@@ -1,5 +1,5 @@
 """
-Creates The Tutorial - while testing its functions.
+Creates markdown - while testing contained code snippets.
 
 """
 
@@ -13,12 +13,8 @@ from ast import literal_eval as ev
 
 breakpoint = pdb.set_trace
 
-# setup creates ctx like this:
-# {'fn_md': '/Users/gk/GitHub/pytest_to_md/tests/tutorial.md',
-#  'fn_readme': '/Users/gk/GitHub/pytest_to_md/README.md',
-#  'here': '/Users/gk/GitHub/pytest_to_md/tests',
-#  'md_sep': '<!-- autogen tutorial -->'}
-ctx = {}
+# contains the config, populated in setup:
+cfg = {}
 
 dflt_md_sep = '<!-- autogen tutorial -->'
 
@@ -38,20 +34,20 @@ def setup(fn_test_file, fn_readme=None, md_sep=dflt_md_sep):
     e.g. fn_test_file=/Users/gk/GitHub/pytest_to_md/tests/test_tutorial.py
     """
 
-    ctx['md_sep'] = md_sep
+    cfg['md_sep'] = md_sep
     fnt = fn_test_file
-    here = ctx['here'] = DIR(fnt)
+    here = cfg['here'] = DIR(fnt)
     if not fn_readme:
-        fn = ctx['fn_readme'] = DIR(here) + '/README.md'
+        fn = cfg['fn_readme'] = DIR(here) + '/README.md'
 
     if not os.path.exists(fn):
         print('Creating', fn)
         with open(fn, 'w') as fd:
             fd.write('\n'.join(('', md_sep, 'will be autogened.', md_sep, '')))
 
-    name = ctx['name'] = rpl(fn_test_file.rsplit('/', 1)[-1], 'test_', '.py')
-    ctx['d_assets'] = here + '/' + name + '/'
-    fn_md = ctx['fn_md'] = here + '/' + name + '.md'
+    name = cfg['name'] = rpl(fn_test_file.rsplit('/', 1)[-1], 'test_', '.py')
+    cfg['d_assets'] = here + '/' + name + '/'
+    fn_md = cfg['fn_md'] = here + '/' + name + '.md'
 
     if os.path.exists(fn_md):
         os.unlink(fn_md)
@@ -65,14 +61,14 @@ def write_readme():
     """
     addd the new version of the rendered tutorial into the main readme
     """
-    fn = ctx['fn_md']
+    fn = cfg['fn_md']
     with open(fn) as fd:
         tut = fd.read()
 
-    fnr = ctx['fn_readme']
+    fnr = cfg['fn_readme']
     with open(fnr) as fd:
         readm = fd.read()
-    m = ctx['md_sep']
+    m = cfg['md_sep']
     pre, _, post = readm.split(m)
     with open(fnr, 'w') as fd:
         fd.write(''.join((pre, m, tut, '\n', m, post)))
@@ -115,7 +111,7 @@ def md(paras, into=nothing):
             pre, post = l.split(ff, 1)
             fn, post = post.rsplit('>', 1)
             if not fn.startswith('/'):
-                fn = ctx['d_assets'] + fn
+                fn = cfg['d_assets'] + fn
             if not os.path.exists(fn):
                 s = l
             else:
@@ -130,7 +126,7 @@ def md(paras, into=nothing):
 
     r = '\n'.join([repl(l) for para in paras for l in para.splitlines()])
     r = into(r)
-    fn = ctx['fn_md']
+    fn = cfg['fn_md']
     with open(fn, 'a') as fd:
         fd.write('\n' + r)
 
@@ -146,7 +142,7 @@ def bash_run(cmd, res_as=None, no_cmd_path=False, no_show_in_cmd=''):
     orig_cmd = cmds[0]['cmd']
     if not res_as and orig_cmd.startswith('python -c'):
         res_as = python
-    D = ctx['d_assets']
+    D = cfg['d_assets']
 
     for c in cmds:
         cmd = c['cmd']

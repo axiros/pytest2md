@@ -15,9 +15,10 @@ Example: This README.md was built from running this file in `pytest`:
 
 ```python
 """
-Creates The Tutorial - while testing its functions.
+Creates Readme - while testing functions of ptm
 
 """
+import pytest_to_md as ptm
 
 import subprocess as sp
 import pytest
@@ -25,7 +26,6 @@ import os
 import time
 from ast import literal_eval as ev
 
-import pytest_to_md as ptm
 
 breakpoint = ptm.breakpoint
 
