@@ -33,6 +33,9 @@ class TestChapter1:
 
         <from-file: %s>
 
+        [Here](https://github.com/axiros/DevApps) is a bigger tutorial created
+        from `pytest_to_md` ([src](https://github.com/axiros/DevApps/tests/test_tutorial.py)).
+
         """
             % __file__
         )
