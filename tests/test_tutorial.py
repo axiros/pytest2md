@@ -28,18 +28,23 @@ class TestChapter1:
 
         <from-file: %s>
 
-        Lets run a bash command (cat that file again) and assert on its results:
-        Note that the command is shown in the readme, while its result can be
-        asserted upon.
-
         """
             % __file__
         )
 
         ptm.md(t)
+        ptm.md(
+            """
+        Lets run a bash command and assert on its results.
+        Note that the command is shown in the readme, incl. result and the result
+        can be asserted upon.
+        """
+        )
 
-        res = ptm.bash_run('cat "%(fn_md)s"' % ptm.ctx, no_cmd_path=True)
-        assert 'This README.md was built' in res[0]['res']
+        res = ptm.bash_run(
+            'cat "/etc/hosts" | grep localhost', no_cmd_path=True
+        )
+        assert '127.0.0.1' in res[0]['res']
 
     def test_write(self):
         """has to be the last 'test'"""
