@@ -56,7 +56,7 @@ class TestChapter1:
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = run(['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'])
+        res = run(['ls "%(fn_md)s"' % ptm.cfg, 'ls -lta /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
@@ -77,9 +77,9 @@ $ cat "/etc/hosts" | grep localhost
 ::1             localhost
 ```
 ```bash
-$ ls -lta /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
--rw-r--r--  1 gk  staff  1763 Oct 30 19:43 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+$ ls "/Users/gk/GitHub/pytest_to_md/tests/tutorial.md"
+/Users/gk/GitHub/pytest_to_md/tests/tutorial.md
 
-$ ls /etc/hosts
-/etc/hosts
+$ ls -lta /etc/hosts
+-rw-r--r--  1 root  wheel  978 Aug 13 08:16 /etc/hosts
 ```

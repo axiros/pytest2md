@@ -46,7 +46,7 @@ class TestChapter1:
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = run(['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'])
+        res = run(['ls "%(fn_md)s"' % ptm.cfg, 'ls -lta /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
