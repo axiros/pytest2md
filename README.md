@@ -4,7 +4,7 @@
 
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
-[pypisvg]: https://badge.fury.io/py/pytest_to_md.svg
+[pypisvg]: https://img.shields.io/pypi/v/pytest_to_md.svg
 [pypi]: https://badge.fury.io/py/pytest_to_md
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
