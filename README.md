@@ -20,9 +20,13 @@ a test within pytest):
 
 ```python
 """
-Creates Readme - while testing functions of ptm
+Creates Readme - while testing functions of ptm.
 
 
+While pytest is running we simply assemble from scratch an intermediate .md file
+in append only mode, located within the tests folder.
+This we insert between two seperators in the target markdown file, as the last
+test function, done.
 """
 import pytest_to_md as ptm
 
