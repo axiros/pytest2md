@@ -100,8 +100,8 @@ $ ls -lta /etc/hosts
 ```
 <!-- autogen tutorial -->
 
-[Here](https://github.com/axiros/DevApps) is a bigger tutorial, created
-from `pytest_to_md` ([src][dasrc])
+[Here](https://github.com/axiros/DevApps) is a bigger tutorial,
+[created][dasrc] from `pytest_to_md`.
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
