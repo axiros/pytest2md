@@ -13,16 +13,15 @@ Creates Readme - while testing functions of ptm
 """
 import pytest_to_md as ptm
 
-import subprocess as sp
 import pytest
-import os
-import time
-from ast import literal_eval as ev
+from functools import partial
 
 
 breakpoint = ptm.breakpoint
 
 here, fn = ptm.setup(__file__)
+
+run = partial(ptm.bash_run, no_cmd_path=True)
 
 
 class TestChapter1:
@@ -50,15 +49,11 @@ class TestChapter1:
         """
         )
 
-        res = ptm.bash_run(
-            'cat "/etc/hosts" | grep localhost', no_cmd_path=True
-        )
+        res = run('cat "/etc/hosts" | grep localhost')
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = ptm.bash_run(
-            ['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'], no_cmd_path=True
-        )
+        res = run(['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
@@ -80,7 +75,7 @@ $ cat "/etc/hosts" | grep localhost
 ```
 ```bash
 $ ls -lta /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
--rw-r--r--  1 gk  staff  1810 Oct 30 18:43 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+-rw-r--r--  1 gk  staff  1708 Oct 30 18:49 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
 
 $ ls /etc/hosts
 /etc/hosts

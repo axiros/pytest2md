@@ -11,6 +11,23 @@ import pdb
 import appdirs
 from ast import literal_eval as ev
 
+if not hasattr(sp, 'getoutput'):
+    # adding the convenient PY3 getoutput to sp.
+    # hope correct (in plane, offline):
+    import subprocess as sp
+
+    def _(*a, **kw):
+        kw['stdout'] = sp.PIPE
+        kw['stderr'] = sp.PIPE
+        kw['shell'] = True
+        out, err = sp.Popen(*a, **kw).communicate()
+        if out.endswith('\n'):
+            out = out[:-1]
+        return out + err
+
+    sp.getoutput = _
+
+# also py2 compat:
 breakpoint = pdb.set_trace
 
 # contains the config, populated in setup:
