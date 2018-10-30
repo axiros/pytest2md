@@ -1,9 +1,11 @@
 # Small tools to generate markdown while testing contained claims.
 
-[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md) [![codecov](https://codecov.io/gh/axiros/pytest_to_md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest_to_md) [![][blacksvg]][black]
+[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md) [![codecov](https://codecov.io/gh/axiros/pytest_to_md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest_to_md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
 
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
+[pypisvg]: https://badge.fury.io/py/pytest_to_md.svg
+[pypi]: https://badge.fury.io/py/pytest_to_md
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
