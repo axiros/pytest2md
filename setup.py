@@ -21,9 +21,11 @@ with open(path.join(HERE, 'README.md')) as fd:
 
 setup(
     name='pytest_to_md',
-    version='20181020',
+    version='20181021',
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
+    long_description_content_type='text/markdown',
+    include_package_data=True,
     url='https://github.com/axiros/pytest_to_md',
     author='gk',
     author_email='gk@axiros.com',
