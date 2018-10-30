@@ -89,7 +89,7 @@ $ cat "/etc/hosts" | grep localhost
 ```
 ```bash
 $ ls -lta /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
--rw-r--r--  1 gk  staff  1763 Oct 30 19:39 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+-rw-r--r--  1 gk  staff  1763 Oct 30 19:43 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
 
 $ ls /etc/hosts
 /etc/hosts

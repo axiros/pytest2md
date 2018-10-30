@@ -21,7 +21,7 @@ with open(path.join(HERE, 'README.md')) as fd:
 
 setup(
     name='pytest_to_md',
-    version='18.10.22',
+    version='20181023',
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
     long_description_content_type='text/markdown',
