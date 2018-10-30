@@ -1,4 +1,4 @@
-# pytest_to_md: Tools to generate README.md while testing their claims.
+# Small tools to generate markdown while testing contained claims.
 
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
