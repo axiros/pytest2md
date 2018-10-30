@@ -1,5 +1,6 @@
 # Small tools to generate markdown while testing contained claims.
 
+[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md)
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
 

@@ -8,7 +8,6 @@ import pytest
 import os
 import time
 import pdb
-import appdirs
 from ast import literal_eval as ev
 
 if not hasattr(sp, 'getoutput'):
