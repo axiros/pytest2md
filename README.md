@@ -54,11 +54,6 @@ class TestChapter1:
 
         <from-file: %s>
 
-        [Here](https://github.com/axiros/DevApps) is a bigger tutorial, created
-        from `pytest_to_md` ([src][dasrc])
-
-        [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
-
         """
             % __file__
         )
@@ -86,11 +81,6 @@ class TestChapter1:
         ptm.write_readme()
 ```
 
-[Here](https://github.com/axiros/DevApps) is a bigger tutorial, created
-from `pytest_to_md` ([src][dasrc])
-
-[dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
-
 
 Lets run a bash command and assert on its results.
 Note that the command is shown in the readme, incl. result and the result
@@ -109,3 +99,9 @@ $ ls -lta /etc/hosts
 -rw-r--r--  1 root  wheel  978 Aug 13 08:16 /etc/hosts
 ```
 <!-- autogen tutorial -->
+
+[Here](https://github.com/axiros/DevApps) is a bigger tutorial, created
+from `pytest_to_md` ([src][dasrc])
+
+[dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
+

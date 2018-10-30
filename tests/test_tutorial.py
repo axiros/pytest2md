@@ -33,11 +33,6 @@ class TestChapter1:
 
         <from-file: %s>
 
-        [Here](https://github.com/axiros/DevApps) is a bigger tutorial, created
-        from `pytest_to_md` ([src][dasrc])
-
-        [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
-
         """
             % __file__
         )
