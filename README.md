@@ -62,6 +62,13 @@ class TestChapter1:
         )
         assert '127.0.0.1' in res[0]['res']
 
+    def test_two(self):
+        res = ptm.bash_run(
+            ['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'], no_cmd_path=True
+        )
+        assert 'tutorial' in res[0]['res']
+        assert 'hosts' in res[1]['res']
+
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
@@ -77,5 +84,12 @@ $ cat "/etc/hosts" | grep localhost
 # localhost is used to configure the loopback interface
 127.0.0.1  localhost lo sd1 sd3 sa1 sa2 sb1 sb2
 ::1             localhost
+```
+```bash
+$ ls -lta /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+-rw-r--r--  1 gk  staff  1810 Oct 30 18:43 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+
+$ ls /etc/hosts
+/etc/hosts
 ```
 <!-- autogen tutorial -->

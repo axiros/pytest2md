@@ -46,6 +46,13 @@ class TestChapter1:
         )
         assert '127.0.0.1' in res[0]['res']
 
+    def test_two(self):
+        res = ptm.bash_run(
+            ['ls -lta %(fn_md)s' % ptm.cfg, 'ls /etc/hosts'], no_cmd_path=True
+        )
+        assert 'tutorial' in res[0]['res']
+        assert 'hosts' in res[1]['res']
+
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
