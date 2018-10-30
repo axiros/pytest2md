@@ -15,7 +15,8 @@
 This is a set of tools, generating parts of a markdown document while
 testing it.
 
-Example: This README.md was built from running this file in `pytest`:
+Example: This README.md was built from this file (while it was run as
+a test within pytest):
 
 ```python
 """
@@ -44,7 +45,8 @@ class TestChapter1:
         This is a set of tools, generating parts of a markdown document while
         testing it.
 
-        Example: This README.md was built from running this file in `pytest`:
+        Example: This README.md was built from this file (while it was run as
+        a test within pytest):
 
         <from-file: %s>
 
@@ -87,7 +89,7 @@ $ cat "/etc/hosts" | grep localhost
 ```
 ```bash
 $ ls -lta /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
--rw-r--r--  1 gk  staff  1709 Oct 30 19:12 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+-rw-r--r--  1 gk  staff  1763 Oct 30 19:35 /Users/gk/GitHub/pytest_to_md/tests/tutorial.md
 
 $ ls /etc/hosts
 /etc/hosts

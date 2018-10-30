@@ -3,6 +3,8 @@
 echo "Uploading to pip"
 set -x
 pytest tests || exit 1
+git commit -am 'pre_pypi_upload'
+git push
 
 clean () {
     rm -rf ./dist
