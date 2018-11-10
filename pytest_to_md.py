@@ -95,9 +95,10 @@ code = """```code
 ```"""
 # fmt: off
 nothing  = lambda s: s
-python   = lambda s: code.replace('code', 'python')  % s
-bash     = lambda s: code.replace('code', 'bash')  %s
+python   = lambda s: code.replace('code', 'python')   % s
+bash     = lambda s: code.replace('code', 'bash')     % s
 markdown = lambda s: code.replace('code', 'markdown') % (s.replace('```', "``"))
+as_lang  = lambda s, lang: code.replace('code', lang) % s
 # fmt: on
 
 
@@ -175,3 +176,28 @@ def bash_run(cmd, res_as=None, no_cmd_path=False, no_show_in_cmd=''):
 
     md(r, into=res_as if res_as else bash)
     return cmds
+
+
+exists = os.path.exists
+
+
+def sh_file(fn, lang='python', content=None):
+    ex = exists(fn)
+    if not ex and not content:
+        raise Exception('not found', fn)
+    dn = os.path.dirname(fn)
+    if not exists(dn):
+        os.system('mkdir -p "%s"' % dn)
+    if content:
+        with open(fn, 'w') as fd:
+            fd.write(content)
+    else:
+        with open(fn) as fd:
+            content = fd.read()
+    FN = os.path.abspath(fn).rsplit('/', 1)[1]
+    content = ('$ cat "%s"' % FN) + '\n' + content
+    content = as_lang(content, lang)
+    md(content)
+
+
+# .

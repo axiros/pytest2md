@@ -29,8 +29,7 @@ This we insert between two seperators in the target markdown file, as the last
 test function, done.
 """
 import pytest_to_md as ptm
-
-import pytest
+import pytest, json, os, time
 from functools import partial
 
 
@@ -75,6 +74,20 @@ class TestChapter1:
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
+    def test_file_create_show(self):
+        ptm.md(
+            """When working with files, the `sh_file` function is helpful,
+                producing output like this one:"""
+        )
+        ts = time.ctime()
+        c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
+        # if content is given it will create it:
+        ptm.sh_file('/tmp/foo', lang='javascript', content=c)
+
+        # check existance:
+        with open('/tmp/foo') as fd:
+            assert fd.read() == c
+
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
@@ -97,6 +110,20 @@ $ ls "/Users/gk/GitHub/pytest_to_md/tests/tutorial.md"
 
 $ ls -lta /etc/hosts
 -rw-r--r--  1 root  wheel  978 Aug 13 08:16 /etc/hosts
+```
+When working with files, the `sh_file` function is helpful,
+                producing output like this one:
+```javascript
+$ cat "foo"
+{
+    "a": [
+        {
+            "testfile": "created"
+        },
+        "at",
+        "Sat Nov 10 21:17:14 2018"
+    ]
+}
 ```
 <!-- autogen tutorial -->
 
