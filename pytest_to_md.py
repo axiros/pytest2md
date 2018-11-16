@@ -2,7 +2,7 @@
 Creates markdown - while testing contained code snippets.
 
 """
-
+import inspect
 import subprocess as sp
 import pytest
 import os
@@ -123,7 +123,7 @@ def md(paras, into=nothing):
         if '```' in l:
             lctx['in_code_block'] = not lctx['in_code_block']
 
-        ff = '<from-file: '
+        ff = '<from_file: '
         if l.strip().startswith(ff):
             pre, post = l.split(ff, 1)
             fn, post = post.rsplit('>', 1)
@@ -198,6 +198,10 @@ def sh_file(fn, lang='python', content=None):
     content = ('$ cat "%s"' % FN) + '\n' + content
     content = as_lang(content, lang)
     md(content)
+
+
+def sh_code(func):
+    return md(python(inspect.getsource(func)))
 
 
 # .

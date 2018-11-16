@@ -40,7 +40,7 @@ class TestChapter1:
         Example: This README.md was built from this file (while it was run as
         a test within pytest):
 
-        <from-file: %s>
+        <from_file: %s>
 
         """
             % __file__
@@ -77,6 +77,11 @@ class TestChapter1:
         with open('/tmp/foo') as fd:
             assert fd.read() == c
 
+    def test_sh_code(self):
+        ptm.md('Source code showing is done like this:')
+        ptm.sh_code(self.test_sh_code)
+        ptm.md('> Is this a recursion? ;-) ')
+
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
@@ -110,7 +115,16 @@ $ cat "foo"
             "testfile": "created"
         },
         "at",
-        "Sat Nov 10 21:17:14 2018"
+        "Sat Nov 17 00:56:29 2018"
     ]
 }
 ```
+Source code showing is done like this:
+```python
+    def test_sh_code(self):
+        ptm.md('Source code showing is done like this:')
+        ptm.sh_code(self.test_sh_code)
+        ptm.md('> Is this a recursion? ;-) ')
+
+```
+> Is this a recursion? ;-) 
