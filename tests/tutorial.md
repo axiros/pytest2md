@@ -1,10 +1,11 @@
 
 
 
-This is a set of tools, generating parts of a markdown document while
-testing it.
+This is a set of tools, *generating* documentation, while verifying the documented
+claims about code behaviour - without the need to adapt the source code, e.g. by modifying
+doc strings.
 
-Example: This README.md was built from this file (while it was run as
+Example: This "README.md" was mainly built from this file (while it was run as
 a test within pytest):
 
 ```python
@@ -34,10 +35,11 @@ class TestChapter1:
         t = (
             """
 
-        This is a set of tools, generating parts of a markdown document while
-        testing it.
+        This is a set of tools, *generating* documentation, while verifying the documented
+        claims about code behaviour - without the need to adapt the source code, e.g. by modifying
+        doc strings.
 
-        Example: This README.md was built from this file (while it was run as
+        Example: This "README.md" was mainly built from this file (while it was run as
         a test within pytest):
 
         <from_file: %s>
@@ -115,7 +117,7 @@ $ cat "foo"
             "testfile": "created"
         },
         "at",
-        "Sat Nov 17 00:56:29 2018"
+        "Sat Nov 17 01:23:40 2018"
     ]
 }
 ```
