@@ -27,7 +27,7 @@ class TestChapter1:
         This is a set of tools, generating parts of a markdown document while
         testing it.
 
-        Example: This README.md was built from this file (while it was run as
+        Example: This "README.md" was mainly built from this file (while it was run as
         a test within pytest):
 
         <from_file: %s>

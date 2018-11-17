@@ -9,11 +9,16 @@
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
+Few things are more annoying than stuff which does not work as announced,
+especially when you find out only after an invest.
+
+Documentation is often prone to produce such situations, since hard to keep 100% in sync with the code evolution.
+
 <!-- autogen tutorial -->
 
 
-This is a set of tools, generating parts of a markdown document while
-testing it.
+This is a set of tools, *generating* documentation, while testing code, without
+touching the code source files, e.g. to modify docstrings.
 
 Example: This README.md was built from this file (while it was run as
 a test within pytest):
