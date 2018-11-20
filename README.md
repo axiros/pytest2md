@@ -149,14 +149,14 @@ $ cat "foo"
             "testfile": "created"
         },
         "at",
-        "Tue Nov 20 23:11:27 2018"
+        "Tue Nov 20 23:15:36 2018"
     ]
 }
 ```
 
 The module does offer also some link replacement feature,
 via the `mdtool` app (Help: See `mdtool -h`).  
-Example: [pytest_to_md][pytest_to_md.py] was linked by replacing "SRC" with the path
+Example: [pytest_to_md]<SRC> was linked by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
 - At normal runs of pytest, that base URL is just a local `file://` link,
@@ -173,7 +173,7 @@ Source code showing is done like this:
         )
 
 ```
-> Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
+> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  
 <!-- autogen tutorial -->
 
 [Here](https://github.com/axiros/DevApps) is a bigger tutorial,
