@@ -6,12 +6,12 @@ here="$(unset CDPATH && cd "$(dirname "$BASH_SOURCE")" && echo $PWD)"
 cd "$here"
 export NOLINKREPL=true
 pytest tests || exit 1
+unset NOLINKREPL
 git commit -am 'pre_pypi_upload'
 #slt="https://github.com/axiros/DevApps/blob/`git rev-parse  HEAD`"
 #slt="$slt/%(file)s%(#Lline)s"
 echo "Setting links..."
 mdtool set_links src_link_tmpl="github" md_file="README.md"
-exit
 git push
 
 clean () {
