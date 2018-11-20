@@ -149,7 +149,7 @@ $ cat "foo"
             "testfile": "created"
         },
         "at",
-        "Tue Nov 20 23:27:52 2018"
+        "Tue Nov 20 23:40:29 2018"
     ]
 }
 ```
@@ -183,5 +183,5 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/17e9b55204a3fdcf5de36cbe36527d9706874364/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/17e9b55204a3fdcf5de36cbe36527d9706874364/tests/test_tutorial.py#L88
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/c09aa46d44dda45eb7e2190d907063013bb1a7f0/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/c09aa46d44dda45eb7e2190d907063013bb1a7f0/tests/test_tutorial.py#L88
