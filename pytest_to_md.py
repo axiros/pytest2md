@@ -2,6 +2,7 @@
 Creates markdown - while testing contained code snippets.
 
 """
+import devapps
 import inspect
 import subprocess as sp
 import pytest
@@ -9,6 +10,10 @@ import os
 import time
 import pdb
 from ast import literal_eval as ev
+
+import mdtool
+
+exists = os.path.exists
 
 if not hasattr(sp, 'getoutput'):
     # adding the convenient PY3 getoutput to sp.
@@ -46,37 +51,82 @@ def rpl(what, *with_):
 
 
 def setup(fn_test_file, fn_readme=None, md_sep=dflt_md_sep):
-    """called at module level by pytest test module, which creates the md
+    """
+    called at module level by pytest test module, which creates the md
     e.g. fn_test_file=/Users/gk/GitHub/pytest_to_md/tests/test_tutorial.py
     """
 
     cfg['md_sep'] = md_sep
     fnt = fn_test_file
     here = cfg['here'] = DIR(fnt)
+    # assuming tests in <base>/tests:
+    cfg['d_base'] = DIR(here)
     if not fn_readme:
-        fn = cfg['fn_readme'] = DIR(here) + '/README.md'
+        fn = cfg['fn_readme'] = cfg['d_base'] + '/README.md'
 
-    if not os.path.exists(fn):
+    if not exists(fn):
         print('Creating', fn)
         with open(fn, 'w') as fd:
             fd.write('\n'.join(('', md_sep, 'will be autogened.', md_sep, '')))
 
     name = cfg['name'] = rpl(fn_test_file.rsplit('/', 1)[-1], 'test_', '.py')
     cfg['d_assets'] = here + '/' + name + '/'
-    fn_md = cfg['fn_md'] = here + '/' + name + '.md'
 
-    if os.path.exists(fn_md):
-        os.unlink(fn_md)
-    with open(fn_md, 'w') as fd:
-        fd.write('')
+    def create_empty_md_file(name):
+        here = cfg['here']
+        # create
+        fn_md = cfg['fn_md'] = here + '/' + name + '.md'
+        if exists(fn_md):
+            os.unlink(fn_md)
+        with open(fn_md, 'w') as fd:
+            fd.write('')
+        return fn_md
+
+    fn_md = create_empty_md_file(name)
 
     return here, fn_md
+
+
+#
+#    def get_repo_base_url(dvcs):
+#        url = dvcs  # just for the error, once we have hg it'll be sane
+#        if dvcs == 'git':
+#            url = os.popen('git config --get remote.origin.url').read().strip()
+#            if 'github' in url:
+#                url, post = url.rsplit('.git', 1)
+#                assert not post
+#                pre, post = url.rsplit('/', 1)
+#                pre = pre.rsplit('/', 1)[-1].rsplit(':', 1)[-1]
+#                cfg['repo_path'] = pre + '/' + post
+#                return repo_urls['github']
+#        raise NotImplemented('Repo url for dvcs', dvcs, url)
+#
+#    def set_repo_base_url(rbu):
+#        dvcss = {'git': None, 'hg': None}
+#        if rbu == None:
+#            d = cfg['here']
+#            for dvcs in dvcss.keys():
+#                while not exists(d + '/.' + dvcs) and d != '/':
+#                    d = os.path.dirname(d)
+#                if d != '/':
+#                    dvcss[dvcs] = get_repo_base_url(dvcs)
+#                    break
+#
+#        breakpoint()
+#
+#    set_repo_base_url(repo_base_url)
+#
+# repo_urls = {
+#    'github': 'https://github.com/%(repo_path)s/blob/%(repo_rev)s/%(file_path)s#L%(file_line)s'
+# }
+#
 
 
 def write_readme():
     """
     addd the new version of the rendered tutorial into the main readme
     """
+    # export DIR_SRC="https://github.com/axiros/DevApps/blob/`git rev-parse  HEAD`/"
     fn = cfg['fn_md']
     with open(fn) as fd:
         tut = fd.read()
@@ -86,8 +136,14 @@ def write_readme():
         readm = fd.read()
     m = cfg['md_sep']
     pre, _, post = readm.split(m)
-    with open(fnr, 'w') as fd:
-        fd.write(''.join((pre, m, tut, '\n', m, post)))
+    md = ''.join((pre, m, tut, '\n', m, post))
+    with open(cfg['fn_readme'], 'w') as fd:
+        fd.write(md)
+    app, f = devapps.configure(
+        mdtool.MDTool,
+        dict(src_base_dir=cfg['d_base'], md_file=cfg['fn_readme']),
+    )
+    app().do_set_links()
 
 
 code = """```code
@@ -129,7 +185,7 @@ def md(paras, into=nothing):
             fn, post = post.rsplit('>', 1)
             if not fn.startswith('/'):
                 fn = cfg['d_assets'] + fn
-            if not os.path.exists(fn):
+            if not exists(fn):
                 s = l
             else:
                 with open(fn) as fd:
@@ -176,9 +232,6 @@ def bash_run(cmd, res_as=None, no_cmd_path=False, no_show_in_cmd=''):
 
     md(r, into=res_as if res_as else bash)
     return cmds
-
-
-exists = os.path.exists
 
 
 def sh_file(fn, lang='python', content=None):

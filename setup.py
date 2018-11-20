@@ -21,7 +21,7 @@ with open(path.join(HERE, 'README.md')) as fd:
 
 setup(
     name='pytest_to_md',
-    version='20181103',
+    version='20181104',
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
     long_description_content_type='text/markdown',
@@ -49,5 +49,6 @@ setup(
     ],
     keywords=['markdown', 'markup', 'testing', 'pytest'],
     py_modules=['pytest_to_md'],
+    entry_points={'console_scripts': ['mdtool = mdtool:run']},
     zip_safe=False,
 )

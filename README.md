@@ -95,10 +95,26 @@ class TestChapter1:
         with open('/tmp/foo') as fd:
             assert fd.read() == c
 
+    def test_mdtool(self):
+        md = """
+        The module does offer also some link replacement feature,
+        via the `mdtool` app (Help: See `mdtool -h`).  
+        Example: [pytest_to_md]<SRC> was linked by replacing "SRC" with the path
+        to a file matching, under a given directory, prefixed by an arbitrary base URL.
+
+        - At normal runs of pytest, that base URL is just a local `file://` link,
+        but before pushes one can set these e.g. to the github base URL or the repo.
+        - `[key-values]` constructs are supported as well, example following:
+
+        """
+        ptm.md(md)
+
     def test_sh_code(self):
         ptm.md('Source code showing is done like this:')
         ptm.sh_code(self.test_sh_code)
-        ptm.md('> Is this a recursion? ;-) ')
+        ptm.md(
+            '> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  '
+        )
 
     def test_write(self):
         """has to be the last 'test'"""
@@ -133,19 +149,31 @@ $ cat "foo"
             "testfile": "created"
         },
         "at",
-        "Sat Nov 17 01:23:40 2018"
+        "Tue Nov 20 23:11:27 2018"
     ]
 }
 ```
+
+The module does offer also some link replacement feature,
+via the `mdtool` app (Help: See `mdtool -h`).  
+Example: [pytest_to_md][pytest_to_md.py] was linked by replacing "SRC" with the path
+to a file matching, under a given directory, prefixed by an arbitrary base URL.
+
+- At normal runs of pytest, that base URL is just a local `file://` link,
+but before pushes one can set these e.g. to the github base URL or the repo.
+- `[key-values]` constructs are supported as well, example following:
+
 Source code showing is done like this:
 ```python
     def test_sh_code(self):
         ptm.md('Source code showing is done like this:')
         ptm.sh_code(self.test_sh_code)
-        ptm.md('> Is this a recursion? ;-) ')
+        ptm.md(
+            '> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  '
+        )
 
 ```
-> Is this a recursion? ;-) 
+> Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
 <!-- autogen tutorial -->
 
 [Here](https://github.com/axiros/DevApps) is a bigger tutorial,
@@ -153,3 +181,7 @@ Source code showing is done like this:
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
+
+<!-- autogenlinks -->
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/4f70b892a6c563c94d0b7222121e81fda733e584/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/4f70b892a6c563c94d0b7222121e81fda733e584/tests/test_tutorial.py#L88
