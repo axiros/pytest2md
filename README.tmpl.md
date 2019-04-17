@@ -10,9 +10,10 @@
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
 Few things are more annoying than stuff which does not work as announced,
-especially when you find out only after an invest.
+especially when you find out only after an invest of time and energy.
 
-Documentation is often prone to produce such situations, since hard to keep 100% in sync with the code evolution.
+Documentation is often prone to produce such situations, since hard to keep
+100% in sync with the code evolution.
 
 <!-- autogen tutorial -->
 <!-- autogen tutorial -->
