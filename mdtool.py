@@ -91,12 +91,19 @@ class MDTool(object):
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
     def __init__(self, src_dir, md_file, src_link_tmpl_name=None):
-        src_link_tmpl_name = src_link_tmpl_name or 'static'
         self.md_file = md_file
-        self.src_base_dir = src_dir
-        self.src_link_tmpl_name = src_link_tmpl_name
         with open(self.md_file) as fd:
             self._md_file = fd.read()
+
+        if not src_link_tmpl_name:
+            # try to find from within the md itself:
+            md = self._md_file.split('<!-- md_links_for:')
+            if len(md) > 1:
+                src_link_tmpl_name = md[1].split('--', 1)[0].strip()
+        src_link_tmpl_name = src_link_tmpl_name or 'static'
+        print('Rendering links for', src_link_tmpl_name)
+        self.src_base_dir = src_dir
+        self.src_link_tmpl_name = src_link_tmpl_name
         if not os.environ.get('NOLINKREPL'):
             self.src_link_repl_ctx = self.init_src_link_tmpl()
 

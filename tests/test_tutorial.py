@@ -11,6 +11,7 @@ import pytest_to_md as ptm
 import pytest, json, os, time
 from functools import partial
 from uuid import uuid4
+import json
 
 # py2.7 compat:
 breakpoint = ptm.breakpoint
@@ -98,12 +99,31 @@ class TestChapter1:
         you have to parametrize the intended hoster in your environment, before
         running a pytest / push cycle. That way the links will be working on the hoster.
 
+        Currently we understand the following namespaces for links:
+
+
+        ```javascript
+        _link_names_
+        ```
+
+        ### Setting a link template
+
+        - `export MD_LINKS_FOR=github   ` # before running pytest / push
+        - `<!-- md_links_for: github -->` # in the markdown template, static
+
+        The latter can be overwritten by environ, should you want to push from time to time
+        to a different code hoster.
+
+        ### Link Refs
+
         We minimize the problem of varying generated target markdown, dependent on the hoster.
         How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
 
-        By using link *refs*, the differences of e.g. a README.md for github vs. gitlab is
-        restricted to the links section on the end of the generated markdown - in the markdown
-        bodies you'll just see link names, which remain the same.
+
+        By building [reference links](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
+        the differences of e.g. a README.md for github vs. gitlab is
+        restricted to the links section on the end of the generated markdown.
+        In the markdown bodies you'll just see link names, which remain the same.
 
         > Check the end of the [title:rendering result,fmatch:README.md,show_raw:True]<SRC> at the end of this README.md,
         in order to see the results for the hoster you are reading this markdown file currently.
@@ -118,7 +138,10 @@ class TestChapter1:
         - `[key-values]` constructs are supported as well, extending to beyond
           just the base url. Example following:
 
-        """
+        """.replace(
+            '_link_names_',
+            json.dumps(ptm.mdtool.known_src_links, indent=4, sort_keys=2),
+        )
         ptm.md(md)
 
     def test_sh_code(self):

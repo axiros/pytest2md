@@ -9,6 +9,9 @@
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
+<!-- only hoster for this repo is github, so we fix the links: -->
+<!-- md_links_for: github -->
+
 Few things are more annoying than stuff which does not work as announced,
 especially when you find out only after an invest of time and energy.
 
@@ -40,6 +43,7 @@ import pytest_to_md as ptm
 import pytest, json, os, time
 from functools import partial
 from uuid import uuid4
+import json
 
 # py2.7 compat:
 breakpoint = ptm.breakpoint
@@ -127,12 +131,31 @@ class TestChapter1:
         you have to parametrize the intended hoster in your environment, before
         running a pytest / push cycle. That way the links will be working on the hoster.
 
+        Currently we understand the following namespaces for links:
+
+
+        ```javascript
+        _link_names_
+        ```
+
+        ### Setting a link template
+
+        - `export MD_LINKS_FOR=github   ` # before running pytest / push
+        - `<!-- md_links_for: github -->` # in the markdown template, static
+
+        The latter can be overwritten by environ, should you want to push from time to time
+        to a different code hoster.
+
+        ### Link Refs
+
         We minimize the problem of varying generated target markdown, dependent on the hoster.
         How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
 
-        By using link *refs*, the differences of e.g. a README.md for github vs. gitlab is
-        restricted to the links section on the end of the generated markdown - in the markdown
-        bodies you'll just see link names, which remain the same.
+
+        By building [reference links](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
+        the differences of e.g. a README.md for github vs. gitlab is
+        restricted to the links section on the end of the generated markdown.
+        In the markdown bodies you'll just see link names, which remain the same.
 
         > Check the end of the [title:rendering result,fmatch:README.md,show_raw:True]<SRC> at the end of this README.md,
         in order to see the results for the hoster you are reading this markdown file currently.
@@ -147,7 +170,10 @@ class TestChapter1:
         - `[key-values]` constructs are supported as well, extending to beyond
           just the base url. Example following:
 
-        """
+        """.replace(
+            '_link_names_',
+            json.dumps(ptm.mdtool.known_src_links, indent=4, sort_keys=2),
+        )
         ptm.md(md)
 
     def test_sh_code(self):
@@ -182,14 +208,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "4b379a17-4b11-4390-9ad6-a3b65aa65b66"
+$ cat "153d8f0b-4f8a-4401-b5f7-e7e8332d7bb0"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:53:20 2019"
+        "Wed Apr 17 15:12:08 2019"
     ]
 }
 ```
@@ -218,12 +244,36 @@ Since all of these are just serving static content w/o js possibilities,
 you have to parametrize the intended hoster in your environment, before
 running a pytest / push cycle. That way the links will be working on the hoster.
 
+Currently we understand the following namespaces for links:
+
+
+```javascript
+{
+    "github": "https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s",
+    "github_raw": "https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s",
+    "static": "file://%(src_base_dir)s/%(path)s",
+    "static_raw": "file://%(src_base_dir)s/%(path)s"
+}
+```
+
+### Setting a link template
+
+- `export MD_LINKS_FOR=github   ` # before running pytest / push
+- `<!-- md_links_for: github -->` # in the markdown template, static
+
+The latter can be overwritten by environ, should you want to push from time to time
+to a different code hoster.
+
+### Link Refs
+
 We minimize the problem of varying generated target markdown, dependent on the hoster.
 How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
 
-By using link *refs*, the differences of e.g. a README.md for github vs. gitlab is
-restricted to the links section on the end of the generated markdown - in the markdown
-bodies you'll just see link names, which remain the same.
+
+By building [reference links](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links)
+the differences of e.g. a README.md for github vs. gitlab is
+restricted to the links section on the end of the generated markdown.
+In the markdown bodies you'll just see link names, which remain the same.
 
 > Check the end of the [rendering result][README.md] at the end of this README.md,
 in order to see the results for the hoster you are reading this markdown file currently.
@@ -258,8 +308,8 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/a8e582f2121d11a6720a65f0700a382d08d285b4/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/a8e582f2121d11a6720a65f0700a382d08d285b4/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/tests/test_tutorial.py#L127
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/4ded6e9f9134350ecbf7441a532053980f801bc0/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/4ded6e9f9134350ecbf7441a532053980f801bc0/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/tests/test_tutorial.py#L150
