@@ -218,6 +218,7 @@ import inspect
 class rec_stdout:
     h = []
 
+    @staticmethod
     def write(*a):
         rec_stdout.h.extend(list(a))
 
