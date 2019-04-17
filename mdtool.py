@@ -146,7 +146,6 @@ class MDTool(object):
         Trivial format [foo]<SRC> is ident to [fmatch:foo]<SRC>
 
         """
-
         if os.environ.get('NOLINKREPL'):
             info('Not replacing links', environ='NOLINKREPL')
             return

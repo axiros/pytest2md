@@ -182,14 +182,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "c07d1016-aa51-48a9-b1e3-67f63d811122"
+$ cat "ffc56025-54d3-404e-b349-d06eb8e2f75d"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:44:30 2019"
+        "Wed Apr 17 14:51:59 2019"
     ]
 }
 ```
@@ -258,8 +258,8 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.md]: file:///data/root/pytest_to_md/README.md
-[README.tmpl.md]: file:///data/root/pytest_to_md/README.tmpl.md
-[mdtool.py]: file:///data/root/pytest_to_md/mdtool.py
-[pytest_to_md.py]: file:///data/root/pytest_to_md/pytest_to_md.py
-[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/tests/test_tutorial.py#L127
