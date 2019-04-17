@@ -2,7 +2,6 @@
 Creates markdown - while testing contained code snippets.
 
 """
-import devapps
 import inspect
 import subprocess as sp
 import pytest
@@ -14,6 +13,8 @@ from ast import literal_eval as ev
 import mdtool
 
 exists = os.path.exists
+abspath = os.path.abspath
+dirname = os.path.dirname
 
 if not hasattr(sp, 'getoutput'):
     # adding the convenient PY3 getoutput to sp.
@@ -39,7 +40,7 @@ cfg = {}
 
 dflt_md_sep = '<!-- autogen tutorial -->'
 
-DIR = lambda d: os.path.abspath(os.path.dirname(d))
+DIR = lambda d: abspath(dirname(d))
 
 
 def rpl(what, *with_):
@@ -50,20 +51,55 @@ def rpl(what, *with_):
     return what
 
 
-def setup(fn_test_file, fn_readme=None, md_sep=dflt_md_sep):
+def setup(
+    fn_test_file, fn_target_md=None, md_sep=dflt_md_sep, fn_target_md_tmpl=None
+):
     """
     called at module level by pytest test module, which creates the md
     e.g. fn_test_file=/Users/gk/GitHub/pytest_to_md/tests/test_tutorial.py
+
+    - fn_target_md: The final rendered result file. Default: HERE/README.md
+    - md_sep: A seperator where we fill in the mardkown from the pytest
+    - fn_target_md_tmpl: A template file, containing the static md around the seps.
+                    If not given we replace the content at every pytest run in
+                    fn_target_md itself.
+                    This is useful when you edit a lot in markdown and don't want
+                    clutter from the autogen result in that file.
+    Filenames relative to directory of this file or absolut.
+
+    We generate that config:
+    (Pdb) pp cfg (for a run of our own tutorial)
+    {'d_assets': '/data/root/pytest_to_md/tests/tutorial/',
+    'fn_md': '/data/root/pytest_to_md/tests/tutorial.md',
+    'fn_target_md': '/data/root/pytest_to_md/README.md.tmpl',
+    'here': '/data/root/pytest_to_md/tests',
+    'md_sep': '<!-- autogen tutorial -->',
+    'name': 'tutorial',
+    'fn_target_md_tmpl': '/data/root/pytest_to_md/README.md.tmpl'}
     """
+    cfg['here'] = here = DIR(fn_test_file)
+
+    # assuming tests in <base>/tests:
+    if not fn_target_md:
+        fn_target_md = here + '/../README.md'
+
+    if not fn_target_md.startswith('/'):
+        fn_target_md = abspath(cfg['here'] + '/' + fn_target_md)
+    fn = cfg['fn_target_md'] = fn_target_md
+
+    if os.path.exists(fn + '.tmpl') and not fn_target_md_tmpl:
+        fn_target_md_tmpl = fn + '.tmpl'
+    if not fn_target_md_tmpl:
+        print(
+            'Replacing content in the final markdown, no template',
+            cfg['fn_target_md'],
+        )
+        fn_target_md_tmpl = cfg['fn_target_md']
+    cfg['fn_target_md_tmpl'] = fn_target_md_tmpl
 
     cfg['md_sep'] = md_sep
-    fnt = fn_test_file
-    here = cfg['here'] = DIR(fnt)
-    # assuming tests in <base>/tests:
-    cfg['d_base'] = DIR(here)
-    if not fn_readme:
-        fn = cfg['fn_readme'] = cfg['d_base'] + '/README.md'
-
+    fnt = abspath(fn_test_file)
+    cfg['fn_target_md'] = fn = fn_target_md_tmpl
     if not exists(fn):
         print('Creating', fn)
         with open(fn, 'w') as fd:
@@ -83,7 +119,10 @@ def setup(fn_test_file, fn_readme=None, md_sep=dflt_md_sep):
         return fn_md
 
     fn_md = create_empty_md_file(name)
-
+    # returns e.g.
+    # /data/root/pytest_to_md/tests /data/root/pytest_to_md/tests/tutorial.md
+    # pytest will create fn_md from scratch, which will be put at write_readme
+    # into the template, which will be after replacements go into md_target
     return here, fn_md
 
 
@@ -107,7 +146,7 @@ def setup(fn_test_file, fn_readme=None, md_sep=dflt_md_sep):
 #            d = cfg['here']
 #            for dvcs in dvcss.keys():
 #                while not exists(d + '/.' + dvcs) and d != '/':
-#                    d = os.path.dirname(d)
+#                    d = dirname(d)
 #                if d != '/':
 #                    dvcss[dvcs] = get_repo_base_url(dvcs)
 #                    break
@@ -127,23 +166,23 @@ def write_readme():
     addd the new version of the rendered tutorial into the main readme
     """
     # export DIR_SRC="https://github.com/axiros/DevApps/blob/`git rev-parse  HEAD`/"
+    # fn_md is created from the pytest:
     fn = cfg['fn_md']
     with open(fn) as fd:
         tut = fd.read()
 
-    fnr = cfg['fn_readme']
+    fnr = cfg['fn_target_md_tmpl']
     with open(fnr) as fd:
         readm = fd.read()
+    # something like <! autoconf...:
     m = cfg['md_sep']
     pre, _, post = readm.split(m)
     md = ''.join((pre, m, tut, '\n', m, post))
-    with open(cfg['fn_readme'], 'w') as fd:
+    with open(cfg['fn_target_md'], 'w') as fd:
         fd.write(md)
-    app, f = devapps.configure(
-        mdtool.MDTool,
-        dict(src_base_dir=cfg['d_base'], md_file=cfg['fn_readme']),
-    )
-    app().do_set_links()
+    print('Now postprocessing', cfg['fn_target_md'])
+    mdt = mdtool.MDTool(src_dir=cfg['here'], md_file=cfg['fn_target_md'])
+    mdt.do_set_links()
 
 
 code = """```code
@@ -238,7 +277,7 @@ def sh_file(fn, lang='python', content=None):
     ex = exists(fn)
     if not ex and not content:
         raise Exception('not found', fn)
-    dn = os.path.dirname(fn)
+    dn = dirname(fn)
     if not exists(dn):
         os.system('mkdir -p "%s"' % dn)
     if content:
@@ -247,7 +286,7 @@ def sh_file(fn, lang='python', content=None):
     else:
         with open(fn) as fd:
             content = fd.read()
-    FN = os.path.abspath(fn).rsplit('/', 1)[1]
+    FN = abspath(fn).rsplit('/', 1)[1]
     content = ('$ cat "%s"' % FN) + '\n' + content
     content = as_lang(content, lang)
     md(content)

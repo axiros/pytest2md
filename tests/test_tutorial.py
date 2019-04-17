@@ -10,12 +10,14 @@ test function, done.
 import pytest_to_md as ptm
 import pytest, json, os, time
 from functools import partial
+from uuid import uuid4
 
-
+# py2.7 compat:
 breakpoint = ptm.breakpoint
 
-here, fn = ptm.setup(__file__)
+here, fn = ptm.setup(__file__, fn_target_md='../README.md')
 
+# parametrizing the shell run results:
 run = partial(ptm.bash_run, no_cmd_path=True)
 
 
@@ -62,11 +64,13 @@ class TestChapter1:
         ts = time.ctime()
         c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
         # if content is given it will create it:
-        ptm.sh_file('/tmp/foo', lang='javascript', content=c)
+        fn = '/tmp/' + str(uuid4())
+        ptm.sh_file(fn, lang='javascript', content=c)
 
         # check existance:
-        with open('/tmp/foo') as fd:
+        with open(fn) as fd:
             assert fd.read() == c
+        os.unlink(fn)
 
     def test_mdtool(self):
         md = """

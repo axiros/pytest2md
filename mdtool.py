@@ -1,28 +1,27 @@
-import devapps, fnmatch
+"""
+Postprocessing the Markdown for various Hosting Ways
+"""
+
+
 from functools import partial
-from devapps.attr_types import InputFile, ExistingDir
+import fnmatch
 import sys, os
-import attr
+
+# from devapps.attr_types import InputFile, ExistingDir
 
 
-def valid(d):
-    if d[0] in ('.', '_'):
-        return False
-    if '.egg' in d:
-        return False
-    return True
+def info(msg, **kw):
+    print(msg, kw)
 
 
-def valid_file(f):
-    if f.endswith('.pyc'):
-        return False
-    return True
+valid_file = lambda f: False if f.endswith('.pyc') else True
+valid_dir = lambda d: False if (d[0] in ('.', '_') or '.egg' in d) else True
 
 
 def find_file(pattern, path, match=fnmatch.fnmatch):
     result = []
     for root, dirs, files in os.walk(path, topdown=True):
-        dirs[:] = [d for d in dirs if valid(d)]
+        dirs[:] = [d for d in dirs if valid_dir(d)]
         for name in files:
             if valid_file(name):
                 if match(name, pattern):
@@ -30,6 +29,7 @@ def find_file(pattern, path, match=fnmatch.fnmatch):
     return result
 
 
+# replacer for shortcut curls, which can be themselves replaced by the build
 known_src_links = {
     'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s'
 }
@@ -92,17 +92,16 @@ def init_src_link_tmpl(mdt):
 
 
 class MDTool(object):
-    src_base_dir = ExistingDir(
-        default='.', descr='Base directory of source code'
-    )
     src_link_tmpl = 'file://%(src_base_dir)s/%(path)s'
-    md_file = InputFile(descr='Markdown file')
     md = ''
     links = {}
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
-    def do_run(mdt):
-        pass
+    def __init__(self, src_dir, md_file):
+        self.md_file = md_file
+        self.src_base_dir = src_dir
+        with open(self.md_file) as fd:
+            self._md_file = fd.read()
 
     def do_set_links(mdt):
         """
@@ -132,7 +131,7 @@ class MDTool(object):
 
         """
         if os.environ.get('NOLINKREPL'):
-            devapps.common.info('Not replacing links', environ='NOLINKREPL')
+            info('Not replacing links', environ='NOLINKREPL')
             return
 
         mdt.src_link_items = init_src_link_tmpl(mdt)
@@ -191,7 +190,6 @@ class MDTool(object):
         ld['title'] = ld.get('title', ld.get('fnmatch', lnk))
 
         title = ld['title']
-        info = partial(devapps.common.info, title=title)
 
         tmpl = mdt.src_link_tmpl
 
@@ -241,8 +239,3 @@ def find_path(ld, bd):
 def to_dict(s):
     l = [kv.strip().split(':', 1) for kv in s.split(',')]
     return dict([(k.strip(), v.strip()) for k, v in l])
-
-
-def run(argv=sys.argv):
-    app, f = devapps.configure(MDTool)
-    f(app())

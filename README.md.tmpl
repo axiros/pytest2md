@@ -1,4 +1,20 @@
+# Small tools to generate markdown - while testing contained claims.
 
+[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md) [![codecov](https://codecov.io/gh/axiros/pytest_to_md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest_to_md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
+
+[blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
+[black]: https://github.com/ambv/black
+[pypisvg]: https://img.shields.io/pypi/v/pytest_to_md.svg
+[pypi]: https://badge.fury.io/py/pytest_to_md
+
+<!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
+
+Few things are more annoying than stuff which does not work as announced,
+especially when you find out only after an invest.
+
+Documentation is often prone to produce such situations, since hard to keep 100% in sync with the code evolution.
+
+<!-- autogen tutorial -->
 
 
 This is a set of tools, *generating* documentation, while verifying the documented
@@ -21,12 +37,14 @@ test function, done.
 import pytest_to_md as ptm
 import pytest, json, os, time
 from functools import partial
+from uuid import uuid4
 
-
+# py2.7 compat:
 breakpoint = ptm.breakpoint
 
-here, fn = ptm.setup(__file__)
+here, fn = ptm.setup(__file__, fn_target_md='../README.md')
 
+# parametrizing the shell run results:
 run = partial(ptm.bash_run, no_cmd_path=True)
 
 
@@ -73,11 +91,13 @@ class TestChapter1:
         ts = time.ctime()
         c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
         # if content is given it will create it:
-        ptm.sh_file('/tmp/foo', lang='javascript', content=c)
+        fn = '/tmp/' + str(uuid4())
+        ptm.sh_file(fn, lang='javascript', content=c)
 
         # check existance:
-        with open('/tmp/foo') as fd:
+        with open(fn) as fd:
             assert fd.read() == c
+        os.unlink(fn)
 
     def test_mdtool(self):
         md = """
@@ -112,35 +132,34 @@ Note that the command is shown in the readme, incl. result and the result
 can be asserted upon.
 ```bash
 $ cat "/etc/hosts" | grep localhost
-# localhost is used to configure the loopback interface
-127.0.0.1  localhost lo sd1 sd3 sa1 sa2 sb1 sb2
-::1             localhost
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 axcentos
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ```
 ```bash
-$ ls "/Users/gk/GitHub/pytest_to_md/tests/tutorial.md"
-/Users/gk/GitHub/pytest_to_md/tests/tutorial.md
+$ ls "/data/root/pytest_to_md/tests/tutorial.md"
+/data/root/pytest_to_md/tests/tutorial.md
 
 $ ls -lta /etc/hosts
--rw-r--r--  1 root  wheel  978 Aug 13 08:16 /etc/hosts
+-rw-r--r--. 1 root root 237 Apr 16 11:42 /etc/hosts
 ```
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "foo"
+$ cat "35dba6a4-376a-4306-afb7-6668f457fdd2"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Tue Nov 20 23:42:40 2018"
+        "Wed Apr 17 12:17:39 2019"
     ]
 }
 ```
 
 The module does offer also some link replacement feature,
 via the `mdtool` app (Help: See `mdtool -h`).  
-Example: [pytest_to_md]<SRC> was linked by replacing "SRC" with the path
+Example: [pytest_to_md was linked by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
 - At normal runs of pytest, that base URL is just a local `file://` link,
@@ -157,4 +176,14 @@ Source code showing is done like this:
         )
 
 ```
-> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  
+> Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
+<!-- autogen tutorial -->
+
+[Here](https://github.com/axiros/DevApps) is a bigger tutorial,
+[created][dasrc] from `pytest_to_md`.
+
+[dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
+
+
+<!-- autogenlinks -->
+[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
