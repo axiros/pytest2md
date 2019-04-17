@@ -185,7 +185,7 @@ def write_readme():
     mdt = mdtool.MDTool(
         src_dir=d,
         md_file=cfg['fn_target_md'],
-        src_link_tmpl=os.environ.get('MD_LINKS_FOR', 'local'),
+        src_link_tmpl_name=os.environ.get('MD_LINKS_FOR'),
     )
     mdt.do_set_links()
 

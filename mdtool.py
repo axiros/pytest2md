@@ -7,7 +7,14 @@ from functools import partial
 import fnmatch
 import sys, os
 
-# from devapps.attr_types import InputFile, ExistingDir
+# replacer for shortcut curls, which can be themselves replaced by the build
+# static is just a static webserver:
+known_src_links = {
+    'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s',
+    'github_raw': 'https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s',
+    'static': 'file://%(src_base_dir)s/%(path)s',
+}
+known_src_links['static_raw'] = known_src_links['static']
 
 
 def info(msg, **kw):
@@ -29,15 +36,18 @@ def find_file(pattern, path, match=fnmatch.fnmatch):
     return result
 
 
-# replacer for shortcut curls, which can be themselves replaced by the build
-known_src_links = {
-    'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s',
-    'local': 'file://%(src_base_dir)s/%(path)s',
-}
-
-
 class InitData:
-    """extend for bitbucket..., custom"""
+    """
+    This is delivering values for keys in src_links which are not determinable
+    from the markdown itself but from e.g. looking into our git config.
+
+    Example: gh_repo_name is part of the links for github.
+
+    All keys used in the source link templates in 'known_src_links' must be
+    having a method here to find them, unless they can be delivered from the
+    markdown itself..
+
+    Todo: extend for bitbucket..., custom"""
 
     @staticmethod
     def src_base_dir(mdt):
@@ -75,34 +85,38 @@ class ItemGetter:
         return ''
 
 
-def init_src_link_tmpl(mdt):
-    """doing all we only have to do once"""
-
-    # mdt.src_link_tmpl = 'github'
-    mdt.src_link_tmpl = slt = known_src_links.get(
-        mdt.src_link_tmpl, mdt.src_link_tmpl
-    )
-
-    if not '/' in slt:
-        raise Exception('Not supported', src_link_tmpl=slt)
-    ctx = mdt.src_url_ctx = {}
-    for k in [l for l in dir(InitData) if not l.startswith('_')]:
-        if k in slt:
-            ctx[k] = getattr(InitData, k)(mdt)
-    return ctx
-
-
 class MDTool(object):
     md = ''
     links = {}
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
-    def __init__(self, src_dir, md_file, src_link_tmpl='local'):
+    def __init__(self, src_dir, md_file, src_link_tmpl_name='static'):
         self.md_file = md_file
         self.src_base_dir = src_dir
-        self.src_link_tmpl = src_link_tmpl
+        self.src_link_tmpl_name = src_link_tmpl_name
         with open(self.md_file) as fd:
             self._md_file = fd.read()
+        if not os.environ.get('NOLINKREPL'):
+            self.src_link_repl_ctx = self.init_src_link_tmpl()
+
+    def init_src_link_tmpl(self):
+        """doing all we only have to do once"""
+
+        # mdt.src_link_tmpl = 'github'
+        # replace given by name with the lookup result from teh known..dict:
+        name = self.src_link_tmpl_name
+        self.src_link_tmpl = sl = known_src_links[name]
+        self.src_link_tmpl_raw = known_src_links[name + '_raw']
+
+        if not '/' in sl:
+            raise Exception('Not supported', self.src_link_tmpl)
+        ctx = self.src_url_ctx = {}
+        for k in [l for l in dir(InitData) if not l.startswith('_')]:
+            if k in sl:
+                # adding git revision to link rednering context
+                # k e.g. gh_repo_name
+                ctx[k] = getattr(InitData, k)(self)
+        return ctx
 
     def do_set_links(mdt):
         """
@@ -131,11 +145,10 @@ class MDTool(object):
         Trivial format [foo]<SRC> is ident to [fmatch:foo]<SRC>
 
         """
+
         if os.environ.get('NOLINKREPL'):
             info('Not replacing links', environ='NOLINKREPL')
             return
-
-        mdt.src_link_items = init_src_link_tmpl(mdt)
 
         md = mdorig = mdt._md_file.split(mdt.autogen_links_sep, 1)[0]
         mdparts = md.split('\n```')
@@ -213,7 +226,7 @@ class MDTool(object):
                             break
 
         link = ld['file']
-        ctx = dict(mdt.src_link_items)
+        ctx = dict(mdt.src_link_repl_ctx)
         ctx.update(ld)
         mdt.links[link] = tmpl % ItemGetter(ctx)
 
