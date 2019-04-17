@@ -30,8 +30,8 @@ class TestChapter1:
         doc strings.
 
         Example: This "README.md" was built into [this](./README.tmpl.md) template,
-        where the [title:placeholder,fmatch:README.tmpl.md,lmatch:autogen]<SRC>
-        content was replaced while running pytest on this testfile:
+        where html comment style placeholders had been replaced while running pytest
+        on this testfile:
 
         <from_file: %s>
 
