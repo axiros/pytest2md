@@ -248,7 +248,7 @@ Source code showing is done like this:
         )
 
 ```
-> Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
+> Is [this][test_tutorialpy] an exotic form of a recursion? ;-)  
 <!-- autogen tutorial -->
 
 [Here](https://github.com/axiros/DevApps) is a bigger tutorial,
@@ -262,4 +262,4 @@ Source code showing is done like this:
 [README.tmpl.md]: file:///data/root/pytest_to_md/README.tmpl.md
 [mdtool.py]: file:///data/root/pytest_to_md/mdtool.py
 [pytest_to_md.py]: file:///data/root/pytest_to_md/pytest_to_md.py
-[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
+[test_tutorialpy]: file:///data/root/pytest_to_md/tests/test_tutorial.py
