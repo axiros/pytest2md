@@ -105,6 +105,9 @@ class TestChapter1:
         restricted to the links section on the end of the generated markdown - in the markdown
         bodies you'll just see link names, which remain the same.
 
+        > Check the end of the [title:rendering result,fmatch:README.md,show_raw:True]<SRC> at the end of this README.md,
+        in order to see the results for the hoster you are reading this markdown file currently.
+
         ## Summary
 
         - At normal runs of pytest, the link base URL is just a local `file://` link,

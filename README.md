@@ -134,6 +134,9 @@ class TestChapter1:
         restricted to the links section on the end of the generated markdown - in the markdown
         bodies you'll just see link names, which remain the same.
 
+        > Check the end of the [title:rendering result,fmatch:README.md,show_raw:True]<SRC> at the end of this README.md,
+        in order to see the results for the hoster you are reading this markdown file currently.
+
         ## Summary
 
         - At normal runs of pytest, the link base URL is just a local `file://` link,
@@ -179,14 +182,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "49a7b499-a153-490f-bf03-bf039e757f1d"
+$ cat "a7534875-c462-449b-acd9-8b6e725e61ee"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:34:04 2019"
+        "Wed Apr 17 14:39:37 2019"
     ]
 }
 ```
@@ -222,6 +225,9 @@ By using link *refs*, the differences of e.g. a README.md for github vs. gitlab 
 restricted to the links section on the end of the generated markdown - in the markdown
 bodies you'll just see link names, which remain the same.
 
+> Check the end of the [rendering result][README.md] at the end of this README.md,
+in order to see the results for the hoster you are reading this markdown file currently.
+
 ## Summary
 
 - At normal runs of pytest, the link base URL is just a local `file://` link,
@@ -252,7 +258,8 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/7302ec4c53b5ef273f21d3b0685558ce0581d8fe/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/7302ec4c53b5ef273f21d3b0685558ce0581d8fe/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/7302ec4c53b5ef273f21d3b0685558ce0581d8fe/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/7302ec4c53b5ef273f21d3b0685558ce0581d8fe/tests/test_tutorial.py#L124
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/b82330a92d1b6f253607b4aced03d2008d31eddd/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/b82330a92d1b6f253607b4aced03d2008d31eddd/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/tests/test_tutorial.py#L127
