@@ -10,9 +10,10 @@
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
 Few things are more annoying than stuff which does not work as announced,
-especially when you find out only after an invest.
+especially when you find out only after an invest of time and energy.
 
-Documentation is often prone to produce such situations, since hard to keep 100% in sync with the code evolution.
+Documentation is often prone to produce such situations, since hard to keep
+100% in sync with the code evolution.
 
 <!-- autogen tutorial -->
 
@@ -21,7 +22,7 @@ This is a set of tools, *generating* documentation, while verifying the document
 claims about code behaviour - without the need to adapt the source code, e.g. by modifying
 doc strings.
 
-Example: This "README.md" was built from the "README.md.tmpl"
+Example: This "README.md" was built from [this](./README.tmpl.md) template.
 
 where the placeholder content was replaced while running pytest on this
 testfile:
@@ -58,7 +59,7 @@ class TestChapter1:
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
         doc strings.
 
-        Example: This "README.md" was built from the "README.md.tmpl"
+        Example: This "README.md" was built from [this](./README.tmpl.md) template.
 
         where the placeholder content was replaced while running pytest on this
         testfile:
@@ -148,14 +149,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "bcb9531e-2dbb-43a3-a440-670824547393"
+$ cat "5ab03852-94fb-4801-b280-f1d17344755e"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 12:39:01 2019"
+        "Wed Apr 17 12:53:12 2019"
     ]
 }
 ```

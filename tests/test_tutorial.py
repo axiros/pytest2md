@@ -29,7 +29,7 @@ class TestChapter1:
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
         doc strings.
 
-        Example: This "README.md" was built from the "README.tmpl.md"
+        Example: This "README.md" was built from [this](./README.tmpl.md) template.
 
         where the placeholder content was replaced while running pytest on this
         testfile:
