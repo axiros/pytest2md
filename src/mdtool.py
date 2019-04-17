@@ -10,8 +10,14 @@ import sys, os
 # replacer for shortcut curls, which can be themselves replaced by the build
 # static is just a static webserver:
 known_src_links = {
-    'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s',
-    'github_raw': 'https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s',
+    'github': (
+        'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/'
+        '%(path)s%(line:#L%s)s'
+    ),
+    'github_raw': (
+        'https://raw.githubusercontent.com/%(gh_repo_name)s/'
+        '%(git_rev)s/%(path)s%(line:#L%s)s'
+    ),
     'static': 'file://%(src_base_dir)s/%(path)s',
 }
 known_src_links['static_raw'] = known_src_links['static']
@@ -59,7 +65,9 @@ class InitData:
         r = [l for l in r.splitlines() if 'github.com' in l and 'push' in l]
         if not r:
             raise Exception('No github push remote found. remotes=' % str(r))
-        r = r[0].split('github.com:', 1)[1].rsplit('.git', 1)[-2]
+        r = r[0].split('github.com', 1)[1].rsplit('.git', 1)[-2]
+        if r[0] in ('/', ':'):
+            r = r[1:]
         return r
 
     @staticmethod
