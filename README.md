@@ -1,11 +1,11 @@
 # Small tools to generate markdown - while testing contained claims.
 
-[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md) [![codecov](https://codecov.io/gh/axiros/pytest_to_md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest_to_md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
+[![Build Status](https://travis-ci.org/axiros/pytest2md.svg?branch=master)](https://travis-ci.org/axiros/pytest2md) [![codecov](https://codecov.io/gh/axiros/pytest2md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest2md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
 
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
-[pypisvg]: https://img.shields.io/pypi/v/pytest_to_md.svg
-[pypi]: https://badge.fury.io/py/pytest_to_md
+[pypisvg]: https://img.shields.io/pypi/v/pytest2md.svg
+[pypi]: https://badge.fury.io/py/pytest2md
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
@@ -39,7 +39,7 @@ in append only mode, located within the tests folder.
 This we insert between two seperators in the target markdown file, as the last
 test function, done.
 """
-import pytest_to_md as ptm
+import pytest2md as ptm
 import pytest, json, os, time
 from functools import partial
 from uuid import uuid4
@@ -89,10 +89,30 @@ class TestChapter1:
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
+    def test_simple_pyfuncs(self):
+        """
+        # Inline Python Function Execution
+
+        via the `md_from_source_code` function you can write fluent markdown
+        (tested) python combos:
+        """
+
+        def foo():
+            hi = 'hello world'
+            assert 'world' in hi
+            print(hi.replace('world', 'joe'))
+
+        """
+        The functions are evaluated and documented in the order they show up
+        within the textblocks.
+        """
+
     def test_file_create_show(self):
         ptm.md(
-            """When working with files, the `sh_file` function is helpful,
-                producing output like this one:"""
+            """
+        # Files
+        When working with files, the `sh_file` function is helpful,
+        producing output like this one:"""
         )
         ts = time.ctime()
         c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
@@ -119,7 +139,7 @@ class TestChapter1:
         [mdtool]<SRC>
         ```
 
-        Other example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
+        Other example: This [pytest2md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
         ## Code Repo Hoster Specific Source Links
@@ -199,23 +219,25 @@ $ cat "/etc/hosts" | grep localhost
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ```
 ```bash
-$ ls "/data/root/pytest_to_md/tests/tutorial.md"
-/data/root/pytest_to_md/tests/tutorial.md
+$ ls "/data/root/pytest2md/tests/tutorial.md"
+/data/root/pytest2md/tests/tutorial.md
 
 $ ls -lta /etc/hosts
 -rw-r--r--. 1 root root 237 Apr 16 11:42 /etc/hosts
 ```
+
+# Files
 When working with files, the `sh_file` function is helpful,
-                producing output like this one:
+producing output like this one:
 ```javascript
-$ cat "df5fd4c5-11d5-4546-8413-e2aa2f75a93b"
+$ cat "6a6168e5-08eb-4f87-a77f-824d3675f37e"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 22:11:09 2019"
+        "Wed Apr 17 23:02:49 2019"
     ]
 }
 ```
@@ -232,7 +254,7 @@ via the [mdtool][mdtool.py] module. The latter link was built simply by this:
 [mdtool]<SRC>
 ```
 
-Other example: This [pytest_to_md][pytest_to_md.py] link was created by replacing "SRC" with the path
+Other example: This [pytest2md link was created by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
 ## Code Repo Hoster Specific Source Links
@@ -308,15 +330,14 @@ get the same result, when running markdown generating tests.
 
 
 [Here](https://github.com/axiros/pycond) is a bigger tutorial,
-[created][dasrc] from `pytest_to_md`. There you'll learn in addition to shell
+[created][dasrc] from `pytest2md`. There you'll learn in addition to shell
 runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/src/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/src/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/tests/test_tutorial.py#L150
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/0369abf0cae28a4de3d8d6f5971da7310d13844a/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/0369abf0cae28a4de3d8d6f5971da7310d13844a/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/0369abf0cae28a4de3d8d6f5971da7310d13844a/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/0369abf0cae28a4de3d8d6f5971da7310d13844a/tests/test_tutorial.py#L170

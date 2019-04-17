@@ -252,7 +252,7 @@ class MDTool(object):
         if not T in md:
             md = T + md
         pre, md = md.split(T)
-        from pytest_to_md import strutils
+        from pytest2md import strutils
 
         lines = md.splitlines()
         toc = ['']

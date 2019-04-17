@@ -18,18 +18,20 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.md')) as fd:
     md = fd.read()
 
+P = find_packages('.')
 
 setup(
-    name='pytest_to_md',
-    version='20190422',
+    name='pytest2md',
+    version='20190423',
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
     long_description_content_type='text/markdown',
     # for parametrizing the command line:
     install_requires=[],
-    package_dir={'': 'src'},
+    packages=P,
+    package_dir={'': '.'},
     include_package_data=True,
-    url='https://github.com/axiros/pytest_to_md',
+    url='https://github.com/axiros/pytest2md',
     author='gk',
     author_email='gk@axiros.com',
     license='BSD',
@@ -51,7 +53,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords=['markdown', 'markup', 'testing', 'pytest'],
-    py_modules=['pytest_to_md'],
+    py_modules=['pytest2md', 'strutils'],
     # entry_points={'console_scripts': ['mdtool = mdtool:run']},
     zip_safe=False,
 )

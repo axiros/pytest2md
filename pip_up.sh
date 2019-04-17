@@ -17,7 +17,7 @@ git push
 
 clean () {
     rm -rf ./dist
-    rm -rf ./pytest_to_md.egg-info
+    rm -rf ./pytest2md.egg-info
     rm -rf ./build
 }
 clean

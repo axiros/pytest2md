@@ -1,11 +1,11 @@
 # Small tools to generate markdown - while testing contained claims.
 
-[![Build Status](https://travis-ci.org/axiros/pytest_to_md.svg?branch=master)](https://travis-ci.org/axiros/pytest_to_md) [![codecov](https://codecov.io/gh/axiros/pytest_to_md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest_to_md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
+[![Build Status](https://travis-ci.org/axiros/pytest2md.svg?branch=master)](https://travis-ci.org/axiros/pytest2md) [![codecov](https://codecov.io/gh/axiros/pytest2md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest2md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
 
 [blacksvg]: https://img.shields.io/badge/code%20style-black-000000.svg
 [black]: https://github.com/ambv/black
-[pypisvg]: https://img.shields.io/pypi/v/pytest_to_md.svg
-[pypi]: https://badge.fury.io/py/pytest_to_md
+[pypisvg]: https://img.shields.io/pypi/v/pytest2md.svg
+[pypi]: https://badge.fury.io/py/pytest2md
 
 <!-- badges: http://thomas-cokelaer.info/blog/2014/08/1013/ -->
 
@@ -28,12 +28,12 @@ get the same result, when running markdown generating tests.
 
 
 [Here](https://github.com/axiros/pycond) is a bigger tutorial,
-[created][dasrc] from `pytest_to_md`. There you'll learn in addition to shell
+[created][dasrc] from `pytest2md`. There you'll learn in addition to shell
 runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
 
 <!-- autogenlinks -->
-[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
+[test_tutorial.py]: file:///data/root/pytest2md/tests/test_tutorial.py
 
