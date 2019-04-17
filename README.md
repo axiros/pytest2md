@@ -208,14 +208,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "153d8f0b-4f8a-4401-b5f7-e7e8332d7bb0"
+$ cat "1df37ef5-4970-460a-ab7c-01a50f4914fb"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 15:12:08 2019"
+        "Wed Apr 17 21:33:27 2019"
     ]
 }
 ```
@@ -301,15 +301,22 @@ Source code showing is done like this:
 > Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
 <!-- autogen tutorial -->
 
-[Here](https://github.com/axiros/DevApps) is a bigger tutorial,
-[created][dasrc] from `pytest_to_md`.
+# Isolation
+
+None. If you would screw up your host running pytest normally, then you will
+get the same result, when running markdown generating tests.
+
+
+[Here](https://github.com/axiros/pycond) is a bigger tutorial,
+[created][dasrc] from `pytest_to_md`. There you'll learn in addition to shell
+runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/4ded6e9f9134350ecbf7441a532053980f801bc0/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/4ded6e9f9134350ecbf7441a532053980f801bc0/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/4ded6e9f9134350ecbf7441a532053980f801bc0/tests/test_tutorial.py#L150
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/241722e81aadc0caa6957e8ee207edbf2983e208/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/241722e81aadc0caa6957e8ee207edbf2983e208/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/src/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/src/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/tests/test_tutorial.py#L150
