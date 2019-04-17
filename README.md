@@ -22,10 +22,9 @@ This is a set of tools, *generating* documentation, while verifying the document
 claims about code behaviour - without the need to adapt the source code, e.g. by modifying
 doc strings.
 
-Example: This "README.md" was built from [this](./README.tmpl.md) template.
-
-where the placeholder content was replaced while running pytest on this
-testfile:
+Example: This "README.md" was built into [this](./README.tmpl.md) template,
+where the [placeholder][README.tmpl.md]
+content was replaced while running pytest on this testfile:
 
 ```python
 """
@@ -59,10 +58,9 @@ class TestChapter1:
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
         doc strings.
 
-        Example: This "README.md" was built from [this](./README.tmpl.md) template.
-
-        where the placeholder content was replaced while running pytest on this
-        testfile:
+        Example: This "README.md" was built into [this](./README.tmpl.md) template,
+        where the [title:placeholder,fmatch:README.tmpl.md]<SRC>
+        content was replaced while running pytest on this testfile:
 
         <from_file: %s>
 
@@ -149,21 +147,21 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "5ab03852-94fb-4801-b280-f1d17344755e"
+$ cat "9cb4d5f7-059c-41b0-9f47-7dc47146deb5"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 12:53:12 2019"
+        "Wed Apr 17 13:24:47 2019"
     ]
 }
 ```
 
 The module does offer also some link replacement feature,
 via the `mdtool` app (Help: See `mdtool -h`).  
-Example: [pytest_to_md was linked by replacing "SRC" with the path
+Example: [pytest_to_md][pytest_to_md.py] was linked by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
 - At normal runs of pytest, that base URL is just a local `file://` link,
@@ -190,4 +188,6 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
+[README.tmpl.md]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/README.tmpl.md
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/tests/test_tutorial.py#L92

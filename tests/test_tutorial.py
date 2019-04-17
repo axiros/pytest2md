@@ -29,10 +29,9 @@ class TestChapter1:
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
         doc strings.
 
-        Example: This "README.md" was built from [this](./README.tmpl.md) template.
-
-        where the placeholder content was replaced while running pytest on this
-        testfile:
+        Example: This "README.md" was built into [this](./README.tmpl.md) template,
+        where the [title:placeholder,fmatch:README.tmpl.md]<SRC>
+        content was replaced while running pytest on this testfile:
 
         <from_file: %s>
 

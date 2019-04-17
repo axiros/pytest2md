@@ -31,7 +31,8 @@ def find_file(pattern, path, match=fnmatch.fnmatch):
 
 # replacer for shortcut curls, which can be themselves replaced by the build
 known_src_links = {
-    'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s'
+    'github': 'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s',
+    'local': 'file://%(src_base_dir)s/%(path)s',
 }
 
 
@@ -92,14 +93,14 @@ def init_src_link_tmpl(mdt):
 
 
 class MDTool(object):
-    src_link_tmpl = 'file://%(src_base_dir)s/%(path)s'
     md = ''
     links = {}
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
-    def __init__(self, src_dir, md_file):
+    def __init__(self, src_dir, md_file, src_link_tmpl='local'):
         self.md_file = md_file
         self.src_base_dir = src_dir
+        self.src_link_tmpl = src_link_tmpl
         with open(self.md_file) as fd:
             self._md_file = fd.read()
 
@@ -116,9 +117,9 @@ class MDTool(object):
 
         Special keys:
         - title: Will become the link text
-        - src_base_dir: Taken from App
+        - src_base_dir: From App, for pytest the folder of the pytested file.
         - path: file path relative to src_base_dir
-        - fmatch: Startswith pattern of file name in dir. Must be unique.
+        - fmatch: Startswith pattern of file name in dir. Must match uniquely.
             also builds if not present:
             - path
             - title
@@ -226,6 +227,7 @@ def find_path(ld, bd):
         return
     found = find_file(file + '*', bd)
     if len(found) == 0:
+        print('Not found', file, 'from', ld, 'builddir', bd)
         return
     elif len(found) > 1:
         found = [f for f in found if f.rsplit('/', 1)[-1] == file]

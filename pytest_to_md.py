@@ -65,17 +65,17 @@ def setup(
                     fn_target_md itself.
                     This is useful when you edit a lot in markdown and don't want
                     clutter from the autogen result in that file.
-    Filenames relative to directory of this file or absolut.
+    Filenames relative to directory of fn_test_file or absolut.
 
-    We generate that config:
+    In this setup function we generate e.g. this as config:
     (Pdb) pp cfg (for a run of our own tutorial)
-    {'d_assets': '/data/root/pytest_to_md/tests/tutorial/',
-    'fn_md': '/data/root/pytest_to_md/tests/tutorial.md',
-    'fn_target_md': '/data/root/pytest_to_md/README.md.tmpl',
-    'here': '/data/root/pytest_to_md/tests',
-    'md_sep': '<!-- autogen tutorial -->',
-    'name': 'tutorial',
-    'fn_target_md_tmpl': '/data/root/pytest_to_md/README.md.tmpl'}
+    {'d_assets'         : '/data/root/pytest_to_md/tests/tutorial/',
+    'fn_md'             : '/data/root/pytest_to_md/tests/tutorial.md',
+    'fn_target_md'      : '/data/root/pytest_to_md/README.md.tmpl',
+    'here'              : '/data/root/pytest_to_md/tests',
+    'md_sep'            : '<!-- autogen tutorial -->',
+    'name'              : 'tutorial',
+    'fn_target_md_tmpl' : '/data/root/pytest_to_md/README.md.tmpl'}
     """
     cfg['md_sep'] = md_sep
     cfg['here'] = here = DIR(fn_test_file)
@@ -181,7 +181,12 @@ def write_readme():
     with open(cfg['fn_target_md'], 'w') as fd:
         fd.write(md)
     print('Now postprocessing', cfg['fn_target_md'])
-    mdt = mdtool.MDTool(src_dir=cfg['here'], md_file=cfg['fn_target_md'])
+    d = dirname(cfg['fn_target_md'])
+    mdt = mdtool.MDTool(
+        src_dir=d,
+        md_file=cfg['fn_target_md'],
+        src_link_tmpl=os.environ.get('MD_LINKS_FOR', 'local'),
+    )
     mdt.do_set_links()
 
 
