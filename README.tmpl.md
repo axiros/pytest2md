@@ -13,6 +13,8 @@
 <!-- only hoster for this repo is github, so we fix the links: -->
 <!-- md_links_for: github -->
 
+[TOC]
+
 Few things are more annoying than stuff which does not work as announced,
 especially when you find out only after an invest of time and energy.
 

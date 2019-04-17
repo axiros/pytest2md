@@ -22,7 +22,7 @@ P = find_packages('.')
 
 setup(
     name='pytest2md',
-    version='20190423',
+    version='20190424',
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
     long_description_content_type='text/markdown',

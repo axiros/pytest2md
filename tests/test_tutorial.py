@@ -73,7 +73,32 @@ class TestChapter1:
         """
         The functions are evaluated and documented in the order they show up
         within the textblocks.
+
+        > Please keep the tripple apostrophes - we split the text blocks,  searching for  those.
+
+        # Tools
+
+        Also there are few tools available, e.g this one:
+
         """
+
+        def mdtable():
+            from pytest2md import html_table as ht
+
+            t = ht(
+                [['joe', 'doe'], ['suzie', 'wong']],
+                ['first', 'last'],
+                summary='names. click to open...',
+            )
+            assert 'details' in t
+            assert 'joe</td' in t
+            print(t)
+
+        """
+        Another tool is the simple TOC generator, invoked like at the end of this file.
+        """
+
+        ptm.md_from_source_code()
 
     def test_file_create_show(self):
         ptm.md(
@@ -174,4 +199,4 @@ class TestChapter1:
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
-        ptm.write_readme()
+        ptm.write_readme(with_source_ref=True, make_toc=True)
