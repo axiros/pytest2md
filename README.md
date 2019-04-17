@@ -182,14 +182,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "ffc56025-54d3-404e-b349-d06eb8e2f75d"
+$ cat "4b379a17-4b11-4390-9ad6-a3b65aa65b66"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:51:59 2019"
+        "Wed Apr 17 14:53:20 2019"
     ]
 }
 ```
@@ -258,8 +258,8 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/71202f41e16d1137bbe3c14b7dc0862c0dbf6513/tests/test_tutorial.py#L127
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/a8e582f2121d11a6720a65f0700a382d08d285b4/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/a8e582f2121d11a6720a65f0700a382d08d285b4/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/a8e582f2121d11a6720a65f0700a382d08d285b4/tests/test_tutorial.py#L127
