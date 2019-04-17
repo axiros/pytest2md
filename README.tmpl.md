@@ -21,8 +21,15 @@ Documentation is often prone to produce such situations, since hard to keep
 <!-- autogen tutorial -->
 <!-- autogen tutorial -->
 
-[Here](https://github.com/axiros/DevApps) is a bigger tutorial,
-[created][dasrc] from `pytest_to_md`.
+# Isolation
+
+None. If you would screw up your host running pytest normally, then you will
+get the same result, when running markdown generating tests.
+
+
+[Here](https://github.com/axiros/pycond) is a bigger tutorial,
+[created][dasrc] from `pytest_to_md`. There you'll learn in addition to shell
+runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
