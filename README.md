@@ -23,8 +23,8 @@ claims about code behaviour - without the need to adapt the source code, e.g. by
 doc strings.
 
 Example: This "README.md" was built into [this](./README.tmpl.md) template,
-where the [placeholder][README.tmpl.md]
-content was replaced while running pytest on this testfile:
+where html comment style placeholders had been replaced while running pytest
+on this testfile:
 
 ```python
 """
@@ -59,8 +59,8 @@ class TestChapter1:
         doc strings.
 
         Example: This "README.md" was built into [this](./README.tmpl.md) template,
-        where the [title:placeholder,fmatch:README.tmpl.md,lmatch:autogen]<SRC>
-        content was replaced while running pytest on this testfile:
+        where html comment style placeholders had been replaced while running pytest
+        on this testfile:
 
         <from_file: %s>
 
@@ -175,14 +175,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "50074417-b9f3-4452-8b51-ad220b2c49fd"
+$ cat "11ca15f7-e9a2-4ea7-9950-17b1ff149033"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 13:43:37 2019"
+        "Wed Apr 17 13:53:05 2019"
     ]
 }
 ```
@@ -244,7 +244,6 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.tmpl.md]: https://github.com/axiros/pytest_to_md/blob/ed6607138083651e458a19c4f1b19464e10a4ce2/README.tmpl.md#L17
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/ed6607138083651e458a19c4f1b19464e10a4ce2/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/ed6607138083651e458a19c4f1b19464e10a4ce2/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/ed6607138083651e458a19c4f1b19464e10a4ce2/tests/test_tutorial.py#L120
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/tests/test_tutorial.py#L120
