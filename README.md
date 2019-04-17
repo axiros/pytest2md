@@ -208,14 +208,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "1df37ef5-4970-460a-ab7c-01a50f4914fb"
+$ cat "df5fd4c5-11d5-4546-8413-e2aa2f75a93b"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 21:33:27 2019"
+        "Wed Apr 17 22:11:09 2019"
     ]
 }
 ```
@@ -315,8 +315,8 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/241722e81aadc0caa6957e8ee207edbf2983e208/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/241722e81aadc0caa6957e8ee207edbf2983e208/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/src/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/src/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/241722e81aadc0caa6957e8ee207edbf2983e208/tests/test_tutorial.py#L150
+[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/src/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/src/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/2ac7edfb6987d8cd8326707f4099c121a2d9d6c1/tests/test_tutorial.py#L150
