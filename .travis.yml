@@ -27,6 +27,7 @@ matrix:
 
 install:
   - pip install -U tox
+  - pip install -e .
 
 script:
   - tox
