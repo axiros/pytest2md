@@ -317,14 +317,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "af0466f7-b3e4-4fc3-900e-0414873b58a8"
+$ cat "a71249ae-a26c-41dc-bd80-b48afc914833"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 23:20:58 2019"
+        "Wed Apr 17 23:32:14 2019"
     ]
 }
 ```
@@ -427,6 +427,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/bb1090b6a73777cbd411cfbb87836d3251a835d1/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/bb1090b6a73777cbd411cfbb87836d3251a835d1/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/bb1090b6a73777cbd411cfbb87836d3251a835d1/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/137c470f6c1ef9bd6ae91eb2f1c8e6914b4afa52/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/137c470f6c1ef9bd6ae91eb2f1c8e6914b4afa52/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/137c470f6c1ef9bd6ae91eb2f1c8e6914b4afa52/tests/test_tutorial.py
