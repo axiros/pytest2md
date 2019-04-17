@@ -59,7 +59,7 @@ class TestChapter1:
         doc strings.
 
         Example: This "README.md" was built into [this](./README.tmpl.md) template,
-        where the [title:placeholder,fmatch:README.tmpl.md]<SRC>
+        where the [title:placeholder,fmatch:README.tmpl.md,lmatch:autogen]<SRC>
         content was replaced while running pytest on this testfile:
 
         <from_file: %s>
@@ -147,14 +147,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "9cb4d5f7-059c-41b0-9f47-7dc47146deb5"
+$ cat "3493f288-fbeb-4f57-8ecf-fed2f7fbf6ea"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 13:24:47 2019"
+        "Wed Apr 17 13:26:55 2019"
     ]
 }
 ```
@@ -188,6 +188,6 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.tmpl.md]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/README.tmpl.md
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/c795982e99db1814f4226f11bdf253d0e65efff3/tests/test_tutorial.py#L92
+[README.tmpl.md]: https://github.com/axiros/pytest_to_md/blob/4f9f1bf8080131603760d85942508a88000d2480/README.tmpl.md#L17
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/4f9f1bf8080131603760d85942508a88000d2480/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/4f9f1bf8080131603760d85942508a88000d2480/tests/test_tutorial.py#L92
