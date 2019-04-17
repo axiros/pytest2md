@@ -1,5 +1,5 @@
 """
-Creates Readme - while testing functions of ptm.
+Creates Readme - while testing functions of p2m.
 
 
 While pytest is running we simply assemble from scratch an intermediate .md file
@@ -7,19 +7,19 @@ in append only mode, located within the tests folder.
 This we insert between two seperators in the target markdown file, as the last
 test function, done.
 """
-import pytest2md as ptm
+import pytest2md as p2m
 import pytest, json, os, time
 from functools import partial
 from uuid import uuid4
 import json
 
 # py2.7 compat:
-breakpoint = ptm.breakpoint
+breakpoint = p2m.breakpoint
 
-here, fn = ptm.setup(__file__, fn_target_md='../README.md')
+here, fn = p2m.setup(__file__, fn_target_md='../README.md')
 
 # parametrizing the shell run results:
-run = partial(ptm.bash_run, no_cmd_path=True)
+run = partial(p2m.bash_run, no_cmd_path=True)
 
 
 class TestChapter1:
@@ -40,8 +40,8 @@ class TestChapter1:
             __file__,
         )
 
-        ptm.md(t)
-        ptm.md(
+        p2m.md(t)
+        p2m.md(
             """
         Lets run a bash command and assert on its results.
         Note that the command is shown in the readme, incl. result and the result
@@ -53,7 +53,7 @@ class TestChapter1:
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = run(['ls "%(fn_md)s"' % ptm.cfg, 'ls -lta /etc/hosts'])
+        res = run(['ls "%(fn_md)s"' % p2m.cfg, 'ls -lta /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
@@ -98,10 +98,10 @@ class TestChapter1:
         Another tool is the simple TOC generator, invoked like at the end of this file.
         """
 
-        ptm.md_from_source_code()
+        p2m.md_from_source_code()
 
     def test_file_create_show(self):
-        ptm.md(
+        p2m.md(
             """
         # Files
         When working with files, the `sh_file` function is helpful,
@@ -111,7 +111,7 @@ class TestChapter1:
         c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
         # if content is given it will create it:
         fn = '/tmp/' + str(uuid4())
-        ptm.sh_file(fn, lang='javascript', content=c)
+        p2m.sh_file(fn, lang='javascript', content=c)
 
         # check existance:
         with open(fn) as fd:
@@ -185,18 +185,18 @@ class TestChapter1:
 
         """.replace(
             '_link_names_',
-            json.dumps(ptm.mdtool.known_src_links, indent=4, sort_keys=2),
+            json.dumps(p2m.mdtool.known_src_links, indent=4, sort_keys=2),
         )
-        ptm.md(md)
+        p2m.md(md)
 
     def test_sh_code(self):
-        ptm.md('Source code showing is done like this:')
-        ptm.sh_code(self.test_sh_code)
-        ptm.md(
+        p2m.md('Source code showing is done like this:')
+        p2m.sh_code(self.test_sh_code)
+        p2m.md(
             '> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  '
         )
 
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
-        ptm.write_readme(with_source_ref=True, make_toc=True)
+        p2m.write_readme(with_source_ref=True, make_toc=True)

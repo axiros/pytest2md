@@ -1,1 +1,1 @@
-from pytest2md.ptm import *
+from pytest2md.p2m import *
