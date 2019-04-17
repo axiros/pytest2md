@@ -77,6 +77,7 @@ def setup(
     'name': 'tutorial',
     'fn_target_md_tmpl': '/data/root/pytest_to_md/README.md.tmpl'}
     """
+    cfg['md_sep'] = md_sep
     cfg['here'] = here = DIR(fn_test_file)
 
     # assuming tests in <base>/tests:
@@ -87,8 +88,9 @@ def setup(
         fn_target_md = abspath(cfg['here'] + '/' + fn_target_md)
     fn = cfg['fn_target_md'] = fn_target_md
 
-    if os.path.exists(fn + '.tmpl') and not fn_target_md_tmpl:
-        fn_target_md_tmpl = fn + '.tmpl'
+    dflt_tmpl = fn.replace('.md', '.tmpl.md')
+    if os.path.exists(dflt_tmpl) and not fn_target_md_tmpl:
+        fn_target_md_tmpl = dflt_tmpl
     if not fn_target_md_tmpl:
         print(
             'Replacing content in the final markdown, no template',
@@ -97,8 +99,6 @@ def setup(
         fn_target_md_tmpl = cfg['fn_target_md']
     cfg['fn_target_md_tmpl'] = fn_target_md_tmpl
 
-    cfg['md_sep'] = md_sep
-    fnt = abspath(fn_test_file)
     fn = fn_target_md_tmpl
     if not exists(fn):
         print('Creating', fn)

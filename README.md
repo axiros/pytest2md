@@ -148,14 +148,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "c1787d1d-cd62-4a6f-8bd4-8d6fa19d25ad"
+$ cat "bcb9531e-2dbb-43a3-a440-670824547393"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 12:29:07 2019"
+        "Wed Apr 17 12:39:01 2019"
     ]
 }
 ```
