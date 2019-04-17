@@ -74,14 +74,42 @@ class TestChapter1:
 
     def test_mdtool(self):
         md = """
-        The module does offer also some link replacement feature,
-        via the `mdtool` app (Help: See `mdtool -h`).  
-        Example: [pytest_to_md]<SRC> was linked by replacing "SRC" with the path
+        # Link Replacements
+
+        Technical markdown content wants to link to source code often.
+        How to get those links working?
+
+        The module does offer also some source finding / link replacement feature,
+        via the [mdtool]<SRC> module.
+
+        Example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-        - At normal runs of pytest, that base URL is just a local `file://` link,
-        but before pushes one can set these e.g. to the github base URL or the repo.
-        - `[key-values]` constructs are supported as well, example following:
+        ## Hoster Specific Source Links
+
+        Github, Gitlab, Bitbucked or Plain directory based static content servers
+        all have their conventional URLs regarding those links.
+
+        Since all of these are just serving static content w/o js possibilities,
+        you have to parametrize the intended hoster in your environment, before
+        running a pytest / push cycle. That way the links will be working on the hoster.
+
+        We minimize the problem of varying generated target markdown, dependent on the hoster.
+        How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
+
+        By using link *refs*, the differences of e.g. a README.md for github vs. gitlab is
+        restricted to the links section on the end of the generated markdown - in the markdown
+        bodies you'll just see link names, which remain the same.
+
+        ## Summary
+
+        - At normal runs of pytest, the link base URL is just a local `file://` link,
+
+        - Before pushes one can set via environ (e.g. `export
+          MD_LINKS_FOR=github`)  these e.g. to the github base URL or the repo.
+
+        - `[key-values]` constructs are supported as well, extending to beyond
+          just the base url. Example following:
 
         """
         ptm.md(md)
