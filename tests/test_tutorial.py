@@ -30,7 +30,7 @@ class TestChapter1:
         doc strings.
 
         Example: This "README.md" was built into [this](./README.tmpl.md) template,
-        where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True]
+        where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 
         <from_file: %s>

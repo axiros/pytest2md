@@ -165,7 +165,9 @@ class MDTool(object):
                     ri.append(part)
                     continue
                 pre, lnk = part.rsplit('[', 1)
-                title, link = mdt.build_src_link(lnk)
+
+                title, link = mdt.build_src_link(lnk)  # <--------------- !
+
                 if title != None:
                     ri.append('%s[%s][%s]' % (pre, title, link))
                 else:
@@ -204,8 +206,11 @@ class MDTool(object):
         ld['title'] = ld.get('title', ld.get('fnmatch', lnk))
 
         title = ld['title']
-
-        tmpl = mdt.src_link_tmpl
+        raw = ld.pop('show_raw', 0)
+        if raw:
+            tmpl = mdt.src_link_tmpl_raw
+        else:
+            tmpl = mdt.src_link_tmpl
 
         if '%(path' in tmpl and not 'path' in ld:
             path = find_path(ld, bd=mdt.src_base_dir)

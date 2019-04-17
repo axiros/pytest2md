@@ -23,7 +23,7 @@ claims about code behaviour - without the need to adapt the source code, e.g. by
 doc strings.
 
 Example: This "README.md" was built into [this](./README.tmpl.md) template,
-where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True]
+where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True
 had been replaced while running pytest on this testfile:
 
 ```python
@@ -59,7 +59,7 @@ class TestChapter1:
         doc strings.
 
         Example: This "README.md" was built into [this](./README.tmpl.md) template,
-        where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True]
+        where [title:html comment style placeholders,fnmatch:README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 
         <from_file: %s>
@@ -179,14 +179,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "5198fc8b-7598-47d7-a5fb-8e60948f0902"
+$ cat "6f9f59f2-2dfa-4063-b2c6-6a119c0028f9"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:26:56 2019"
+        "Wed Apr 17 14:31:46 2019"
     ]
 }
 ```
@@ -252,6 +252,6 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/71fddc7925790686378749b31a0b8a04814b9a2e/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/71fddc7925790686378749b31a0b8a04814b9a2e/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/71fddc7925790686378749b31a0b8a04814b9a2e/tests/test_tutorial.py#L124
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/b8704bae8a219423ad4bcf5d15fc662459ce98d1/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/b8704bae8a219423ad4bcf5d15fc662459ce98d1/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/b8704bae8a219423ad4bcf5d15fc662459ce98d1/tests/test_tutorial.py#L124
