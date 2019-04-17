@@ -99,7 +99,7 @@ def setup(
 
     cfg['md_sep'] = md_sep
     fnt = abspath(fn_test_file)
-    cfg['fn_target_md'] = fn = fn_target_md_tmpl
+    fn = fn_target_md_tmpl
     if not exists(fn):
         print('Creating', fn)
         with open(fn, 'w') as fd:

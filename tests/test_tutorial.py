@@ -23,20 +23,21 @@ run = partial(ptm.bash_run, no_cmd_path=True)
 
 class TestChapter1:
     def test_one(self):
-        t = (
-            """
+        t = """
 
         This is a set of tools, *generating* documentation, while verifying the documented
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
         doc strings.
 
-        Example: This "README.md" was mainly built from this file (while it was run as
-        a test within pytest):
+        Example: This "README.md" was built from the "README.md.tmpl"
+
+        where the placeholder content was replaced while running pytest on this
+        testfile:
 
         <from_file: %s>
 
-        """
-            % __file__
+        """ % (
+            __file__,
         )
 
         ptm.md(t)
