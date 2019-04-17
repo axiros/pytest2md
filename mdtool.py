@@ -90,7 +90,8 @@ class MDTool(object):
     links = {}
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
-    def __init__(self, src_dir, md_file, src_link_tmpl_name='static'):
+    def __init__(self, src_dir, md_file, src_link_tmpl_name=None):
+        src_link_tmpl_name = src_link_tmpl_name or 'static'
         self.md_file = md_file
         self.src_base_dir = src_dir
         self.src_link_tmpl_name = src_link_tmpl_name

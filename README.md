@@ -182,14 +182,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "a7534875-c462-449b-acd9-8b6e725e61ee"
+$ cat "c07d1016-aa51-48a9-b1e3-67f63d811122"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 14:39:37 2019"
+        "Wed Apr 17 14:44:30 2019"
     ]
 }
 ```
@@ -258,8 +258,8 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/b82330a92d1b6f253607b4aced03d2008d31eddd/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest_to_md/b82330a92d1b6f253607b4aced03d2008d31eddd/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/b82330a92d1b6f253607b4aced03d2008d31eddd/tests/test_tutorial.py#L127
+[README.md]: file:///data/root/pytest_to_md/README.md
+[README.tmpl.md]: file:///data/root/pytest_to_md/README.tmpl.md
+[mdtool.py]: file:///data/root/pytest_to_md/mdtool.py
+[pytest_to_md.py]: file:///data/root/pytest_to_md/pytest_to_md.py
+[test_tutorial.py]: file:///data/root/pytest_to_md/tests/test_tutorial.py
