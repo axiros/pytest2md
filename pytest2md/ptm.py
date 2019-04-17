@@ -230,7 +230,7 @@ def run_func(funcstr, frame):
     try:
         o = sys.stdout
         sys.stdout = rec_stdout
-        rec_stdout.h.clear()
+        del rec_stdout.h[:]  # py2, no clear
         func()
     finally:
         sys.stdout = o
