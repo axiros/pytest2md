@@ -106,15 +106,19 @@ class TestChapter1:
         # Link Replacements
 
         Technical markdown content wants to link to source code often.
-        How to get those links working?
+        How to get those links working and that convenient?
 
         The module does offer also some source finding / link replacement feature,
-        via the [mdtool]<SRC> module.
+        via the [mdtool]<SRC> module. The latter link was built simply by this:
 
-        Example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
+        ```
+        [mdtool]<SRC>
+        ```
+
+        Other example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-        ## Hoster Specific Source Links
+        ## Code Repo Hoster Specific Source Links
 
         Github, Gitlab, Bitbucked or Plain directory based static content servers
         all have their conventional URLs regarding those links.
@@ -175,14 +179,14 @@ $ ls -lta /etc/hosts
 When working with files, the `sh_file` function is helpful,
                 producing output like this one:
 ```javascript
-$ cat "11ca15f7-e9a2-4ea7-9950-17b1ff149033"
+$ cat "facda32e-ae35-4dc6-9db4-db667c7b6502"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Wed Apr 17 13:53:05 2019"
+        "Wed Apr 17 13:59:24 2019"
     ]
 }
 ```
@@ -190,15 +194,19 @@ $ cat "11ca15f7-e9a2-4ea7-9950-17b1ff149033"
 # Link Replacements
 
 Technical markdown content wants to link to source code often.
-How to get those links working?
+How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool][mdtool.py] module.
+via the [mdtool][mdtool.py] module. The latter link was built simply by this:
 
-Example: This [pytest_to_md][pytest_to_md.py] link was created by replacing "SRC" with the path
+```
+[mdtool]<SRC>
+```
+
+Other example: This [pytest_to_md][pytest_to_md.py] link was created by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-## Hoster Specific Source Links
+## Code Repo Hoster Specific Source Links
 
 Github, Gitlab, Bitbucked or Plain directory based static content servers
 all have their conventional URLs regarding those links.
@@ -244,6 +252,6 @@ Source code showing is done like this:
 
 
 <!-- autogenlinks -->
-[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/mdtool.py
-[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/pytest_to_md.py
-[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/9fd95634a9902abd6afd277849295fee1844197e/tests/test_tutorial.py#L120
+[mdtool.py]: https://github.com/axiros/pytest_to_md/blob/4d752d103b2c4f65c97a88c3e15a96afd5b9905f/mdtool.py
+[pytest_to_md.py]: https://github.com/axiros/pytest_to_md/blob/4d752d103b2c4f65c97a88c3e15a96afd5b9905f/pytest_to_md.py
+[test_tutorial.py]: https://github.com/axiros/pytest_to_md/blob/4d752d103b2c4f65c97a88c3e15a96afd5b9905f/tests/test_tutorial.py#L124

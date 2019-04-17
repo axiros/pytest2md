@@ -77,15 +77,19 @@ class TestChapter1:
         # Link Replacements
 
         Technical markdown content wants to link to source code often.
-        How to get those links working?
+        How to get those links working and that convenient?
 
         The module does offer also some source finding / link replacement feature,
-        via the [mdtool]<SRC> module.
+        via the [mdtool]<SRC> module. The latter link was built simply by this:
 
-        Example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
+        ```
+        [mdtool]<SRC>
+        ```
+
+        Other example: This [pytest_to_md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-        ## Hoster Specific Source Links
+        ## Code Repo Hoster Specific Source Links
 
         Github, Gitlab, Bitbucked or Plain directory based static content servers
         all have their conventional URLs regarding those links.
