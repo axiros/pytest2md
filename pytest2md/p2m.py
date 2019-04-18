@@ -2,15 +2,15 @@
 Creates markdown - while testing contained code snippets.
 
 """
+from ast import literal_eval as ev
 from pytest2md import strutils
 from pytest2md import mdtool
-import inspect
 import subprocess as sp
+import inspect
 import pytest
 import os
 import time
 import pdb
-from ast import literal_eval as ev
 
 
 exists = os.path.exists
@@ -50,6 +50,14 @@ def rpl(what, *with_):
             w = (w, '')
         what = what.replace(w[0], w[1])
     return what
+
+
+def convert_to_staticmethods(cls):
+    """Helper for Py2 - in docu we often use classes as namespaces"""
+    meths = [(k, getattr(cls, k)) for k in dir(cls)]
+    c = callable
+    meths = [(k, meth) for k, meth in meths if k[:2] != '__' and c(meth)]
+    [setattr(cls, k, staticmethod(f)) for k, f in meths]
 
 
 def setup(
@@ -200,6 +208,8 @@ def write_readme(with_source_ref=False, make_toc=False):
         fd.write(md)
 
 
+# ------------------------------------------------------- Creating the Markdown
+
 code = """```code
 %s
 ```"""
@@ -215,12 +225,13 @@ import sys
 import inspect
 
 
-class rec_stdout:
-    h = []
+class Printed:
+    stdout = []
+    stderr = []
 
     @staticmethod
     def write(*a):
-        rec_stdout.h.extend(list(a))
+        Printed.stdout.extend(list(a))
 
 
 def run_and_document_pyfunc(funcstr, frame):
@@ -235,15 +246,19 @@ def run_and_document_pyfunc(funcstr, frame):
         s = pre
     # wrap into python code block:
     s = python(s)
+    del Printed.stdout[:]  # py2, no clear
+    del Printed.stderr[:]  # py2, no clear
     try:
         o = sys.stdout
+        e = sys.stderr
         if not 'breakpoint' in s:
-            sys.stdout = rec_stdout
-        del rec_stdout.h[:]  # py2, no clear
+            sys.stdout = Printed
+            sys.stderr = Printed
         func()
     finally:
         sys.stdout = o
-    so = ''.join(rec_stdout.h)
+        sys.stderr = e
+    so = ''.join(Printed.stdout)
     if so:
         if so.startswith('MARKDOWN:'):
             so = so.replace('MARKDOWN:', '\n')
