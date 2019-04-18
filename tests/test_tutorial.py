@@ -32,6 +32,10 @@ class TestChapter1:
 
         ![](./assets/shot1.png)
 
+        > When the documentation is using a lot of code examples then a very welcome
+        additional benefit of writing it like shown is the availability of [source
+        code autoformatters](https://github.com/ambv/black).
+
         Other Example:
 
         This "README.md" was built into [this](./README.tmpl.md) template,
