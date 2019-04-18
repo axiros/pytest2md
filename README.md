@@ -118,7 +118,19 @@ class TestChapter1:
         The functions are evaluated and documented in the order they show up
         within the textblocks.
 
-        > Please keep the tripple apostrophes - we split the text blocks,  searching for  those.
+        > Please keep tripple apostrophes - we split the text blocks,
+        searching for those.
+
+        State is kept within the outer pytest function, like normally in python.
+        I.e. if you require new state, then start a new pytest function.
+
+        Stdout is redirected to an output collector function, i.e. if you print
+        this does result in an "Output" block. If the printout starts with
+        "MARKDOWN:" then we won't wrap that output into fenced code blocks but
+        display as is.
+
+        > If the string 'breakpoint' occurs in a function body, we won't redirect
+        standardout for displaying output.
 
         # Tools
 
@@ -252,15 +264,16 @@ Note that the command is shown in the readme, incl. result and the result
 can be asserted upon.
 ```bash
 $ cat "/etc/hosts" | grep localhost
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 axcentos
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+# localhost is used to configure the loopback interface
+127.0.0.1  localhost lo sd1 sd3 sa1 sa2 sb1 sb2
+::1             localhost
 ```
 ```bash
-$ ls "/data/root/pytest2md/tests/tutorial.md"
-/data/root/pytest2md/tests/tutorial.md
+$ ls "/Users/gk/GitHub/pytest2md/tests/tutorial.md"
+/Users/gk/GitHub/pytest2md/tests/tutorial.md
 
 $ ls -lta /etc/hosts
--rw-r--r--. 1 root root 237 Apr 16 11:42 /etc/hosts
+-rw-r--r--  1 root  wheel  1047 Mar  1 11:35 /etc/hosts
 ```
 # Inline Python Function Execution
 
@@ -280,7 +293,19 @@ hello joe
 The functions are evaluated and documented in the order they show up
 within the textblocks.
 
-> Please keep the tripple apostrophes - we split the text blocks,  searching for  those.
+> Please keep tripple apostrophes - we split the text blocks,
+searching for those.
+
+State is kept within the outer pytest function, like normally in python.
+I.e. if you require new state, then start a new pytest function.
+
+Stdout is redirected to an output collector function, i.e. if you print
+this does result in an "Output" block. If the printout starts with
+"MARKDOWN:" then we won't wrap that output into fenced code blocks but
+display as is.
+
+> If the string 'breakpoint' occurs in a function body, we won't redirect
+standardout for displaying output.
 
 # Tools
 
@@ -316,14 +341,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "4a57fcee-0dc8-4f6a-967d-a19435b266c6"
+$ cat "0deedcae-662a-4380-8611-17c12464ea3e"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 00:16:51 2019"
+        "Thu Apr 18 20:52:09 2019"
     ]
 }
 ```
@@ -334,7 +359,7 @@ Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool][mdtool.py] module. The latter link was built simply by this:
+via the [mdtool module. The latter link was built simply by this:
 
 ```
 [mdtool]<SRC>
@@ -426,7 +451,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c2feaa1b0a9f0eb897ffd2af5b41ca507f3ea4ba/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c2feaa1b0a9f0eb897ffd2af5b41ca507f3ea4ba/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/c2feaa1b0a9f0eb897ffd2af5b41ca507f3ea4ba/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c2feaa1b0a9f0eb897ffd2af5b41ca507f3ea4ba/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/tests/test_tutorial.py
