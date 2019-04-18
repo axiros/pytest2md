@@ -70,7 +70,9 @@ from functools import partial
 from uuid import uuid4
 import json
 
+# a P2M instance contains all we need:
 p2m = p2m.P2M(__file__, fn_target_md='../README.md')
+
 # py2.7 compat:
 breakpoint = p2m.breakpoint
 
@@ -285,15 +287,16 @@ Note that the command is shown in the readme, incl. result and the result
 can be asserted upon.
 ```bash
 $ cat "/etc/hosts" | grep localhost
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 axcentos
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+# localhost is used to configure the loopback interface
+127.0.0.1  localhost lo sd1 sd3 sa1 sa2 sb1 sb2
+::1             localhost
 ```
 ```bash
-$ ls "/data/root/pytest2md/tests/tutorial.md"
-/data/root/pytest2md/tests/tutorial.md
+$ ls "/Users/gk/GitHub/pytest2md/tests/tutorial.md"
+/Users/gk/GitHub/pytest2md/tests/tutorial.md
 
 $ ls -lta /etc/hosts
--rw-r--r--. 1 root root 237 Apr 16 11:42 /etc/hosts
+-rw-r--r--  1 root  wheel  1047 Mar  1 11:35 /etc/hosts
 ```
 # <a href="#toc1">Inline Python Function Execution</a>
 
@@ -361,14 +364,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "d6fc63e2-e8c6-4fdb-93b0-7c2af6a7e4bf"
+$ cat "61e44d06-df31-41ce-be7b-44819238b598"
 {
     "a": [
         {
             "testfile": "created"
-        },
-        "at",
-        "Fri Apr 19 00:57:03 2019"
+        }, 
+        "at", 
+        "Fri Apr 19 00:59:34 2019"
     ]
 }
 ```
@@ -379,7 +382,7 @@ Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool][mdtool.py] module. The latter link was built simply by this:
+via the [mdtool module. The latter link was built simply by this:
 
 ```
 [mdtool]<SRC>
@@ -402,9 +405,9 @@ Currently we understand the following namespaces for links:
 
 ```javascript
 {
-    "github": "https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s",
-    "github_raw": "https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s",
-    "static": "file://%(src_base_dir)s/%(path)s",
+    "github": "https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s", 
+    "github_raw": "https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s", 
+    "static": "file://%(src_base_dir)s/%(path)s", 
     "static_raw": "file://%(src_base_dir)s/%(path)s"
 }
 ```
@@ -471,7 +474,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/ade44b6c134768bdfc7d122d6309bb581033290a/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/ade44b6c134768bdfc7d122d6309bb581033290a/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/ade44b6c134768bdfc7d122d6309bb581033290a/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/ade44b6c134768bdfc7d122d6309bb581033290a/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/dffdb4f7e0f69931dfb056e9241c30bb2706673e/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/dffdb4f7e0f69931dfb056e9241c30bb2706673e/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/dffdb4f7e0f69931dfb056e9241c30bb2706673e/tests/test_tutorial.py
