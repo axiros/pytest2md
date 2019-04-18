@@ -8,11 +8,12 @@ from pytest2md import mdtool
 import subprocess as sp
 import inspect
 import pytest
-import os
 import time
+import sys
 import pdb
+import os
 
-
+PY2 = sys.version_info[0] < 3
 exists = os.path.exists
 abspath = os.path.abspath
 dirname = os.path.dirname
@@ -57,7 +58,7 @@ def convert_to_staticmethods(cls):
     meths = [(k, getattr(cls, k)) for k in dir(cls)]
     c = callable
     meths = [(k, meth) for k, meth in meths if k[:2] != '__' and c(meth)]
-    [setattr(cls, k, staticmethod(f)) for k, f in meths]
+    [setattr(cls, k, staticmethod(f.__func__ if PY2 else f)) for k, f in meths]
 
 
 def setup(

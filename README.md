@@ -357,14 +357,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "327bb2c4-7ab2-49da-968a-937d18bf99ea"
+$ cat "cb3e8a3a-c9c8-42fc-87cb-7675d875dfb4"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 21:24:09 2019"
+        "Thu Apr 18 21:38:37 2019"
     ]
 }
 ```
@@ -375,7 +375,7 @@ Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool module. The latter link was built simply by this:
+via the [mdtool][mdtool.py] module. The latter link was built simply by this:
 
 ```
 [mdtool]<SRC>
@@ -467,6 +467,7 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/51534843c56dad6260d4f92f67f5f2353f73b4f6/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/51534843c56dad6260d4f92f67f5f2353f73b4f6/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/51534843c56dad6260d4f92f67f5f2353f73b4f6/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/tests/test_tutorial.py
