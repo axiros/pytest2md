@@ -94,11 +94,17 @@ class ItemGetter:
 
 
 class MDTool(object):
+    """
+    Created when P2M is done with the tutorial markdowns and wants
+    to integrate into the main readme
+    """
+
+    links = None
     md = ''
-    links = {}
     autogen_links_sep = '\n\n<!-- autogenlinks -->\n'
 
     def __init__(self, md, src_dir, src_link_tmpl_name=None):
+        self.links = {}
         self._md_file = md
 
         if not src_link_tmpl_name:
@@ -248,11 +254,15 @@ class MDTool(object):
 
     def make_toc(mdt, md):
         """making a table of content, replacing "[TOC]" -else at the beginning"""
+        from pytest2md import strutils
+
+        # this allows to jump back to the toc:
+        back_ref_id = 0
+
         T = '\n[TOC]\n'
         if not T in md:
             md = T + md
         pre, md = md.split(T)
-        from pytest2md import strutils
 
         lines = md.splitlines()
         toc = ['']
@@ -262,19 +272,23 @@ class MDTool(object):
             r.append(line)
             for code in '```', '    ':
                 if line.startswith(code):
-                    while True:
+                    while lines:
                         r.append(lines.pop(0))
                         if r[-1].startswith(code):
                             break
             if line.startswith('#'):
+                back_ref_id += 1
                 lev, h = line.split(' ', 1)
                 toc.append(
                     '    ' * (len(lev) - 1)
-                    + '- [%s](#%s)' % (h, strutils.slugify(h, delim='-'))
+                    + '- <a name="toc%s"></a>[%s](#%s)'
+                    % (back_ref_id, h, strutils.slugify(h, delim='-'))
                 )
+                r.pop()
+                r.append('%s <a href="#toc%s">%s</a>' % (lev, back_ref_id, h))
         toc.append('')
         toc.extend(r)
-        res = pre + '\n'.join(toc)
+        res = pre + '\n<hr/>\n\n# Table Of Contents\n\n' + '\n'.join(toc)
         return res
 
 

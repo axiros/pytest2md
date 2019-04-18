@@ -13,10 +13,12 @@ from functools import partial
 from uuid import uuid4
 import json
 
+# a P2M instance contains all we need:
+p2m = p2m.P2M(__file__, fn_target_md='../README.md')
+
 # py2.7 compat:
 breakpoint = p2m.breakpoint
 
-here, fn = p2m.setup(__file__, fn_target_md='../README.md')
 
 # parametrizing the shell run results:
 run = partial(p2m.bash_run, no_cmd_path=True)
@@ -103,7 +105,7 @@ class TestChapter1:
         """
 
         def mdtable():
-            from pytest2md import html_table as ht
+            ht = p2m.html_table
 
             t = ht(
                 [['joe', 'doe'], ['suzie', 'wong']],

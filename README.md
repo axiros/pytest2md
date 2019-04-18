@@ -13,15 +13,20 @@
 <!-- only hoster for this repo is github, so we fix the links: -->
 <!-- md_links_for: github -->
 
-- [Inline Python Function Execution](#inline-python-function-execution)
-- [Tools](#tools)
-- [Files](#files)
-- [Link Replacements](#link-replacements)
-    - [Code Repo Hoster Specific Source Links](#code-repo-hoster-specific-source-links)
-        - [Setting a link template](#setting-a-link-template)
-        - [Link Refs](#link-refs)
-    - [Summary](#summary)
-- [Isolation](#isolation)
+<hr/>
+
+# Table Of Contents
+
+
+- <a name="toc1"></a>[Inline Python Function Execution](#inline-python-function-execution)
+- <a name="toc2"></a>[Tools](#tools)
+- <a name="toc3"></a>[Files](#files)
+- <a name="toc4"></a>[Link Replacements](#link-replacements)
+    - <a name="toc5"></a>[Code Repo Hoster Specific Source Links](#code-repo-hoster-specific-source-links)
+        - <a name="toc6"></a>[Setting a link template](#setting-a-link-template)
+        - <a name="toc7"></a>[Link Refs](#link-refs)
+    - <a name="toc8"></a>[Summary](#summary)
+- <a name="toc9"></a>[Isolation](#isolation)
 
 
 Few things are more annoying than stuff which does not work as announced,
@@ -65,10 +70,10 @@ from functools import partial
 from uuid import uuid4
 import json
 
+p2m = p2m.P2M(__file__, fn_target_md='../README.md')
 # py2.7 compat:
 breakpoint = p2m.breakpoint
 
-here, fn = p2m.setup(__file__, fn_target_md='../README.md')
 
 # parametrizing the shell run results:
 run = partial(p2m.bash_run, no_cmd_path=True)
@@ -155,7 +160,7 @@ class TestChapter1:
         """
 
         def mdtable():
-            from pytest2md import html_table as ht
+            ht = p2m.html_table
 
             t = ht(
                 [['joe', 'doe'], ['suzie', 'wong']],
@@ -280,18 +285,17 @@ Note that the command is shown in the readme, incl. result and the result
 can be asserted upon.
 ```bash
 $ cat "/etc/hosts" | grep localhost
-# localhost is used to configure the loopback interface
-127.0.0.1  localhost lo sd1 sd3 sa1 sa2 sb1 sb2
-::1             localhost
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 axcentos
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ```
 ```bash
-$ ls "/Users/gk/GitHub/pytest2md/tests/tutorial.md"
-/Users/gk/GitHub/pytest2md/tests/tutorial.md
+$ ls "/data/root/pytest2md/tests/tutorial.md"
+/data/root/pytest2md/tests/tutorial.md
 
 $ ls -lta /etc/hosts
--rw-r--r--  1 root  wheel  1047 Mar  1 11:35 /etc/hosts
+-rw-r--r--. 1 root root 237 Apr 16 11:42 /etc/hosts
 ```
-# Inline Python Function Execution
+# <a href="#toc1">Inline Python Function Execution</a>
 
 via the `md_from_source_code` function you can write fluent markdown
 (tested) python combos:
@@ -323,13 +327,13 @@ display as is.
 > If the string 'breakpoint' occurs in a function body, we won't redirect
 standardout for displaying output.
 
-# Tools
+# <a href="#toc2">Tools</a>
 
 Also there are few tools available, e.g this one:
 
 ```python
 
-from pytest2md import html_table as ht
+ht = p2m.html_table
 
 t = ht(
     [['joe', 'doe'], ['suzie', 'wong']],
@@ -343,33 +347,33 @@ print(t)
 
 
 <details>
-        <summary>names. click to open...</summary>
-        <table>
+            <summary>names. click to open...</summary>
+            <table>
 <tr><td>first</td><td>last</td></tr>
 <tr><td>joe</td><td>doe</td></tr>
 <tr><td>suzie</td><td>wong</td></tr>
 </table>
-        </details>
-        
+            </details>
+            
 
 
-# Files
+# <a href="#toc3">Files</a>
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "cb3e8a3a-c9c8-42fc-87cb-7675d875dfb4"
+$ cat "d6fc63e2-e8c6-4fdb-93b0-7c2af6a7e4bf"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 21:38:37 2019"
+        "Fri Apr 19 00:57:03 2019"
     ]
 }
 ```
 
-# Link Replacements
+# <a href="#toc4">Link Replacements</a>
 
 Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
@@ -384,7 +388,7 @@ via the [mdtool][mdtool.py] module. The latter link was built simply by this:
 Other example: This [pytest2md link was created by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-## Code Repo Hoster Specific Source Links
+## <a href="#toc5">Code Repo Hoster Specific Source Links</a>
 
 Github, Gitlab, Bitbucked or Plain directory based static content servers
 all have their conventional URLs regarding those links.
@@ -405,7 +409,7 @@ Currently we understand the following namespaces for links:
 }
 ```
 
-### Setting a link template
+### <a href="#toc6">Setting a link template</a>
 
 - `export MD_LINKS_FOR=github   ` # before running pytest / push
 - `<!-- md_links_for: github -->` # in the markdown template, static
@@ -413,7 +417,7 @@ Currently we understand the following namespaces for links:
 The latter can be overwritten by environ, should you want to push from time to time
 to a different code hoster.
 
-### Link Refs
+### <a href="#toc7">Link Refs</a>
 
 We minimize the problem of varying generated target markdown, dependent on the hoster.
 How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
@@ -427,7 +431,7 @@ In the markdown bodies you'll just see link names, which remain the same.
 > Check the end of the [rendering result][README.md] at the end of this README.md,
 in order to see the results for the hoster you are reading this markdown file currently.
 
-## Summary
+## <a href="#toc8">Summary</a>
 
 - At normal runs of pytest, the link base URL is just a local `file://` link,
 
@@ -453,7 +457,7 @@ Source code showing is done like this:
 
 <!-- autogen tutorial -->
 
-# Isolation
+# <a href="#toc9">Isolation</a>
 
 None. If you would screw up your host running pytest normally, then you will
 get the same result, when running markdown generating tests.
@@ -467,7 +471,7 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/README.tmpl.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c7ee6b262a5dc2bbf71d95c3685740741ca9108a/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/ade44b6c134768bdfc7d122d6309bb581033290a/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/ade44b6c134768bdfc7d122d6309bb581033290a/README.tmpl.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/ade44b6c134768bdfc7d122d6309bb581033290a/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/ade44b6c134768bdfc7d122d6309bb581033290a/tests/test_tutorial.py
