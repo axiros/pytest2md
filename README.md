@@ -39,6 +39,10 @@ doc strings:
 
 ![](./assets/shot1.png)
 
+> When the documentation is using a lot of code examples then a very welcome
+additional benefit of writing it like shown is the availability of [source
+code autoformatters](https://github.com/ambv/black).
+
 Other Example:
 
 This "README.md" was built into [this](./README.tmpl.md) template,
@@ -79,6 +83,10 @@ class TestChapter1:
         doc strings:
 
         ![](./assets/shot1.png)
+
+        > When the documentation is using a lot of code examples then a very welcome
+        additional benefit of writing it like shown is the availability of [source
+        code autoformatters](https://github.com/ambv/black).
 
         Other Example:
 
@@ -349,14 +357,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "2847e5bc-7bca-47a5-849a-89b985417f11"
+$ cat "8b670c37-fe12-44e1-b65b-208ad469ee5b"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 21:15:43 2019"
+        "Thu Apr 18 21:22:23 2019"
     ]
 }
 ```
@@ -459,6 +467,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/90a4b8a675520fe70132a76a4ca8912fdd699722/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/90a4b8a675520fe70132a76a4ca8912fdd699722/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/90a4b8a675520fe70132a76a4ca8912fdd699722/tests/test_tutorial.py
