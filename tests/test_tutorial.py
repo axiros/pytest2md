@@ -74,7 +74,19 @@ class TestChapter1:
         The functions are evaluated and documented in the order they show up
         within the textblocks.
 
-        > Please keep the tripple apostrophes - we split the text blocks,  searching for  those.
+        > Please keep tripple apostrophes - we split the text blocks,
+        searching for those.
+
+        State is kept within the outer pytest function, like normally in python.
+        I.e. if you require new state, then start a new pytest function.
+
+        Stdout is redirected to an output collector function, i.e. if you print
+        this does result in an "Output" block. If the printout starts with
+        "MARKDOWN:" then we won't wrap that output into fenced code blocks but
+        display as is.
+
+        > If the string 'breakpoint' occurs in a function body, we won't redirect
+        standardout for displaying output.
 
         # Tools
 

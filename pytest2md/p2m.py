@@ -223,14 +223,22 @@ class rec_stdout:
         rec_stdout.h.extend(list(a))
 
 
-def run_func(funcstr, frame):
+def run_and_document_pyfunc(funcstr, frame):
     func = frame.f_locals[funcstr]
     s = inspect.getsource(func).split(':', 1)[1]
     s = deindent(s)
+    # if the function is called outside (to test asserttions) then it'll end
+    # with a return - we omit that, if the user wants the reader to see the
+    # assertion he should put it inside the func:
+    pre, last = s.rsplit('\n', 1)
+    if last.lstrip().startswith('return '):
+        s = pre
+    # wrap into python code block:
     s = python(s)
     try:
         o = sys.stdout
-        sys.stdout = rec_stdout
+        if not 'breakpoint' in s:
+            sys.stdout = rec_stdout
         del rec_stdout.h[:]  # py2, no clear
         func()
     finally:
@@ -255,7 +263,15 @@ def deindent(p):
     )
 
 
+import json
 from textwrap import dedent
+
+
+def as_json(d):
+    if not isinstance(d, str):
+        d = json.dumps(d, sort_keys=True, default=str, indent=4)
+    return 'MARKDOWN:\n\n```javascript\n%s\n```' % d
+
 
 # *headers is not py2 compatible :-(
 def html_table(list, headers, summary=None):
@@ -311,7 +327,7 @@ def md(paras, into=nothing, test_func=None):
     while parts:
         part = parts.pop(0)
         func, post = part.split('\n', 1)
-        after += run_func(func, test_func) + post
+        after += run_and_document_pyfunc(func, test_func) + post
 
     paras = [after]
 
