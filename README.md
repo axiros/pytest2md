@@ -1,4 +1,4 @@
-# Small tools to generate markdown - while testing contained claims.
+# Generating Markdown - While Testing Contained Claims
 
 [![Build Status](https://travis-ci.org/axiros/pytest2md.svg?branch=master)](https://travis-ci.org/axiros/pytest2md) [![codecov](https://codecov.io/gh/axiros/pytest2md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest2md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
 
@@ -357,14 +357,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "8b670c37-fe12-44e1-b65b-208ad469ee5b"
+$ cat "327bb2c4-7ab2-49da-968a-937d18bf99ea"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 21:22:23 2019"
+        "Thu Apr 18 21:24:09 2019"
     ]
 }
 ```
@@ -467,6 +467,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/90a4b8a675520fe70132a76a4ca8912fdd699722/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/90a4b8a675520fe70132a76a4ca8912fdd699722/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/90a4b8a675520fe70132a76a4ca8912fdd699722/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/51534843c56dad6260d4f92f67f5f2353f73b4f6/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/51534843c56dad6260d4f92f67f5f2353f73b4f6/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/51534843c56dad6260d4f92f67f5f2353f73b4f6/tests/test_tutorial.py

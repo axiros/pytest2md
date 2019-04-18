@@ -1,4 +1,4 @@
-# Small tools to generate markdown - while testing contained claims.
+# Generating Markdown - While Testing Contained Claims
 
 [![Build Status](https://travis-ci.org/axiros/pytest2md.svg?branch=master)](https://travis-ci.org/axiros/pytest2md) [![codecov](https://codecov.io/gh/axiros/pytest2md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest2md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
 
