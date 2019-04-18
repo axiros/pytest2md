@@ -35,9 +35,13 @@ Documentation is often prone to produce such situations, since hard to keep
 
 This is a set of tools, *generating* documentation, while verifying the documented
 claims about code behaviour - without the need to adapt the source code, e.g. by modifying
-doc strings.
+doc strings:
 
-Example: This "README.md" was built into [this](./README.tmpl.md) template,
+![](./assets/shot1.png)
+
+Other Example:
+
+This "README.md" was built into [this](./README.tmpl.md) template,
 where [html comment style placeholders][README.tmpl.md]
 had been replaced while running pytest on this testfile:
 
@@ -72,9 +76,13 @@ class TestChapter1:
 
         This is a set of tools, *generating* documentation, while verifying the documented
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
-        doc strings.
+        doc strings:
 
-        Example: This "README.md" was built into [this](./README.tmpl.md) template,
+        ![](./assets/shot1.png)
+
+        Other Example:
+
+        This "README.md" was built into [this](./README.tmpl.md) template,
         where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 
@@ -341,14 +349,14 @@ print(t)
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "0deedcae-662a-4380-8611-17c12464ea3e"
+$ cat "2847e5bc-7bca-47a5-849a-89b985417f11"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Thu Apr 18 20:52:09 2019"
+        "Thu Apr 18 21:15:43 2019"
     ]
 }
 ```
@@ -451,6 +459,6 @@ runners how to generate markdown from running inline python functions...
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c1b4d5f4deb9da222739cfaaa4db27cb6a231707/tests/test_tutorial.py
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/README.md
+[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/README.tmpl.md
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/a52550f8fb77627b1e13a9d3e2853218e1e34bc5/tests/test_tutorial.py

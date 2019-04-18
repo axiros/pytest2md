@@ -28,9 +28,13 @@ class TestChapter1:
 
         This is a set of tools, *generating* documentation, while verifying the documented
         claims about code behaviour - without the need to adapt the source code, e.g. by modifying
-        doc strings.
+        doc strings:
 
-        Example: This "README.md" was built into [this](./README.tmpl.md) template,
+        ![](./assets/shot1.png)
+
+        Other Example:
+
+        This "README.md" was built into [this](./README.tmpl.md) template,
         where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 
