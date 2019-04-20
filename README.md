@@ -472,6 +472,24 @@ runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
+<table>
+    <tr><td>test</td><td>
+        det
+        <details>
+ <summary>click</summary>
+
+<table>
+    <tr><td>test</td><td>
+        det
+        <details>
+ <summary>click</summary>
+    
+</details>
+</td></td></tr></table>
+
+    
+</details>
+</td></td></tr></table>
 
 <!-- autogenlinks -->
 [README.md]: https://raw.githubusercontent.com/axiros/pytest2md/dffdb4f7e0f69931dfb056e9241c30bb2706673e/README.md
