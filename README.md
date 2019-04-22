@@ -393,14 +393,14 @@ Another tool is the simple TOC generator, invoked like at the end of this file.
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "11d271fa-e657-4c11-87d7-944bb12d6f20"
+$ cat "cc66e42f-c551-4c74-b734-7ebc0f202242"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Mon Apr 22 10:55:43 2019"
+        "Mon Apr 22 10:57:40 2019"
     ]
 }
 ```
