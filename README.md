@@ -1,3 +1,10 @@
+---
+
+author: gk
+version: 190422
+
+---
+
 # Generating Markdown - While Testing Contained Claims
 
 [![Build Status](https://travis-ci.org/axiros/pytest2md.svg?branch=master)](https://travis-ci.org/axiros/pytest2md) [![codecov](https://codecov.io/gh/axiros/pytest2md/branch/master/graph/badge.svg)](https://codecov.io/gh/axiros/pytest2md)[![PyPI    version][pypisvg]][pypi] [![][blacksvg]][black]
@@ -386,14 +393,14 @@ Another tool is the simple TOC generator, invoked like at the end of this file.
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "1cdadeaa-84d0-46d5-b758-7a7dd5d14894"
+$ cat "11d271fa-e657-4c11-87d7-944bb12d6f20"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Mon Apr 22 10:52:42 2019"
+        "Mon Apr 22 10:55:43 2019"
     ]
 }
 ```

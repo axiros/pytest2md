@@ -18,11 +18,17 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.md')) as fd:
     md = fd.read()
 
+for f in (HERE + '/.README.tmpl.md',):
+    with open(f) as fd:
+        version = fd.read().split('version:', 1)[1].split('\n', 1)[0]
+        version = version.strip()
+
+
 P = find_packages('.')
 
 setup(
     name='pytest2md',
-    version='20190501',
+    version=version,
     description='Create and run markdown Readmes from within pytest',
     long_description=md,
     long_description_content_type='text/markdown',
