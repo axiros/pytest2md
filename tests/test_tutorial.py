@@ -161,7 +161,7 @@ class TestChapter1:
 
         These will be replaced:
 
-        `[title:this,fmatch:test_tutorial,lmatch:exotic] <SRC>` (remove space between] and <)
+        `[title:this,fmatch:test_tutorial,lmatch:line_match] <SRC>` (remove space between] and <)
 
         - title: The link title - text the user reads
         - fmatch: substring match for the link destination file
