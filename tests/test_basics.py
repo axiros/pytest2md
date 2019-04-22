@@ -9,6 +9,7 @@ from pytest2md import mdtool
 from functools import partial
 
 here = os.path.abspath(os.path.dirname(__file__))
+base = os.path.abspath(os.path.dirname(here))
 test_mod = os.path.basename(__file__).split('.py', 1)[0]
 
 
@@ -27,12 +28,12 @@ class TestGenerateMarkdown(unittest.TestCase):
         p2mt = p2mm.P2M(__file__, fn_target_md='/tmp/root/docs/foo.md')
 
         assert p2mt.ctx == {
-            'd_assets': '/Users/gk/GitHub/pytest2md/tests/assets',
-            'd_repo_base': '/Users/gk/GitHub/pytest2md',
-            'd_test': '/Users/gk/GitHub/pytest2md/tests',
+            'd_assets': here + '/assets',
+            'd_repo_base': base,
+            'd_test': here,
             'fn_target_md': '/tmp/root/docs/foo.md',
             'fn_target_md_tmpl': '/tmp/root/docs/templates/foo.md',
-            'fn_test_file': '/Users/gk/GitHub/pytest2md/tests/test_basics.py',
+            'fn_test_file': here + '/' + test_mod + '.py',
             'md': [],
             'md_sep': '<!-- autogen tutorial -->',
             'name': 'basics',
