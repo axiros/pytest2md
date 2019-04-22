@@ -39,7 +39,7 @@ class TestChapter1:
 
         Other Example:
 
-        This "README.md" was built into [this](./README.tmpl.md) template,
+        This "README.md" was built into [this](./.README.tmpl.md) template,
         where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 

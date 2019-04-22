@@ -238,7 +238,6 @@ def write_markdown(
     """
     # just required for 'with_source_ref':
     src = sys._getframe().f_back.f_code
-    md = ctx['md']
 
     if with_source_ref:
         msg = (
@@ -246,7 +245,7 @@ def write_markdown(
             'axiros/pytest2md), running [%s]<SRC>*'
         )
         msg = msg % src.co_filename.rsplit('/', 1)[-1]
-        md.append('\n\n%s\n' % msg)
+        ctx['md'].append('\n\n%s\n' % msg)
 
     # we first embed the md into the template:
     fnr = ctx['fn_target_md_tmpl']
@@ -260,30 +259,34 @@ def write_markdown(
     if not sep in readm:
         readm = '\n%s\n%s\n%s\n' % (sep, readm, sep)
     pre, _, post = readm.split(sep)
-    md = ''.join((pre, sep, '\n' + '\n'.join(md), '\n', sep, post))
+    ctx['md'] = ''.join(
+        (pre, sep, '\n' + '\n'.join(ctx['md']), '\n', sep, post)
+    )
 
     print('Now postprocessing', ctx['fn_target_md'])
 
     mdt = mdtool.MDTool(
-        md=md,
+        md=ctx['md'],
         d_repo_base=ctx['d_repo_base'],
         src_link_tmpl_name=os.environ.get('MD_LINKS_FOR'),
     )
     if not no_link_repl:
-        md, changed = mdt.do_set_links()
+        ctx['md'], changed = mdt.do_set_links()
+        mdt.ctx['md'] = ctx['md']
     if make_toc:
         if not isinstance(make_toc, dict):
             make_toc = {}
-        md = mdt.make_toc(**make_toc)
+        ctx['md'] = mdt.make_toc(**make_toc)
+        mdt.ctx['md'] = ctx['md']
     if no_write:
-        return md
+        return ctx['md']
     f = ctx['fn_target_md']
     if not exists(dirname(f)):
         # TODO: fix security:
         sp.getoutput('mkdir -p "%s"' % dirname(f))
     with open(ctx['fn_target_md'], 'w') as fd:
-        fd.write(md)
-    return md
+        fd.write(ctx['md'])
+    return ctx['md']
 
 
 # ------------------------------------------- Markdown Generation API Functions
