@@ -278,7 +278,7 @@ class TestChapter1:
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
-        p2m.write_readme(with_source_ref=True, make_toc=True)
+        p2m.write_markdown(with_source_ref=True, make_toc=True)
 ```
 
 

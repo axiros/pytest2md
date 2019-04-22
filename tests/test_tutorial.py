@@ -17,7 +17,6 @@ import json
 p2m = p2m.P2M(__file__, fn_target_md='../README.md')
 
 # py2.7 compat:
-breakpoint = p2m.breakpoint
 
 
 # parametrizing the shell run results:
@@ -63,7 +62,7 @@ class TestChapter1:
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = run(['ls "%(fn_md)s"' % p2m.cfg, 'ls -lta /etc/hosts'])
+        res = run(['ls "%(d_test)s"' % p2m.ctx, 'ls -lta /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
@@ -154,8 +153,23 @@ class TestChapter1:
         [mdtool]<SRC>
         ```
 
+
         Other example: This [pytest2md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
+
+        ## Spec
+
+        These will be replaced:
+
+        `[title:this,fmatch:test_tutorial,lmatch:exotic] <SRC>` (remove space between] and <)
+
+        - title: The link title - text the user reads
+        - fmatch: substring match for the link destination file
+        - lmatch: Find matching line within that file
+        - show_raw: Link to raw version of file, not the one rendered by the
+          repo server
+        - path: Fix file path (usually derived by fmach)
+        - line: Fix the line number of the link (usually done via lmatch)
 
         ## Code Repo Hoster Specific Source Links
 
@@ -207,7 +221,7 @@ class TestChapter1:
 
         """.replace(
             '_link_names_',
-            json.dumps(p2m.mdtool.known_src_links, indent=4, sort_keys=2),
+            json.dumps(p2m.src_link_templates, indent=4, sort_keys=2),
         )
         p2m.md(md)
 
@@ -221,4 +235,4 @@ class TestChapter1:
     def test_write(self):
         """has to be the last 'test'"""
         # default is ../README.md
-        p2m.write_readme(with_source_ref=True, make_toc=True)
+        p2m.write_markdown(with_source_ref=True, make_toc=True)
