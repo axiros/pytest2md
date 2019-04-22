@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 190426
+version: 190427
 
 ---
 
@@ -59,7 +59,7 @@ code autoformatters](https://github.com/ambv/black).
 Other Example:
 
 This "README.md" was built into [this](./.README.tmpl.md) template,
-where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True
+where [html comment style placeholders][.README.tmpl.md]
 had been replaced while running pytest on this testfile:
 
 ```python
@@ -105,7 +105,7 @@ class TestChapter1:
         Other Example:
 
         This "README.md" was built into [this](./.README.tmpl.md) template,
-        where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True]<SRC>
+        where [title:html comment style placeholders,fmatch:.README.tmpl.md,show_raw:True]<SRC>
         had been replaced while running pytest on this testfile:
 
         <from_file: %s>
@@ -392,14 +392,14 @@ Another tool is the simple TOC generator, invoked like at the end of this file.
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "b2e17be4-722a-42ac-a1e0-af3ae2015d56"
+$ cat "e06a64dc-6448-4f36-bf55-d69e852b6682"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Mon Apr 22 13:05:44 2019"
+        "Mon Apr 22 13:39:16 2019"
     ]
 }
 ```
@@ -410,14 +410,14 @@ Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool module. The latter link was built simply by this:
+via the [mdtool][mdtool.py] module. The latter link was built simply by this:
 
 ```
 [mdtool]<SRC>
 ```
 
 
-Other example: This [pytest2md link was created by replacing "SRC" with the path
+Other example: This [pytest2md][pytest2md-190425.tar.gz] link was created by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
 ## <a href="#toc5">Spec</a>
@@ -518,6 +518,9 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/e27c6f980daf1d1056cbd176df7078fba5f6adc2/README.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/e27c6f980daf1d1056cbd176df7078fba5f6adc2/tests/test_tutorial.py
-[test_tutorial.py#163]: https://github.com/axiros/pytest2md/blob/e27c6f980daf1d1056cbd176df7078fba5f6adc2/tests/test_tutorial.py#L163
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/pytest2md/mdtool.py
+[pytest2md-190425.tar.gz]: https://github.com/axiros/pytest2md/blob/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/dist/pytest2md-190425.tar.gz
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/tests/test_tutorial.py
+[test_tutorial.py#163]: https://github.com/axiros/pytest2md/blob/9fb54d8b5e9ca6ab18206c0ae8db47339b56d3b9/tests/test_tutorial.py#L163

@@ -356,7 +356,6 @@ def do_set_links(ctx):
                 ri.append(part)
                 continue
             pre, lnk = part.rsplit('[', 1)
-
             title, link = build_src_link(ctx, lnk)  # <--------------- !
 
             if title != None:
@@ -504,10 +503,16 @@ def find_path(ld, bd):
         print('Not found', file, 'from', ld, 'builddir', bd)
         return
     elif len(found) > 1:
-        found = [f for f in found if f.rsplit('/', 1)[-1] == file]
-        if len(found) != 1:
-            return
-            # info('No unique source link found')
+        # take shortest path to match:
+        cur = found[0]
+        for l in found[1:]:
+            if len(l) < len(cur):
+                cur = l
+        found = [cur]
+        # found = [f for f in found if f.rsplit('/', 1)[-1] == file]
+        # if len(found) != 1:
+        #    return
+        # info('No unique source link found')
     if len(found) == 1:
         return found[0][len(bd) + 1 :]
 

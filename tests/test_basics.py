@@ -308,6 +308,7 @@ hi[%s][%s.py] [nix]
             test_mod,
         )
         assert lm.strip() == md.strip().rsplit('file://', 1)[0] + 'file://'
+        self.p2m.ctx['md'] = ['# h1', 'hi[%s]<SRC> [nix]' % test_mod]
         e = os.environ
         e['MD_LINKS_FOR'] = 'name:github,gh_repo_name:A/B,git_rev:1234'
         this = here.rsplit('/', 1)[1] + '/%s.py' % test_mod

@@ -238,6 +238,8 @@ def write_markdown(
     """
     # just required for 'with_source_ref':
     src = sys._getframe().f_back.f_code
+    if isinstance(ctx['md'], str):
+        ctx['md'] = [ctx['md']]
 
     if with_source_ref:
         msg = (
@@ -273,6 +275,7 @@ def write_markdown(
     if not no_link_repl:
         ctx['md'], changed = mdt.do_set_links()
         mdt.ctx['md'] = ctx['md']
+
     if make_toc:
         if not isinstance(make_toc, dict):
             make_toc = {}
