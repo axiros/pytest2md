@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 190422
+version: 190423
 
 ---
 
@@ -393,14 +393,14 @@ Another tool is the simple TOC generator, invoked like at the end of this file.
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "cc66e42f-c551-4c74-b734-7ebc0f202242"
+$ cat "1f85660c-6959-4e38-bda2-3cbff6159bd2"
 {
     "a": [
         {
             "testfile": "created"
         },
         "at",
-        "Mon Apr 22 10:57:40 2019"
+        "Mon Apr 22 11:00:37 2019"
     ]
 }
 ```
