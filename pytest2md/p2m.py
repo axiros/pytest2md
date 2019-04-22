@@ -54,6 +54,23 @@ def rpl(what, *with_):
     return what
 
 
+def d_repo_base(tests_dir):
+    # where is our root for paths? If we have it its easy:
+    here = os.getcwd()
+    try:
+        os.chdir(tests_dir)
+        d = sp.getoutput('git rev-parse --show-toplevel')
+        if not d:
+            raise
+    except:
+        # only change, hope the testmodule is one of these top level ones:
+        # note: The whole point of py2m is working at test phase
+        # i.e. with repos
+        d = tests_dir.split('/tests', 1)[0].split('/test', 1)[0]
+    os.chdir(here)
+    return d
+
+
 # ------------------------------------------------------- Creating the Markdown
 
 code = """```code
@@ -128,6 +145,7 @@ class P2M:
         # '<!-- autogen... as default:
         C['md_sep'] = md_sep
         C['d_test'] = d_test = DIR(fn_test_file)
+        C['d_repo_base'] = d_repo_base(d_test)
         C['fn_target_md'] = fn = abs(
             fn_target_md or dflt_target_md(fnt, d_test)
         )
@@ -181,8 +199,11 @@ def find_template(fn_target_md, fn_target_md_tmpl):
     fn, fnt = fn_target_md, fn_target_md_tmpl
 
     def find(fn):
-        t1 = DIR(fn) + '/templates/%s' % os.path.basename(fn)
-        for t in (fn.replace('.md', '.tmpl.md'), t1):
+        fnb = os.path.basename(fn)
+        t1 = fn.replace('.md', '.tmpl.md')
+        t2 = fn.replace(fnb, '.' + fnb).replace('.md', '.tmpl.md')
+        t3 = DIR(fn) + '/templates/%s' % fnb
+        for t in (t1, t2, t3):
             if os.path.exists(t):
                 return t
 
@@ -245,7 +266,7 @@ def write_markdown(
 
     mdt = mdtool.MDTool(
         md=md,
-        tests_dir=ctx['d_test'],
+        d_repo_base=ctx['d_repo_base'],
         src_link_tmpl_name=os.environ.get('MD_LINKS_FOR'),
     )
     if not no_link_repl:

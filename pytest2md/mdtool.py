@@ -21,7 +21,7 @@ known_src_links = {
         'https://raw.githubusercontent.com/%(gh_repo_name)s/'
         '%(git_rev)s/%(path)s%(line:#L%s)s'
     ),
-    'static': 'file://%(repo_base_dir)s/%(path)s',
+    'static': 'file://%(d_repo_base)s/%(path)s',
 }
 known_src_links['static_raw'] = known_src_links['static']
 
@@ -59,12 +59,12 @@ class InitData:
     Todo: extend for bitbucket..., custom"""
 
     @staticmethod
-    def repo_base_dir(ctx):
-        return ctx['repo_base_dir']
+    def d_repo_base(ctx):
+        return ctx['d_repo_base']
 
     @staticmethod
     def gh_repo_name(ctx):
-        r = os.popen('cd "%s"; git remote -v' % ctx['repo_base_dir']).read()
+        r = os.popen('cd "%s"; git remote -v' % ctx['d_repo_base']).read()
         r = [l for l in r.splitlines() if 'github.com' in l and 'push' in l]
         if not r:
             raise Exception('No github push remote found. remotes=%s' % str(r))
@@ -75,7 +75,7 @@ class InitData:
 
     @staticmethod
     def git_rev(ctx):
-        r = os.popen('cd "%(repo_base_dir)s"; git rev-parse HEAD' % ctx).read()
+        r = os.popen('cd "%(d_repo_base)s"; git rev-parse HEAD' % ctx).read()
         return r.strip()
 
 
@@ -119,7 +119,7 @@ class CommitSearchStringLookup:
             self.links[tit] = self.mdt.links[lnk]
         else:
             # this is a match string
-            res = search_repo(k, repo_dir=self.mdt.repo_base_dir)
+            res = search_repo(k, repo_dir=self.mdt.d_repo_base)
             self.match_lines[k] = res
             return '<details><summary>%s</summary></details>' % k
         return '[%s][%s]' % (tit, lnk)
@@ -145,7 +145,7 @@ class ChangeLogWriter:
             return
         try:
             here = os.getcwd()
-            os.chdir(self.repo_base_dir)
+            os.chdir(self.d_repo_base)
             return self._make_changelog(change_log, md)
         finally:
             os.chdir(here)
@@ -160,7 +160,7 @@ class ChangeLogWriter:
          }
         """
         cl = change_log
-        fn = self.repo_base_dir + '/.changelog.json'
+        fn = self.d_repo_base + '/.changelog.json'
         if os.path.exists(fn):
             have = json.loads(fn.read())
         else:
@@ -249,26 +249,16 @@ class MDTool(ChangeLogWriter):
     to integrate into the main readme
     """
 
-    def __init__(self, md, tests_dir, src_link_tmpl_name=None):
+    def __init__(self, md, d_repo_base, src_link_tmpl_name=None):
         C = self.ctx = {
             'md': md,
             'links': {},
             'links_log': [],
-            'tests_dir': tests_dir,
+            'd_repo_base': d_repo_base,
             'autogen_links_sep': '\n\n<!-- autogenlinks -->\n',
             'src_link_tmpl_name': src_link_tmpl_name,
         }
-        # where is our root for paths? If we have it its easy:
-        try:
-            d = os_run('git rev-parse --show-toplevel')
-            if not d:
-                raise
-        except:
-            # only change, hope the testmodule is one of these top level ones:
-            # note: The whole point of py2m is working at test phase
-            # i.e. with repos
-            d = tests_dir.split('/tests/', 1)[0].split('/test/', 1)[0]
-        C['repo_base_dir'] = d
+        C['d_repo_base'] = d_repo_base
 
         if not C['src_link_tmpl_name']:
             # try to find from within the md itself:
@@ -329,8 +319,8 @@ def do_set_links(ctx):
 
     Special keys:
     - title: Will become the link text
-    - repo_base_dir: From App, for pytest the folder of the pytested file.
-    - path: file path relative to repo_base_dir
+    - d_repo_base: From App, for pytest the folder of the pytested file.
+    - path: file path relative to d_repo_base
     - fmatch: Startswith pattern of file name in dir. Must match uniquely.
         also builds if not present:
         - path
@@ -418,14 +408,14 @@ def build_src_link(ctx, lnk):
 
     # tmpl is the source link template, usually containing /%(path)s/
     if '%(path' in tmpl and not 'path' in ld:
-        path = find_path(ld, bd=ctx['repo_base_dir'])
+        path = find_path(ld, bd=ctx['d_repo_base'])
         if not path:
             ll('Path not found', **ld)
             return None, None
         ld['path'] = path
 
     ld['file'] = ld.get('file', ld.get('path', '').rsplit('/', 1)[-1])
-    ld['fullpath'] = fn = os.path.join(ctx['repo_base_dir'], ld['path'])
+    ld['fullpath'] = fn = os.path.join(ctx['d_repo_base'], ld['path'])
 
     if '%(line' in tmpl and not 'line' in ld:
         if 'lmatch' in ld:

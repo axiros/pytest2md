@@ -13,21 +13,22 @@
 <!-- only hoster for this repo is github, so we fix the links: -->
 <!-- md_links_for: github -->
 
-<hr/>
+<!-- TOC -->
 
 # Table Of Contents
-
 
 - <a name="toc1"></a>[Inline Python Function Execution](#inline-python-function-execution)
 - <a name="toc2"></a>[Tools](#tools)
 - <a name="toc3"></a>[Files](#files)
 - <a name="toc4"></a>[Link Replacements](#link-replacements)
-    - <a name="toc5"></a>[Code Repo Hoster Specific Source Links](#code-repo-hoster-specific-source-links)
-        - <a name="toc6"></a>[Setting a link template](#setting-a-link-template)
-        - <a name="toc7"></a>[Link Refs](#link-refs)
-    - <a name="toc8"></a>[Summary](#summary)
-- <a name="toc9"></a>[Isolation](#isolation)
+    - <a name="toc5"></a>[Spec](#spec)
+    - <a name="toc6"></a>[Code Repo Hoster Specific Source Links](#code-repo-hoster-specific-source-links)
+        - <a name="toc7"></a>[Setting a link template](#setting-a-link-template)
+        - <a name="toc8"></a>[Link Refs](#link-refs)
+    - <a name="toc9"></a>[Summary](#summary)
+- <a name="toc10"></a>[Isolation](#isolation)
 
+<!-- TOC -->
 
 Few things are more annoying than stuff which does not work as announced,
 especially when you find out only after an invest of time and energy.
@@ -51,7 +52,7 @@ code autoformatters](https://github.com/ambv/black).
 Other Example:
 
 This "README.md" was built into [this](./README.tmpl.md) template,
-where [html comment style placeholders][README.tmpl.md]
+where [title:html comment style placeholders,fmatch:README.tmpl.md,show_raw:True]<SRC>
 had been replaced while running pytest on this testfile:
 
 ```python
@@ -71,10 +72,9 @@ from uuid import uuid4
 import json
 
 # a P2M instance contains all we need:
-p2m = p2m.P2M(__file__, fn_target_md='../README.md')
+p2m = p2m.P2M(__file__, fn_target_md='README.md')
 
 # py2.7 compat:
-breakpoint = p2m.breakpoint
 
 
 # parametrizing the shell run results:
@@ -120,7 +120,7 @@ class TestChapter1:
         assert '127.0.0.1' in res[0]['res']
 
     def test_two(self):
-        res = run(['ls "%(fn_md)s"' % p2m.cfg, 'ls -lta /etc/hosts'])
+        res = run(['ls "%(d_test)s"' % p2m.ctx, 'ls -lta /etc/hosts'])
         assert 'tutorial' in res[0]['res']
         assert 'hosts' in res[1]['res']
 
@@ -211,8 +211,23 @@ class TestChapter1:
         [mdtool]<SRC>
         ```
 
+
         Other example: This [pytest2md]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
+
+        ## Spec
+
+        These will be replaced:
+
+        `[title:this,fmatch:test_tutorial,lmatch:exotic] <SRC>` (remove space between] and <)
+
+        - title: The link title - text the user reads
+        - fmatch: substring match for the link destination file
+        - lmatch: Find matching line within that file
+        - show_raw: Link to raw version of file, not the one rendered by the
+          repo server
+        - path: Fix file path (usually derived by fmach)
+        - line: Fix the line number of the link (usually done via lmatch)
 
         ## Code Repo Hoster Specific Source Links
 
@@ -264,7 +279,7 @@ class TestChapter1:
 
         """.replace(
             '_link_names_',
-            json.dumps(p2m.mdtool.known_src_links, indent=4, sort_keys=2),
+            json.dumps(p2m.src_link_templates, indent=4, sort_keys=2),
         )
         p2m.md(md)
 
@@ -292,27 +307,32 @@ $ cat "/etc/hosts" | grep localhost
 ::1             localhost
 ```
 ```bash
-$ ls "/Users/gk/GitHub/pytest2md/tests/tutorial.md"
-/Users/gk/GitHub/pytest2md/tests/tutorial.md
+$ ls "/Users/gk/GitHub/pytest2md/tests"
+__pycache__
+test_basics.py
+test_changelog.py
+test_tutorial.py
 
 $ ls -lta /etc/hosts
 -rw-r--r--  1 root  wheel  1047 Mar  1 11:35 /etc/hosts
 ```
+
 # <a href="#toc1">Inline Python Function Execution</a>
 
 via the `md_from_source_code` function you can write fluent markdown
-(tested) python combos:
-```python
+(tested) python combos:  
 
+```python
 hi = 'hello world'
 assert 'world' in hi
 print(hi.replace('world', 'joe'))
 ```
 Output:
-```
-hello joe
 
 ```
+hello joe
+```
+
 The functions are evaluated and documented in the order they show up
 within the textblocks.
 
@@ -333,9 +353,9 @@ standardout for displaying output.
 # <a href="#toc2">Tools</a>
 
 Also there are few tools available, e.g this one:
+  
 
 ```python
-
 ht = p2m.html_table
 
 t = ht(
@@ -348,30 +368,32 @@ assert 'joe</td' in t
 print(t)
 ```
 
-
 <details>
-            <summary>names. click to open...</summary>
-            <table>
+        <summary>names. click to open...</summary>
+        <table>
 <tr><td>first</td><td>last</td></tr>
 <tr><td>joe</td><td>doe</td></tr>
 <tr><td>suzie</td><td>wong</td></tr>
 </table>
-            </details>
-            
+        </details>
+        
 
+
+
+Another tool is the simple TOC generator, invoked like at the end of this file.  
 
 # <a href="#toc3">Files</a>
 When working with files, the `sh_file` function is helpful,
 producing output like this one:
 ```javascript
-$ cat "61e44d06-df31-41ce-be7b-44819238b598"
+$ cat "1cdadeaa-84d0-46d5-b758-7a7dd5d14894"
 {
     "a": [
         {
             "testfile": "created"
-        }, 
-        "at", 
-        "Fri Apr 19 00:59:34 2019"
+        },
+        "at",
+        "Mon Apr 22 10:52:42 2019"
     ]
 }
 ```
@@ -382,16 +404,31 @@ Technical markdown content wants to link to source code often.
 How to get those links working and that convenient?
 
 The module does offer also some source finding / link replacement feature,
-via the [mdtool module. The latter link was built simply by this:
+via the [mdtool]<SRC> module. The latter link was built simply by this:
 
 ```
 [mdtool]<SRC>
 ```
 
-Other example: This [pytest2md link was created by replacing "SRC" with the path
+
+Other example: This [pytest2md]<SRC> link was created by replacing "SRC" with the path
 to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
-## <a href="#toc5">Code Repo Hoster Specific Source Links</a>
+## <a href="#toc5">Spec</a>
+
+These will be replaced:
+
+`[title:this,fmatch:test_tutorial,lmatch:exotic] <SRC>` (remove space between] and <)
+
+- title: The link title - text the user reads
+- fmatch: substring match for the link destination file
+- lmatch: Find matching line within that file
+- show_raw: Link to raw version of file, not the one rendered by the
+  repo server
+- path: Fix file path (usually derived by fmach)
+- line: Fix the line number of the link (usually done via lmatch)
+
+## <a href="#toc6">Code Repo Hoster Specific Source Links</a>
 
 Github, Gitlab, Bitbucked or Plain directory based static content servers
 all have their conventional URLs regarding those links.
@@ -405,14 +442,14 @@ Currently we understand the following namespaces for links:
 
 ```javascript
 {
-    "github": "https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s", 
-    "github_raw": "https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s", 
-    "static": "file://%(src_base_dir)s/%(path)s", 
-    "static_raw": "file://%(src_base_dir)s/%(path)s"
+    "github": "https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/%(path)s%(line:#L%s)s",
+    "github_raw": "https://raw.githubusercontent.com/%(gh_repo_name)s/%(git_rev)s/%(path)s%(line:#L%s)s",
+    "static": "file://%(d_repo_base)s/%(path)s",
+    "static_raw": "file://%(d_repo_base)s/%(path)s"
 }
 ```
 
-### <a href="#toc6">Setting a link template</a>
+### <a href="#toc7">Setting a link template</a>
 
 - `export MD_LINKS_FOR=github   ` # before running pytest / push
 - `<!-- md_links_for: github -->` # in the markdown template, static
@@ -420,7 +457,7 @@ Currently we understand the following namespaces for links:
 The latter can be overwritten by environ, should you want to push from time to time
 to a different code hoster.
 
-### <a href="#toc7">Link Refs</a>
+### <a href="#toc8">Link Refs</a>
 
 We minimize the problem of varying generated target markdown, dependent on the hoster.
 How? Like [any problem in IT is solved](https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering).
@@ -431,10 +468,10 @@ the differences of e.g. a README.md for github vs. gitlab is
 restricted to the links section on the end of the generated markdown.
 In the markdown bodies you'll just see link names, which remain the same.
 
-> Check the end of the [rendering result][README.md] at the end of this README.md,
+> Check the end of the [title:rendering result,fmatch:README.md,show_raw:True]<SRC> at the end of this README.md,
 in order to see the results for the hoster you are reading this markdown file currently.
 
-## <a href="#toc8">Summary</a>
+## <a href="#toc9">Summary</a>
 
 - At normal runs of pytest, the link base URL is just a local `file://` link,
 
@@ -454,13 +491,14 @@ Source code showing is done like this:
         )
 
 ```
-> Is [this][test_tutorial.py] an exotic form of a recursion? ;-)  
+> Is [title:this,fmatch:test_tutorial,lmatch:exotic]<SRC> an exotic form of a recursion? ;-)  
 
-*Auto generated by [pytest2md](https://github.com/axiros/pytest2md), running [test_tutorial.py][test_tutorial.py]*
+
+*Auto generated by [pytest2md](https://github.com/axiros/pytest2md), running [test_tutorial.py]<SRC>*
 
 <!-- autogen tutorial -->
 
-# <a href="#toc9">Isolation</a>
+# <a href="#toc10">Isolation</a>
 
 None. If you would screw up your host running pytest normally, then you will
 get the same result, when running markdown generating tests.
@@ -472,26 +510,6 @@ runners how to generate markdown from running inline python functions...
 
 [dasrc]: https://github.com/axiros/DevApps/blob/master/tests/test_tutorial.py
 
-<table>
-    <tr><td>test</td><td>
-        det
-        <details>
- <summary>click</summary>
-
-<table>
-    <tr><td>test</td><td>
-        det
-        <details>
- <summary>click</summary>
-    
-</details>
-</td></td></tr></table>
-
-    
-</details>
-</td></td></tr></table>
 
 <!-- autogenlinks -->
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/dffdb4f7e0f69931dfb056e9241c30bb2706673e/README.md
-[README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/dffdb4f7e0f69931dfb056e9241c30bb2706673e/README.tmpl.md
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/dffdb4f7e0f69931dfb056e9241c30bb2706673e/tests/test_tutorial.py
+[test_tutorial.py]: file:///data/root/pytest2md/tests/test_tutorial.py

@@ -25,14 +25,16 @@ class TestGenerateMarkdown(unittest.TestCase):
         os.system('touch /tmp/root/docs/templates/foo.md')
 
         p2mt = p2mm.P2M(__file__, fn_target_md='/tmp/root/docs/foo.md')
+
         assert p2mt.ctx == {
-            'd_assets': here + '/assets',
-            'd_test': here,
+            'd_assets': '/Users/gk/GitHub/pytest2md/tests/assets',
+            'd_repo_base': '/Users/gk/GitHub/pytest2md',
+            'd_test': '/Users/gk/GitHub/pytest2md/tests',
             'fn_target_md': '/tmp/root/docs/foo.md',
             'fn_target_md_tmpl': '/tmp/root/docs/templates/foo.md',
-            'fn_test_file': __file__,
-            'md_sep': '<!-- autogen tutorial -->',
+            'fn_test_file': '/Users/gk/GitHub/pytest2md/tests/test_basics.py',
             'md': [],
+            'md_sep': '<!-- autogen tutorial -->',
             'name': 'basics',
         }
 
@@ -357,7 +359,7 @@ class TestLinks(unittest.TestCase):
     def setUp(self):
         self.mdt = partial(
             mdtool.MDTool,
-            tests_dir=here,
+            d_repo_base=os.path.dirname(os.path.abspath(here)),
             src_link_tmpl_name='name:github,gh_repo_name:A/B,git_rev:1234',
         )
 
