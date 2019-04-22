@@ -478,7 +478,7 @@ def md_from_source_code(ctx):
                 else:
                     r.append(line)
             continue
-        if line[0] in ('"', "'"):
+        if orig_line[0] in ('"', "'"):
             r.append(line[1:-1] + '  ')  # md line sep
             continue
 
@@ -489,6 +489,15 @@ def md_from_source_code(ctx):
             # a simple name is enough, since the source code is in the locals
             # our test func, under the key of its name:
             r.append(run_pyrun_funcs([func_name], test_func_frame, ctx))
+            while lines:
+                # remove all source code:
+                if lines[0].startswith(' ') or not lines[0]:
+                    lines.pop(0)
+                else:
+                    # one \n at the end:
+                    r.append('')
+                    break
+
     return md('\n'.join(r), ctx, test_func_frame=test_func_frame)
 
 

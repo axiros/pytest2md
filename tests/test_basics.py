@@ -70,7 +70,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         l = ['\nHello  \n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```']
         assert l == md
 
-    def test_from_src_code2(self):
+    def test_from_src_code2_1(self):
         i = 42
 
         def f1():
@@ -240,7 +240,7 @@ class TestGenerateMarkdown(unittest.TestCase):
             '\n'
             '```\n'
             '42\n'
-            '```\n'
+            '```'
         ]
         assert l == md
 
