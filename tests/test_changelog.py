@@ -4,7 +4,6 @@
 
 import pytest, json, os, time
 import pytest2md as p2m  # this is our markdown tutorial generation tool
-import pycond as pc  # the tested module:
 
 from functools import partial
 from uuid import uuid4
