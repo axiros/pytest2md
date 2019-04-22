@@ -3,7 +3,6 @@ Creates markdown - while testing contained code snippets.
 
 """
 from ast import literal_eval as ev
-from rx import operators as op
 from pytest2md import strutils
 from functools import partial
 from pytest2md import mdtool

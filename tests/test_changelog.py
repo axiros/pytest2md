@@ -13,8 +13,6 @@ import time
 import json
 import sys
 import uuid
-import rx
-from rx import operators as op
 
 
 p2m = p2m.P2M(__file__, fn_target_md='../docs/Changelog.md')
