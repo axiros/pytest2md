@@ -280,6 +280,6 @@ class TestChapter1:
         )
 
     def test_write(self):
-        """has to be the last 'test'"""
+        """has to be the last 'test' - or done by a fixture"""
         # default is ../README.md
         p2m.write_markdown(with_source_ref=True, make_toc=True)
