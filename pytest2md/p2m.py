@@ -76,6 +76,21 @@ def d_repo_base(tests_dir):
 code = """```code
 %s
 ```"""
+
+
+def details(md=None, summary='details'):
+    # blank line MUST be there:
+    return """
+<details><summary>%s</summary>
+
+%s
+</details>
+""" % (
+        summary,
+        md,
+    )
+
+
 # fmt: off
 nothing  = lambda s: s
 python   = lambda s: code.replace('code', 'python')   % s
@@ -295,7 +310,7 @@ def write_markdown(
 # ------------------------------------------- Markdown Generation API Functions
 
 
-def md(paras, ctx, into=nothing, test_func_frame=None):
+def md(paras, ctx, into=nothing, test_func_frame=None, summary=None):
     """adds generated markdown into our context"""
     # get a hold on the test function currently executed, to be able, to
     # find and run pyrun <funcfname> statements:
@@ -337,10 +352,20 @@ def md(paras, ctx, into=nothing, test_func_frame=None):
 
     r = '\n'.join([repl(l) for para in paras for l in para.splitlines()])
     r = into(r)
+    if summary:
+        r = details(r, summary)
     ctx['md'].append(r)
 
 
-def bash_run(cmd, res_as=None, no_cmd_path=False, no_show_in_cmd='', ctx=None):
+def bash_run(
+    cmd,
+    res_as=None,
+    no_cmd_path=False,
+    no_show_in_cmd='',
+    summary=None,
+    into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
+    ctx=None,
+):
     """runs unix commands, then writes results into the markdown"""
     if isinstance(cmd, str):
         cmds = [{'cmd': cmd, 'res': ''}]
@@ -352,21 +377,44 @@ def bash_run(cmd, res_as=None, no_cmd_path=False, no_show_in_cmd='', ctx=None):
     if not res_as and orig_cmd.startswith('python -c'):
         res_as = python
     D = ctx['d_assets']
+    into_file_res = []
+    if into_file:
+        dl = ctx['d_assets'] + '/logs'
+        if not exists(dl):
+            os.system('mkdir -p "%s"' % dl)
+        fn_into = dl + '/%s' % into_file
 
     for c in cmds:
         cmd = c['cmd']
         fncmd = cmd if no_cmd_path else (D + cmd)
         # run it:
-        res = c['res'] = sp.getoutput(fncmd)
+        if into_file:
+            _ = fncmd + '> "%s" 2>&1' % fn_into
+            print('Running', _)
+            sp.Popen(_, shell=True).communicate()
+        else:
+            res = c['res'] = sp.getoutput(fncmd)
         if no_show_in_cmd:
             fncmd = fncmd.replace(no_show_in_cmd, '')
         # .// -> when there is no_cmd_path we would get that, ugly:
         # this is just for md output, not part of testing:
         c['cmd'] = fncmd.replace(D, './').strip().replace('.//', './')
+        if into_file:
+            # just a few lines, rest in log:
+            msg = '\n...(output truncated - see link below)\n'
+            with os.popen('head -n 5 "%s"' % fn_into) as fd:
+                c['res'] = fd.read() + msg
+            fn = fn_into.replace(ctx['d_repo_base'], '.')
+            into_file_res.append([c['cmd'], fn])
 
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
 
-    md(r, into=res_as if res_as else bash, ctx=ctx)
+    md(r, into=res_as if res_as else bash, summary=summary, ctx=ctx)
+    # show links of the output logs:
+    for cmd, fn in into_file_res:
+        md('- [Output](%s) of `%s`  \n' % (fn, cmd), ctx=ctx)
+    if into_file_res:
+        md('\n', ctx=ctx)
     return cmds
 
 
@@ -523,15 +571,7 @@ def html_table(list, headers, summary=None):
         r += (row(p.join([str(s) for s in l])),)
     r = '<table>\n' + '\n'.join(r) + '\n</table>'
     if summary:
-        r = """<details>
-        <summary>%s</summary>
-        %s
-        </details>
-        """ % (
-            summary,
-            r,
-        )
-
+        r = details(r, summary)
     return 'MARKDOWN:\n' + r
 
 
