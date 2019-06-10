@@ -45,14 +45,10 @@ class TestChapter1:
 
         This "README.md" was built into [this](./.README.tmpl.md) template,
         where [title:html comment style placeholders,fmatch:.README.tmpl.md,show_raw:True]<SRC>
-        had been replaced while running pytest on this testfile:
+        had been replaced while running pytest on [test_tutorial](./tests/test_tutorial.py).
 
-        <from_file: %s>
 
-        """ % (
-            __file__,
-        )
-
+        """
         p2m.md(t)
         p2m.md(
             """
@@ -101,7 +97,7 @@ class TestChapter1:
         > If the string 'breakpoint' occurs in a function body, we won't redirect
         standardout for displaying output.
 
-        # Tools
+        # Features
 
         ## html_table
 
@@ -123,21 +119,9 @@ class TestChapter1:
 
         doc_src()
 
-    def test_toc(self):
-        p2m.md(
-            """
-        ## TOC
-
-            p2m.write_markdown(with_source_ref=True, make_toc=True)
-
-        See this tutorial.
-
-        """
-        )
-
     def test_file_create_show(self):
         p2m.md('## sh_file')
-        fn = '/tmp/' + str(uuid4())
+        fn = '/tmp/test_file.json'
         ts = time.ctime()
         c = json.dumps({'a': [{'testfile': 'created'}, 'at', ts]}, indent=4)
 
@@ -190,6 +174,18 @@ class TestChapter1:
 
         doc_src()
 
+    def test_toc_making(self):
+        p2m.md(
+            """
+        ## Table of Contents
+
+            p2m.write_markdown(with_source_ref=True, make_toc=True)
+
+        See this tutorial.
+
+        """
+        )
+
     def test_mdtool(self):
         md = """
         # Link Replacements
@@ -205,7 +201,7 @@ class TestChapter1:
         ```
 
 
-        Other example: This [pytest2md]<SRC> link was created by replacing "SRC" with the path
+        Other example: This [test_tutorial.py]<SRC> link was created by replacing "SRC" with the path
         to a file matching, under a given directory, prefixed by an arbitrary base URL.
 
         ## Spec

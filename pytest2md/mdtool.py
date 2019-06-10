@@ -465,12 +465,15 @@ def make_toc(ctx, add_change_log=None, **kw):
     while lines:
         line = lines.pop(0)
         r.append(line)
-        for code in '```', '    ':
-            if line.startswith(code):
-                while lines:
-                    r.append(lines.pop(0))
-                    if r[-1].startswith(code):
-                        break
+        if line.startswith('```'):
+            while lines:
+                r.append(lines.pop(0))
+                if r[-1].startswith('```'):
+                    break
+        if line.startswith('    '):
+            while lines and lines[0].startswith('    '):
+                r.append(lines.pop(0))
+
         if line.startswith('#'):
             back_ref_id += 1
             lev, h = line.split(' ', 1)
