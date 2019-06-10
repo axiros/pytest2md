@@ -37,6 +37,7 @@ before_install:
   - "echo 'starting'"
   - "echo $PYTHONPATH"
   - pip install codecov
+  - pip install ansi2html # for the bash_run into_file=....html feature
   #- sudo pip install -U attrs structlog nose appdirs funcsigs colorama
   #- sudo python setup.py install
 

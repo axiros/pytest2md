@@ -310,7 +310,14 @@ def write_markdown(
 # ------------------------------------------- Markdown Generation API Functions
 
 
-def md(paras, ctx, into=nothing, test_func_frame=None, summary=None):
+def md(
+    paras,
+    ctx,
+    into=nothing,
+    test_func_frame=None,
+    summary=None,
+    no_sh_func_output=False,
+):
     """adds generated markdown into our context"""
     # get a hold on the test function currently executed, to be able, to
     # find and run pyrun <funcfname> statements:
@@ -323,7 +330,12 @@ def md(paras, ctx, into=nothing, test_func_frame=None, summary=None):
     parts = paras[0].split('\npyrun: ')
     after = parts.pop(0)
     if parts:
-        r = run_pyrun_funcs(parts, test_func_frame, ctx=ctx)
+        r = run_pyrun_funcs(
+            parts,
+            test_func_frame,
+            ctx=ctx,
+            no_sh_func_output=no_sh_func_output,
+        )
         after += r
 
     paras = [after]
@@ -376,21 +388,27 @@ def bash_run(
     orig_cmd = cmds[0]['cmd']
     if not res_as and orig_cmd.startswith('python -c'):
         res_as = python
-    D = ctx['d_assets']
+    d_ass = ctx['d_assets']
     into_file_res = []
     if into_file:
-        dl = ctx['d_assets'] + '/logs'
+        dl = d_ass + '/bash_run_outputs'
         if not exists(dl):
             os.system('mkdir -p "%s"' % dl)
         fn_into = dl + '/%s' % into_file
 
     for c in cmds:
         cmd = c['cmd']
-        fncmd = cmd if no_cmd_path else (D + cmd)
+        fncmd = cmd if no_cmd_path else (d_ass + '/' + cmd)
         # run it:
         if into_file:
-            _ = fncmd + '> "%s" 2>&1' % fn_into
-            print('Running', _)
+            if into_file.endswith('.html'):
+                _ = fncmd + ' 2>&1 | ansi2html > "%s"' % fn_into
+            else:
+                _ = fncmd + '> "%s" 2>&1' % fn_into
+            # don't generate output which would be shown in the markdown
+            # this is for the user running the tests, so that he can tail
+            # the file for long running commands:
+            print('Running', _, '...')
             sp.Popen(_, shell=True).communicate()
         else:
             res = c['res'] = sp.getoutput(fncmd)
@@ -398,12 +416,13 @@ def bash_run(
             fncmd = fncmd.replace(no_show_in_cmd, '')
         # .// -> when there is no_cmd_path we would get that, ugly:
         # this is just for md output, not part of testing:
-        c['cmd'] = fncmd.replace(D, './').strip().replace('.//', './')
+        c['cmd'] = fncmd.replace(d_ass, './').strip().replace('.//', './')
         if into_file:
-            # just a few lines, rest in log:
-            msg = '\n...(output truncated - see link below)\n'
-            with os.popen('head -n 5 "%s"' % fn_into) as fd:
-                c['res'] = fd.read() + msg
+            if not into_file.endswith('.html'):
+                # just a few lines, rest in log:
+                msg = '\n...(output truncated - see link below)\n'
+                with os.popen('head -n 5 "%s"' % fn_into) as fd:
+                    c['res'] = fd.read() + msg
             fn = fn_into.replace(ctx['d_repo_base'], '.')
             into_file_res.append([c['cmd'], fn])
 
@@ -412,13 +431,21 @@ def bash_run(
     md(r, into=res_as if res_as else bash, summary=summary, ctx=ctx)
     # show links of the output logs:
     for cmd, fn in into_file_res:
-        md('- [Output](%s) of `%s`  \n' % (fn, cmd), ctx=ctx)
+        if fn.endswith('.html'):
+            md('\n[%s](%s)\n' % (cmd, fn), ctx=ctx)
+        else:
+            md('- [Output](%s) of `%s`  \n' % (fn, cmd), ctx=ctx)
     if into_file_res:
         md('\n', ctx=ctx)
     return cmds
 
 
-def sh_file(fn, lang='python', content=None, ctx=None):
+import shutil
+
+
+def sh_file(
+    fn, lang='python', content=None, summary=None, as_link=None, ctx=None
+):
     ex = exists(fn)
     if not ex and not content:
         raise Exception('not found', fn)
@@ -434,7 +461,20 @@ def sh_file(fn, lang='python', content=None, ctx=None):
     FN = abspath(fn).rsplit('/', 1)[1]
     content = ('$ cat "%s"' % FN) + '\n' + content
     content = as_lang(content, lang)
-    md(content, ctx=ctx)
+    if summary:
+        content = details(content, summary)
+    if as_link:
+        d_ass = ctx['d_assets']
+        dl = d_ass + '/sh_files'
+        if not exists(dl):
+            os.system('mkdir -p "%s"' % dl)
+        fn_into = dl + '/%s' % FN
+        shutil.copyfile(fn, fn_into)
+        n = FN if as_link == True else as_link
+        fn = fn_into.replace(ctx['d_repo_base'], '.')
+        md('\n[%s](%s)\n' % (n, fn), ctx=ctx)
+    else:
+        md(content, ctx=ctx)
     return content
 
 
@@ -445,7 +485,7 @@ def sh_code(func, ctx=None):
 _print_redir_lock = threading.RLock()
 
 
-def run_pyrun_funcs(blocks, test_func_frame, ctx):
+def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
     r = []
     printed = Printed()
     for b in blocks:
@@ -474,17 +514,18 @@ def run_pyrun_funcs(blocks, test_func_frame, ctx):
             finally:
                 sys.stdout = o
                 sys.stderr = e
-        so = ''.join(printed.stdout)
-        if so:
-            if so.startswith('MARKDOWN:'):
-                so = so.replace('MARKDOWN:', '\n')
-            elif not so.lstrip().startswith('```'):
-                so = '\nOutput:\n\n```\n' + so.rstrip() + '\n```'
-            # we should to the user as test output:
-            # not only bury into markdown
-            if not 'breakpoint' in s:
-                print(so)
-            s += so
+        if not no_sh_func_output:
+            so = ''.join(printed.stdout)
+            if so:
+                if so.startswith('MARKDOWN:'):
+                    so = so.replace('MARKDOWN:', '\n')
+                elif not so.lstrip().startswith('```'):
+                    so = '\nOutput:\n\n```\n' + so.rstrip() + '\n```'
+                # we should to the user as test output:
+                # not only bury into markdown
+                if not 'breakpoint' in s:
+                    print(so)
+                s += so
         r.append(s)
     return '\n'.join(r)
 
@@ -495,7 +536,7 @@ def _is_outer_func_def(line):
     )
 
 
-def md_from_source_code(ctx):
+def md_from_source_code(ctx, pre_md='', no_sh_func_output=False):
     """Called from within test func blocks. Just a convience wrapper around
     adding 'pyrun: <funcname>' on every func to be run - we run all defined.
     We run the functions one by one and replace their source within.
@@ -507,13 +548,13 @@ def md_from_source_code(ctx):
     mdsrc = dedent(inspect.getsource(test_func_frame.f_code).split(':', 1)[1])
     lines = mdsrc.splitlines()
     # find text versus code lines:
-    r = []
+    r = ['', pre_md] if pre_md else []
 
     while lines:
         orig_line = lines.pop(0)
         line = orig_line.strip()
         # the conversion instruction has to be at the end:
-        if 'md_from_source_code' in line:
+        if 'md_from_source_code(' in line:
             break
         if not line:
             r.append(line)
@@ -542,7 +583,14 @@ def md_from_source_code(ctx):
             func_name = line[4:].split('(', 1)[0]
             # a simple name is enough, since the source code is in the locals
             # our test func, under the key of its name:
-            r.append(run_pyrun_funcs([func_name], test_func_frame, ctx))
+            r.append(
+                run_pyrun_funcs(
+                    [func_name],
+                    test_func_frame,
+                    ctx,
+                    no_sh_func_output=no_sh_func_output,
+                )
+            )
             while lines:
                 # remove all source code:
                 if lines[0].startswith(' ') or not lines[0]:
@@ -551,8 +599,12 @@ def md_from_source_code(ctx):
                     # one \n at the end:
                     r.append('')
                     break
-
-    return md('\n'.join(r), ctx, test_func_frame=test_func_frame)
+    return md(
+        '\n'.join(r),
+        ctx,
+        test_func_frame=test_func_frame,
+        no_sh_func_output=no_sh_func_output,
+    )
 
 
 def as_json(d):
