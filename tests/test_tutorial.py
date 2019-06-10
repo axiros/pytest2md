@@ -146,8 +146,8 @@ class TestChapter1:
         def br():
             run = partial(p2m.bash_run, no_cmd_path=True)
             # by default we search in assets for the command to run:
+            # errors have to be redirected:
             res = p2m.bash_run('some_command_in_assets arg1 2>&1')
-            assert 'No such file' in res[0]['res']
             res = run('cat /etc/hostname | grep local | head -n 1')
             assert 'local' in res[0]['res']
             res = run('cat /etc/hostname', into_file='bash_run.txt')
