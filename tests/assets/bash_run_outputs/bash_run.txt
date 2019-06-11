@@ -1,9 +1,11 @@
-total 112
-drwxr-xr-x. 3 root root  4096 Jun 11 01:05 pytest2md
-drwxr-xr-x. 8 root root  4096 Jun 11 01:05 .git
--rw-r--r--. 1 root root 12594 Jun 11 00:49 README.md
-drwxr-xr-x. 4 root root  4096 Jun 11 00:49 tests
-drwxr-xr-x. 9 root root  4096 Jun 11 00:45 .
+total 116
+drwxr-xr-x. 8 root root  4096 Jun 11 04:07 .git
+drwxr-xr-x. 4 root root  4096 Jun 11 04:07 tests
+-rw-r--r--. 1 root root 14039 Jun 11 04:06 README.md
+drwxr-xr-x. 9 root root  4096 Jun 11 03:23 .
+-rw-r--r--. 1 root root  1223 Jun 11 03:23 .r.py.un~
+drwxr-xr-x. 3 root root  4096 Jun 11 03:21 pytest2md
+drwxr-xr-x. 7 root root  4096 Jun 11 01:46 ..
 -rw-r--r--. 1 root root 17763 Jun 11 00:45 ..README.tmpl.md.un~
 -rw-r--r--. 1 root root  2025 Jun 11 00:45 .README.tmpl.md
 drwxr-xr-x. 3 root root  4096 Jun 10 19:39 docs
@@ -12,7 +14,6 @@ drwxr-xr-x. 3 root root  4096 Jun 10 19:39 docs
 -rw-r--r--. 1 root root  1446 Jun 10 19:33 .setup.py.un~
 -rw-r--r--. 1 root root  1933 Jun 10 19:33 setup.py
 drwxr-xr-x. 3 root root  4096 Jun 10 17:13 .pytest_cache
-drwxr-xr-x. 6 root root  4096 Jun  9 23:57 ..
 drwxr-xr-x. 2 root root  4096 Jun  9 21:34 pytest2md.egg-info
 -rw-r--r--. 1 root root   425 Jun  9 21:32 tox.ini
 -rwxr-xr-x. 1 root root   636 Jun  9 21:32 pip_up.sh

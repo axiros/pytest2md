@@ -189,6 +189,16 @@ class P2M:
         self.write_markdown = partial(write_markdown, ctx=C)
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
+        MdInline.bash = partial(self.bash_run, no_cmd_path=True, add_md=False)
+
+
+class MdInline:
+    """Funcs which can be supplied inline:
+    <bash: ls /etc>
+    (further funcs can be set by the user into this)
+    """
+
+    pass
 
 
 class Printed:
@@ -342,12 +352,17 @@ def md(
 
     paras = [after]
 
-    def repl(l, lctx=lctx):
+    def repl(l, lctx=lctx, ctx=ctx):
         if '```' in l:
             lctx['in_code_block'] = not lctx['in_code_block']
+        ls = l.lstrip()
+        if not ls.startswith('<') or not ':' in l:
+            return l
 
-        ff = '<from_file: '
-        if l.strip().startswith(ff):
+        md_inline_cmd, args = ls[1:].split(':', 1)
+        # todo: do this via MdInline:
+        if md_inline_cmd == 'from_file':
+            ff = '<from_file: '
             pre, post = l.split(ff, 1)
             fn, post = post.rsplit('>', 1)
             if not fn.startswith('/'):
@@ -361,8 +376,21 @@ def md(
                     s = python(s)
                 else:
                     s = code % s
-            l = pre + s + post
-        return l
+            res = pre + s + post
+        else:
+            f = getattr(MdInline, md_inline_cmd, None)
+            if not f:
+                return l
+            args = args.strip()[:-1].rstrip()  # remove last '>'
+            if not args or args[0] not in ('{', '['):
+                args = [args]
+            else:
+                args = json.loads(args)
+            if isinstance(args, list):
+                res = f(*args)
+            else:
+                res = f(**args)
+        return res
 
     r = '\n'.join([repl(l) for para in paras for l in para.splitlines()])
     r = into(r)
@@ -378,6 +406,7 @@ def bash_run(
     no_show_in_cmd='',
     summary=None,
     into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
+    add_md=True,
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
@@ -429,16 +458,20 @@ def bash_run(
             into_file_res.append([c['cmd'], fn])
 
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
+    into = res_as if res_as else bash
+    if not add_md:
+        r = into(r)
+        if summary:
+            r = details(r, summary)
+        return r
 
-    md(r, into=res_as if res_as else bash, summary=summary, ctx=ctx)
+    md(r, into=into, summary=summary, ctx=ctx)
     # show links of the output logs:
     for cmd, fn in into_file_res:
         if fn.endswith('.html'):
-            md('\n[%s](%s)\n' % (cmd, fn), ctx=ctx)
+            md('\n[%s](%s)\n\n' % (cmd, fn), ctx=ctx)
         else:
-            md('- [Output](%s) of `%s`  \n' % (fn, cmd), ctx=ctx)
-    if into_file_res:
-        md('\n', ctx=ctx)
+            md('- [Output](%s) of `%s`  \n\n' % (fn, cmd), ctx=ctx)
     return cmds
 
 
