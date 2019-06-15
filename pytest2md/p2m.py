@@ -400,6 +400,23 @@ def md(
     ctx['md'].append(r)
 
 
+def _bash_run_cmd_structure(c):
+    if isinstance(c, str):
+        return {'cmd': c, 'res': ''}
+    elif isinstance(c, (list, tuple)):
+        # run([['ls /etc', 'hosts'], ['ps ax', 'systemd']])
+        return {'cmd': c[0], 'res': '', 'assert': c[1]}
+    else:
+        raise Exception('Err: not support command structure', cmd)
+
+
+def _bash_run_check_asserts(c):
+    ass = c.get('assert')
+    if ass is not None:
+        if not ass in c['res']:
+            raise Exception('Assertion violation in bash_run:', c)
+
+
 def bash_run(
     cmd,
     res_as=None,
@@ -413,10 +430,14 @@ def bash_run(
     """runs unix commands, then writes results into the markdown"""
     if isinstance(cmd, str):
         cmds = [{'cmd': cmd, 'res': ''}]
+
     elif isinstance(cmd, list):
-        cmds = [{'cmd': c, 'res': ''} for c in cmd]
+
+        cmds = [_bash_run_cmd_structure(c) for c in cmd]
+
     else:
         cmds = cmd
+
     orig_cmd = cmds[0]['cmd']
     if not res_as and orig_cmd.startswith('python -c'):
         res_as = python
@@ -444,6 +465,7 @@ def bash_run(
             sp.Popen(_, shell=True).communicate()
         else:
             res = c['res'] = sp.getoutput(fncmd)
+
         if no_show_in_cmd:
             fncmd = fncmd.replace(no_show_in_cmd, '')
         # .// -> when there is no_cmd_path we would get that, ugly:
@@ -459,14 +481,16 @@ def bash_run(
             into_file_res.append([c['cmd'], fn])
 
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
+    [_bash_run_check_asserts(c) for c in cmds]
     into = res_as if res_as else bash
     if not add_md:
         r = into(r)
         if summary:
             r = details(r, summary)
         return r
+    else:
+        md(r, into=into, summary=summary, ctx=ctx)
 
-    md(r, into=into, summary=summary, ctx=ctx)
     # show links of the output logs:
     for cmd, fn in into_file_res:
         if fn.endswith('.html'):
