@@ -279,6 +279,14 @@ class TestWriteMarkdown(unittest.TestCase):
         os.unlink('/tmp/foo.md') if os.path.exists('/tmp/foo.md') else 0
         self.p2m = p2mm.P2M(__file__, fn_target_md='/tmp/foo.md')
         self.run = partial(self.p2m.bash_run, no_cmd_path=True)
+        self.old_mlf = os.environ.get('MD_LINKS_FOR')
+
+    def tearDown(self):
+        if self.old_mlf is None:
+            if 'MD_LINKS_FOR' in os.environ:
+                del os.environ['MD_LINKS_FOR']
+        else:
+            os.environ['MD_LINKS_FOR'] = self.old_mlf
 
     def test_write_md_1(self):
         self.p2m.ctx['md'] = ['# h1', 'hi']
@@ -333,7 +341,6 @@ hi[%s][%s.py] [nix]
             this,
         )
         assert md.strip() == l.strip()
-        os.environ['MD_LINKS_FOR'] = ''
 
     def test_link_match_only(self):
         foo = '1555854118.9871481555854118.9871481555854118.987148'
@@ -358,7 +365,6 @@ check [test_basics][test_basics.py#%s] that
             (nr, nr, this, nr)
         )
         assert l.strip() == md.strip()
-        os.environ['MD_LINKS_FOR'] = ''
 
 
 class TestLinks(unittest.TestCase):

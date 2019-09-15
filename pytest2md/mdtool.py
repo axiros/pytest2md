@@ -268,7 +268,7 @@ class MDTool(ChangeLogWriter):
 
         C['src_link_tmpl_name'] = C['src_link_tmpl_name'] or 'static'
         print('Rendering links for', src_link_tmpl_name)
-        if not os.environ.get('NOLINKREPL'):
+        if 1 or not os.environ.get('NOLINKREPL'):
             init_src_link_tmpl(ctx=C)
 
         self.do_set_links = partial(do_set_links, ctx=C)

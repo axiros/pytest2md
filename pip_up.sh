@@ -12,7 +12,7 @@ git commit -am 'pre_pypi_upload'
 #slt="$slt/%(file)s%(#Lline)s"
 echo "Setting links..."
 mdtool set_links src_link_tmpl="github" md_file="README.md"
-git commit --amend -am 'reame links auto replaced'
+git commit --amend -am 'links auto replaced'
 git push
 
 clean () {
