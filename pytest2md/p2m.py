@@ -94,7 +94,7 @@ def details(md=None, summary='details'):
 # fmt: off
 nothing  = lambda s: s
 python   = lambda s: code.replace('code', 'python')   % s
-javascript = js  = json = lambda s: code.replace('code', 'javascript')   % s
+javascript = js  = lambda s: code.replace('code', 'javascript')   % s
 bash     = lambda s: code.replace('code', 'bash')     % s
 markdown = lambda s: code.replace('code', 'markdown') % (s.replace('```', "``"))
 as_lang  = lambda s, lang: code.replace('code', lang) % s

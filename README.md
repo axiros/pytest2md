@@ -78,7 +78,7 @@ $ cat "/etc/hosts" | grep localhost
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ```
 ```bash
-$ ls "/root/git/pytest2md/tests"
+$ ls "/home/gk/repos/pytest2md/tests"
 assets
 __pycache__
 test_basics.py
@@ -86,7 +86,7 @@ test_changelog.py
 test_tutorial.py
 
 $ ls -lta /etc/hosts
--rw-r--r--. 1 root root 158 Apr  9 09:47 /etc/hosts
+-rw-r--r--. 1 root root 286 Jul 22 12:08 /etc/hosts
 ```
 
 
@@ -149,7 +149,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Jun 11 04:07:17 2019"
+        "Sun Sep 15 17:39:19 2019"
     ]
 }
 ```
@@ -164,7 +164,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Jun 11 04:07:17 2019"
+        "Sun Sep 15 17:39:19 2019"
     ]
 }
 ```
@@ -191,19 +191,19 @@ p2m.sh_file(fn, lang='javascript', content=c, as_link='as link')
 ## <a href="#toc5">bash_run</a>
 ```bash
 $ ./some_command_in_assets arg1 2>&1
-/bin/sh: /root/git/pytest2md/tests/assets/some_command_in_assets: No such file or directory
+/bin/sh: /home/gk/repos/pytest2md/tests/assets/some_command_in_assets: No such file or directory
 ```
 ```bash
 $ ls -lta | grep total | head -n 1
-total 116
+total 84
 ```
 ```bash
 $ ls -lta
-total 116
-drwxr-xr-x. 8 root root  4096 Jun 11 04:07 .git
-drwxr-xr-x. 4 root root  4096 Jun 11 04:07 tests
--rw-r--r--. 1 root root 14039 Jun 11 04:06 README.md
-drwxr-xr-x. 9 root root  4096 Jun 11 03:23 .
+total 84
+-rw-r--r--.  1 gk armynyus 14048 Sep 15 17:39 README.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 15 17:38 .git
+drwxr-xr-x.  2 gk armynyus  4096 Sep 15 17:13 pytest2md.egg-info
+drwxr-xr-x.  9 gk armynyus  4096 Sep 15 17:13 .
 
 ...(output truncated - see link below)
 ```
@@ -265,11 +265,11 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 
 ```bash
 $ cd /etc; ls -lta | head -n 5
-total 1900
-drwxr-xr-x. 128 root     root      12288 Jun  9 21:11 .
--rw-r--r--.   1 root     root         74 Jun  9 21:11 resolv.conf
-drwxr-xr-x.   2 root     root       4096 Jun  9 21:08 default
--rw-r--r--.   1 root     root      75553 Jun  9 02:50 ld.so.cache
+total 2240
+drwxr-xr-x. 156 root root     12288 Sep 13 19:32 .
+-rw-r--r--.   1 root root        67 Sep 13 19:32 resolv.conf
+-rw-r--r--.   1 root root    124464 Sep  9 08:29 ld.so.cache
+drwxr-xr-x.   2 root root      4096 Sep  6 09:58 w3m
 ```
 
 Default inline functions:  
@@ -490,8 +490,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/4be4d0392827d564ee76a1ed32c72a991d947930/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/4be4d0392827d564ee76a1ed32c72a991d947930/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/4be4d0392827d564ee76a1ed32c72a991d947930/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/4be4d0392827d564ee76a1ed32c72a991d947930/tests/test_tutorial.py
-[test_tutorial.py#318]: https://github.com/axiros/pytest2md/blob/4be4d0392827d564ee76a1ed32c72a991d947930/tests/test_tutorial.py#L318
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/5a0cbfac0b2a649e0bb9f1aaf0746dbd94837362/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/5a0cbfac0b2a649e0bb9f1aaf0746dbd94837362/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/5a0cbfac0b2a649e0bb9f1aaf0746dbd94837362/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/5a0cbfac0b2a649e0bb9f1aaf0746dbd94837362/tests/test_tutorial.py
+[test_tutorial.py#318]: https://github.com/axiros/pytest2md/blob/5a0cbfac0b2a649e0bb9f1aaf0746dbd94837362/tests/test_tutorial.py#L318
