@@ -1,6 +1,7 @@
 total 80
+-rw-r--r--.  1 gk armynyus  2025 Sep 15 21:51 .README.tmpl.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 15 21:51 .git
 drwxr-xr-x.  8 gk armynyus  4096 Sep 15 21:50 .
-drwxr-xr-x.  8 gk armynyus  4096 Sep 15 21:50 .git
 -rw-r--r--.  1 gk armynyus 14039 Sep 15 21:50 README.md
 -rwxr-xr-x.  1 gk armynyus   630 Sep 15 20:15 pip_up.sh
 drwxr-xr-x.  3 gk armynyus  4096 Sep 15 13:17 pytest2md
@@ -15,4 +16,3 @@ drwxr-xr-x.  2 gk armynyus  4096 Sep 15 12:37 assets
 -rw-r--r--.  1 gk armynyus    77 Sep 15 12:37 MANIFEST.in
 -rw-r--r--.  1 gk armynyus  1437 Sep 15 12:37 .travis.yml
 -rw-r--r--.  1 gk armynyus  1214 Sep 15 12:37 .gitignore
--rw-r--r--.  1 gk armynyus  2025 Sep 15 12:37 .README.tmpl.md
