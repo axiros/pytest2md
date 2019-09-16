@@ -11,6 +11,7 @@ import subprocess as sp
 import threading
 import inspect
 import pytest
+import socket
 import time
 import json
 import sys
@@ -191,7 +192,10 @@ class P2M:
         self.write_markdown = partial(write_markdown, ctx=C)
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
-        MdInline.bash = partial(self.bash_run, no_cmd_path=True, add_md=False)
+        MdInline.bash = partial(
+            self.bash_run, no_cmd_path=True, md_insert=False
+        )
+        MdInline.sh_file = partial(self.sh_file, md_insert=False)
 
 
 class MdInline:
@@ -368,7 +372,7 @@ def md(
             pre, post = l.split(ff, 1)
             fn, post = post.rsplit('>', 1)
             if not fn.startswith('/'):
-                fn = self.ctx['d_assets'] + fn
+                fn = ctx['d_assets'] + fn
             if not exists(fn):
                 s = l
             else:
@@ -384,10 +388,14 @@ def md(
             if not f:
                 return l
             args = args.strip()[:-1].rstrip()  # remove last '>'
-            if not args or args[0] not in ('{', '['):
+            if not args:
                 args = [args]
-            else:
+            elif args[0] in ('{', '['):
                 args = json.loads(args)
+            elif ',' in args and ':' in args:
+                args = mdtool.to_dict(args)
+            else:
+                args = [args]
             if isinstance(args, list):
                 res = f(*args)
             else:
@@ -425,7 +433,7 @@ def bash_run(
     no_show_in_cmd='',
     summary=None,
     into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
-    add_md=True,
+    md_insert=True,
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
@@ -484,7 +492,8 @@ def bash_run(
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
     [_bash_run_check_asserts(c) for c in cmds]
     into = res_as if res_as else bash
-    if not add_md:
+    # when we have an inline func we want the content only:
+    if not md_insert:
         r = into(r)
         if summary:
             r = details(r, summary)
@@ -505,7 +514,13 @@ import shutil
 
 
 def sh_file(
-    fn, lang='python', content=None, summary=None, as_link=None, ctx=None
+    fn,
+    lang='python',
+    content=None,
+    summary=None,
+    as_link=None,
+    ctx=None,
+    md_insert=True,
 ):
     ex = exists(fn)
     if not ex and not content:
@@ -533,8 +548,8 @@ def sh_file(
         shutil.copyfile(fn, fn_into)
         n = FN if as_link == True else as_link
         fn = fn_into.replace(ctx['d_repo_base'], '.')
-        md('\n[%s](%s)\n' % (n, fn), ctx=ctx)
-    else:
+        content = '\n[%s](%s)\n' % (n, fn)
+    if md_insert:
         md(content, ctx=ctx)
     return content
 
@@ -597,16 +612,20 @@ def _is_outer_func_def(line):
     )
 
 
-def md_from_source_code(ctx, pre_md='', no_sh_func_output=False):
+def md_from_source_code(ctx, pre_md='', no_sh_func_output=False, repl=None):
     """Called from within test func blocks. Just a convience wrapper around
     adding 'pyrun: <funcname>' on every func to be run - we run all defined.
     We run the functions one by one and replace their source within.
     then hand over to the .md function:
 
+    repl is a simple pre parse replacement dict.
     """
     test_func_frame = sys._getframe().f_back
     # removes the test function itself and de-indents the text block:
     mdsrc = dedent(inspect.getsource(test_func_frame.f_code).split(':', 1)[1])
+    if repl:
+        for k, v in repl.items():
+            mdsrc = mdsrc.replace(k, v)
     lines = mdsrc.splitlines()
     # find text versus code lines:
     r = ['', pre_md] if pre_md else []
@@ -694,6 +713,31 @@ def convert_to_staticmethods(cls):
     c = callable
     meths = [(k, meth) for k, meth in meths if k[:2] != '__' and c(meth)]
     [setattr(cls, k, staticmethod(f.__func__ if PY2 else f)) for k, f in meths]
+
+
+def wait_for_port(port, host='localhost', timeout=5.0):
+    """
+    Utility:
+    Wait until a port starts accepting TCP connections.
+    Args:
+        port (int): Port number.
+        host (str): Host address on which the port should exist.
+        timeout (float): In seconds. How long to wait before raising errors.
+    Raises:
+        TimeoutError: The port isn't accepting connection after time specified in `timeout`.
+    """
+    start_time = time.perf_counter()
+    while True:
+        try:
+            with socket.create_connection((host, port), timeout=timeout):
+                break
+        except OSError as ex:
+            time.sleep(0.03)
+            if time.perf_counter() - start_time >= timeout:
+                raise TimeoutError(
+                    'Waited too long for the port {} on host {} to start accepting '
+                    'connections.'.format(port, host)
+                ) from ex
 
 
 # .

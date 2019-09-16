@@ -184,9 +184,9 @@ class TestChapter1:
             """
             Strings can also contain instructions, like this (looked up in p2m.MdInline namespace class)
 
-            <bash: cd /etc; ls -lta | head -n 5>
+            <bash: cd MY_REPL_DIR; ls -lta | head -n 5>
 
-            Default inline functions:
+            Default inline functions (add your own in module headers):
             """
 
             def known():
@@ -198,7 +198,8 @@ class TestChapter1:
                     ]
                 )
 
-            p2m.md_from_source_code()
+            # repl dict simply replaces keys with values before any processing:
+            p2m.md_from_source_code(repl={'MY_REPL_DIR': '/etc'})
 
         some_test_function()
         assert '$ cd /etc' in p2m.ctx['md'][-1]
