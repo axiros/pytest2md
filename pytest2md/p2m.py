@@ -749,7 +749,7 @@ def wait_for_port(port, host='localhost', timeout=5.0):
                 raise TimeoutError(
                     'Waited too long for the port {} on host {} to start accepting '
                     'connections.'.format(port, host)
-                ) from ex
+                )  # from ex
 
 
 # .
