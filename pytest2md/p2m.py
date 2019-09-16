@@ -193,7 +193,10 @@ class P2M:
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
         MdInline.bash = partial(
-            self.bash_run, no_cmd_path=True, md_insert=False
+            self.bash_run,
+            no_cmd_path=True,
+            md_insert=False,
+            assert_success=True,
         )
         MdInline.sh_file = partial(self.sh_file, md_insert=False)
 
@@ -434,6 +437,7 @@ def bash_run(
     summary=None,
     into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
     md_insert=True,
+    assert_success=False,  # currently only for non into_file commands
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
@@ -462,6 +466,7 @@ def bash_run(
         cmd = c['cmd']
         fncmd = cmd if no_cmd_path else (d_ass + '/' + cmd)
         # run it:
+
         if into_file:
             if into_file.endswith('.html'):
                 _ = fncmd + ' 2>&1 | ansi2html > "%s"' % fn_into
@@ -472,8 +477,15 @@ def bash_run(
             # the file for long running commands:
             print('Running', _, '...')
             sp.Popen(_, shell=True).communicate()
+
         else:
+            if assert_success:
+                fncmd += ' || echo CMD_RUN_ERROR '
             res = c['res'] = sp.getoutput(fncmd)
+            fncmd = fncmd.replace(' || echo CMD_RUN_ERROR ', '')
+
+            if assert_success and 'CMD_RUN_ERROR' in res:
+                raise Exception('Command run error: %s %s' % (fncmd, res))
 
         if no_show_in_cmd:
             fncmd = fncmd.replace(no_show_in_cmd, '')
