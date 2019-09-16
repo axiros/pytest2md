@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
+expl='
+We have to commit once before setting links, in order to have the hash pointing to the blob with that checksum:
+e.g. such a link can then be generated:
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/bf37bbb1302553d8732713b2ebfb415b27c0616c/pytest2md/mdtool.py
+'
+
 echo "Uploading to pip"
 set -x
-here="$(unset CDPATH && cd "$(dirname "$BASH_SOURCE")" && echo $PWD)"
-cd "$here"
+here="$(unset CDPATH && cd "$(dirname "${BASH_SOURCE[0]}")" && echo "$PWD")"
+cd "$here" || exit 1
 export NOLINKREPL=true
 pytest tests || exit 1
 unset NOLINKREPL
-git commit -am 'pre_pypi_upload'
+git commit -am 'pre_pypi_upload' # to have the commit hash for the links
 #slt="https://github.com/axiros/DevApps/blob/`git rev-parse  HEAD`"
 #slt="$slt/%(file)s%(#Lline)s"
 echo "Setting links..."

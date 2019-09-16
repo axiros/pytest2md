@@ -73,7 +73,8 @@ def d_repo_base(tests_dir):
 
 # ------------------------------------------------------- Creating the Markdown
 
-code = """```code
+code = """
+```code
 %s
 ```"""
 

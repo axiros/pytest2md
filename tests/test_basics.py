@@ -53,7 +53,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
         l = [
-            '\nhi  \nHello  \n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```'
+            '\nhi  \nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```'
         ]
         assert l == md
 
@@ -68,7 +68,9 @@ class TestGenerateMarkdown(unittest.TestCase):
 
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = ['\nHello  \n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```']
+        l = [
+            '\nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```'
+        ]
         assert l == md
 
     def test_from_src_code2_1(self):
@@ -80,7 +82,9 @@ class TestGenerateMarkdown(unittest.TestCase):
         'foo'
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = ['\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```\n\nfoo  ']
+        l = [
+            '\n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```\n\nfoo  '
+        ]
         assert l == md
 
     def test_from_src_code3(self):
@@ -96,7 +100,7 @@ class TestGenerateMarkdown(unittest.TestCase):
 
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = ['\n```python\nprint(42)\n```\nOutput:\n\n```\n42\n```']
+        l = ['\n\n```python\nprint(42)\n```\nOutput:\n\n```\n42\n```']
         assert l == md
 
     def test_from_src_code_printing_markdown(self):
@@ -108,7 +112,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         # the test func gets that "MARKDOWN:" output ususally from a helper
         # func, i.e. user doe not see it, e.g. print(to_html(res))
         l = [
-            '\n```python\nprint("""MARKDOWN: # h1\\ninner""")\n```\n # h1\ninner\n'
+            '\n\n```python\nprint("""MARKDOWN: # h1\\ninner""")\n```\n # h1\ninner\n'
         ]
         assert l == md
 
@@ -125,7 +129,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         l = [
             '\n'
             'foo  \n'
-            '\n'
+            '\n\n'
             '```python\n'
             "print(p2m.as_json({'a': {'b': {'c': 1}}}))\n"
             '```\n'
@@ -166,7 +170,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         l = [
             '\n'
             'foo  \n'
-            '\n'
+            '\n\n'
             '```python\n'
             'print(\n'
             '    p2m.html_table(\n'
@@ -190,7 +194,7 @@ class TestGenerateMarkdown(unittest.TestCase):
             '\n'
             '\n'
             'as details:  \n'
-            '\n'
+            '\n\n'
             '```python\n'
             'print(\n'
             '    p2m.html_table(\n'
@@ -231,7 +235,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         l = [
             '\n'
             'A Py2 tool  \n'
-            '\n'
+            '\n\n'
             '```python\n'
             'class A:\n'
             '    def foo(b):\n'
@@ -255,14 +259,14 @@ class TestGenerateMarkdown(unittest.TestCase):
         assert r[0]['res']
         assert [i for i in r[0].keys()] in (['cmd', 'res'], ['res', 'cmd'])
         md = self.p2m.ctx['md'][0]
-        assert md.startswith('```bash\n')
-        assert 'cat /etc' in md.splitlines()[1]
+        assert md.startswith('\n```bash\n')
+        assert 'cat /etc' in md.splitlines()[2]
         assert md.splitlines()[-1] == '```'
 
     def test_sh_file(self):
         r = self.p2m.sh_file(__file__)
         for r in (r, self.p2m.ctx['md'][0]):
-            assert r.startswith('```python')
+            assert r.startswith('\n```python')
             assert 'test_sh_file' in r
 
     def test_sh_code(self):
@@ -270,7 +274,7 @@ class TestGenerateMarkdown(unittest.TestCase):
             print('42')
 
         r = self.p2m.sh_code(f)
-        l = ["```python\n        def f():\n            print('42')\n\n```"]
+        l = ["\n```python\n        def f():\n            print('42')\n\n```"]
         assert l == self.p2m.ctx['md']
 
 

@@ -406,8 +406,9 @@ def build_src_link(ctx, lnk):
         tmpl = ctx['src_link_tmpl']
 
     # tmpl is the source link template, usually containing /%(path)s/
+    dirmatch = ld.get('dirmatch')
     if '%(path' in tmpl and not 'path' in ld:
-        path = find_path(ld, bd=ctx['d_repo_base'])
+        path = find_path(ld, bd=ctx['d_repo_base'], dirmatch=dirmatch)
         if not path:
             ll('Path not found', **ld)
             return None, None
@@ -496,8 +497,11 @@ def make_toc(ctx, add_change_log=None, **kw):
     return res
 
 
-def find_path(ld, bd):
-    """link dict, base dir"""
+def find_path(ld, bd, dirmatch=None):
+    """
+    link dict, base dir
+    dirmatch is a "contains" filter for found matches.
+    """
     file = ld.get('fmatch')
     if not file:
         return
@@ -506,6 +510,8 @@ def find_path(ld, bd):
         print('Not found', file, 'from', ld, 'builddir', bd)
         return
     elif len(found) > 1:
+        if dirmatch:
+            found = [f for f in found if dirmatch in f]
         # take shortest path to match:
         cur = found[0]
         for l in found[1:]:
