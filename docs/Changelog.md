@@ -30,4 +30,4 @@ $ ./cat "/etc/hosts"
 
 
 <!-- autogenlinks -->
-[p2m.py]: https://github.com/axiros/pytest2md/blob/141513a4f5a83e88edeb77fc32a7027a1d330db6/pytest2md/p2m.py
+[p2m.py]: https://github.com/axiros/pytest2md/blob/f6b235f741e80174d0605eade6daf2921466fdfd/pytest2md/p2m.py
