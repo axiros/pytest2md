@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 expl='
+Change the version in .README.md.tmpl - not in the generated one before calling this.
+
 We have to commit once before setting links, in order to have the hash pointing to the blob with that checksum:
 e.g. such a link can then be generated:
 [mdtool.py]: https://github.com/axiros/pytest2md/blob/bf37bbb1302553d8732713b2ebfb415b27c0616c/pytest2md/mdtool.py
