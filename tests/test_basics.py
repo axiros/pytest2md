@@ -29,6 +29,8 @@ class TestGenerateMarkdown(unittest.TestCase):
         p2mt = p2mm.P2M(__file__, fn_target_md='/tmp/root/docs/foo.md')
 
         assert p2mt.ctx == {
+            'cmd_log': [],
+            'env_exports': {},
             'd_assets': here + '/assets',
             'd_repo_base': base,
             'd_test': here,

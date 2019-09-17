@@ -176,12 +176,17 @@ class P2M:
 
         # the produced markdown:
         C['md'] = []
+        # log for all shell actions:
+        C['cmd_log'] = []
 
         # Generator API:
         self.md_from_source_code = partial(md_from_source_code, ctx=C)
         self.md = partial(md, ctx=C)
         self.bash_run = partial(bash_run, ctx=C)
+
         self.sh_file = partial(sh_file, ctx=C)
+        C['env_exports'] = {}
+        self.export = partial(export, ctx=C)
         # tools for the functions:
         self.sh_code = partial(sh_code, ctx=C)
         self.as_json = as_json
@@ -199,6 +204,12 @@ class P2M:
             assert_success=True,
         )
         MdInline.sh_file = partial(self.sh_file, md_insert=False)
+
+
+def export(key, val, ctx):
+    ctx['env_exports'][key] = val
+    ctx['cmd_log'].append('export %s="%s"' % (key, val))
+    os.environ[key] = val
 
 
 class MdInline:
@@ -264,6 +275,7 @@ def write_markdown(
     with_source_ref=False,
     no_link_repl=False,
     make_toc=True,
+    make_cmd_log=True,
     no_write=False,
     ctx=None,
 ):
@@ -274,6 +286,13 @@ def write_markdown(
     # src = sys._getframe().f_back.f_code
     if isinstance(ctx['md'], str):
         ctx['md'] = [ctx['md']]
+
+    if make_cmd_log:
+        cl = ctx['cmd_log']
+        if cl:
+            cl = bash('\n'.join(cl))
+            d = details(cl, 'Command Summary')
+            ctx['md'].append('\n\n%s\n' % d)
 
     if with_source_ref:
         msg = (
@@ -315,8 +334,9 @@ def write_markdown(
     if make_toc:
         if not isinstance(make_toc, dict):
             make_toc = {}
-        ctx['md'] = mdt.make_toc(**make_toc)
-        mdt.ctx['md'] = ctx['md']
+        mdt.ctx['md'] = ctx['md'] = mdt.make_toc(**make_toc)
+        # mdt.ctx['md'] = ctx['md']
+
     if no_write:
         return ctx['md']
     f = ctx['fn_target_md']
@@ -422,11 +442,22 @@ def _bash_run_cmd_structure(c):
         raise Exception('Err: not support command structure', cmd)
 
 
-def _bash_run_check_asserts(c):
+def _bash_run_check_asserts(c, ctx):
     ass = c.get('assert')
     if ass is not None:
         if not ass in c['res']:
+            dump_cmd_log(ctx)
             raise Exception('Assertion violation in bash_run:', c)
+
+
+def dump_cmd_log(ctx):
+    cl = ctx['cmd_log']
+    if not cl:
+        return
+    print('\nCommand log to this point\n', '=' * 80)
+    for l in ctx['cmd_log']:
+        print(l)
+    print('=' * 80)
 
 
 def bash_run(
@@ -465,6 +496,7 @@ def bash_run(
     for c in cmds:
         cmd = c['cmd']
         fncmd = cmd if no_cmd_path else (d_ass + '/' + cmd)
+        ctx['cmd_log'].append(fncmd)
         # run it:
 
         if into_file:
@@ -485,6 +517,7 @@ def bash_run(
             fncmd = fncmd.replace(' || echo CMD_RUN_ERROR ', '')
 
             if assert_success and 'CMD_RUN_ERROR' in res:
+                dump_cmd_log(ctx)
                 raise Exception('Command run error: %s %s' % (fncmd, res))
 
         if no_show_in_cmd:
@@ -502,7 +535,7 @@ def bash_run(
             into_file_res.append([c['cmd'], fn])
 
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
-    [_bash_run_check_asserts(c) for c in cmds]
+    [_bash_run_check_asserts(c, ctx) for c in cmds]
     into = res_as if res_as else bash
     # when we have an inline func we want the content only:
     if not md_insert:
@@ -727,29 +760,31 @@ def convert_to_staticmethods(cls):
     [setattr(cls, k, staticmethod(f.__func__ if PY2 else f)) for k, f in meths]
 
 
-def wait_for_port(port, host='localhost', timeout=5.0):
-    """
-    Utility:
-    Wait until a port starts accepting TCP connections.
-    Args:
-        port (int): Port number.
-        host (str): Host address on which the port should exist.
-        timeout (float): In seconds. How long to wait before raising errors.
-    Raises:
-        TimeoutError: The port isn't accepting connection after time specified in `timeout`.
-    """
-    start_time = time.perf_counter()
-    while True:
-        try:
-            with socket.create_connection((host, port), timeout=timeout):
-                break
-        except OSError as ex:
-            time.sleep(0.03)
-            if time.perf_counter() - start_time >= timeout:
-                raise TimeoutError(
-                    'Waited too long for the port {} on host {} to start accepting '
-                    'connections.'.format(port, host)
-                )  # from ex
+class util:
+    @staticmethod
+    def wait_for_port(port, host='localhost', timeout=5.0):
+        """
+        Utility:
+        Wait until a port starts accepting TCP connections.
+        Args:
+            port (int): Port number.
+            host (str): Host address on which the port should exist.
+            timeout (float): In seconds. How long to wait before raising errors.
+        Raises:
+            TimeoutError: The port isn't accepting connection after time specified in `timeout`.
+        """
+        start_time = time.perf_counter()
+        while True:
+            try:
+                with socket.create_connection((host, port), timeout=timeout):
+                    break
+            except OSError as ex:
+                time.sleep(0.03)
+                if time.perf_counter() - start_time >= timeout:
+                    raise TimeoutError(
+                        'Waited too long for the port {} on host {} to start accepting '
+                        'connections.'.format(port, host)
+                    )  # from ex
 
 
 # .
