@@ -455,8 +455,10 @@ def dump_cmd_log(ctx):
     if not cl:
         return
     print('\nCommand log to this point\n', '=' * 80)
+    os.system('echo -e "\x1b[1;48;5;245m"')
     for l in ctx['cmd_log']:
         print(l)
+    os.system('echo -e "\x1b[0m"')
     print('=' * 80)
 
 
@@ -469,6 +471,7 @@ def bash_run(
     into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
     md_insert=True,
     assert_success=False,  # currently only for non into_file commands
+    pdb=False,
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
@@ -498,6 +501,11 @@ def bash_run(
         fncmd = cmd if no_cmd_path else (d_ass + '/' + cmd)
         ctx['cmd_log'].append(fncmd)
         # run it:
+        if str(pdb).lower() not in ('none', 'false', '0'):
+            print('pdb is set -> requested break')
+            print('locals at bash_run:')
+            print(json.dumps(locals(), indent=2, sort_keys=True, default=str))
+            breakpoint()
 
         if into_file:
             if into_file.endswith('.html'):
@@ -776,7 +784,7 @@ class util:
         start_time = time.perf_counter()
         while True:
             try:
-                with socket.create_connection((host, port), timeout=timeout):
+                with socket.create_connection((host, port), timeout=0.1):
                     break
             except OSError as ex:
                 time.sleep(0.03)
