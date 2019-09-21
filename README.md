@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Sep 17 12:02:27 2019"
+        "Sat Sep 21 23:55:06 2019"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Sep 17 12:02:27 2019"
+        "Sat Sep 21 23:55:06 2019"
     ]
 }
 ```
@@ -210,10 +210,10 @@ total 80
 ```bash
 $ ls -lta
 total 80
--rw-r--r--.  1 gk armynyus  2025 Sep 17 12:02 .README.tmpl.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 17 12:02 .git
--rw-r--r--.  1 gk armynyus 14538 Sep 17 12:01 README.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 17 01:44 .
+-rw-r--r--.  1 gk armynyus 14539 Sep 21 23:55 README.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 21 23:54 .git
+drwxrwxr-x. 20 gk gk        4096 Sep 17 18:13 ..
+drwxr-xr-x.  8 gk armynyus  4096 Sep 17 12:02 .
 
 ...(output truncated - see link below)
 ```
@@ -281,10 +281,10 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 ```bash
 $ cd /etc; ls -lta | head -n 5
 total 2240
-drwxr-xr-x. 156 root root     12288 Sep 17 11:34 .
--rw-r--r--.   1 root root        67 Sep 17 11:34 resolv.conf
--rw-r--r--.   1 root root    124464 Sep 17 10:38 ld.so.cache
-drwxr-xr-x.   4 root lp        4096 Sep 17 10:08 cups
+drwxr-xr-x. 156 root root     12288 Sep 21 14:26 .
+-rw-r--r--.   1 root root        67 Sep 21 14:26 resolv.conf
+drwxr-xr-x.   5 root root      4096 Sep 19 19:23 systemd
+-rw-r--r--.   1 root root    124464 Sep 19 19:00 ld.so.cache
 ```
 
 Default inline functions (add your own in module headers):  
@@ -526,8 +526,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/53e8a661d83845d29b6d9e378b2ec4de2437516c/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/53e8a661d83845d29b6d9e378b2ec4de2437516c/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/53e8a661d83845d29b6d9e378b2ec4de2437516c/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/53e8a661d83845d29b6d9e378b2ec4de2437516c/tests/test_tutorial.py
-[test_tutorial.py#319]: https://github.com/axiros/pytest2md/blob/53e8a661d83845d29b6d9e378b2ec4de2437516c/tests/test_tutorial.py#L319
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/17def1b8bb732f3b5b924daca0ea21b883bedae6/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/17def1b8bb732f3b5b924daca0ea21b883bedae6/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/17def1b8bb732f3b5b924daca0ea21b883bedae6/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/17def1b8bb732f3b5b924daca0ea21b883bedae6/tests/test_tutorial.py
+[test_tutorial.py#319]: https://github.com/axiros/pytest2md/blob/17def1b8bb732f3b5b924daca0ea21b883bedae6/tests/test_tutorial.py#L319
