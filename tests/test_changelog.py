@@ -17,7 +17,7 @@ import uuid
 p2m = p2m.P2M(__file__, fn_target_md='docs/Changelog.md')
 
 
-# run = partial(p2m.bash_run, no_cmd_path=True)
+# run = partial(p2m.bash_run, cmd_path_from_env=True)
 
 
 class Test1(unittest.TestCase):

@@ -20,7 +20,7 @@ class TestGenerateMarkdown(unittest.TestCase):
     def setUp(self):
         os.unlink('/tmp/foo.md') if os.path.exists('/tmp/foo.md') else 0
         self.p2m = p2mm.P2M(__file__, fn_target_md='/tmp/foo.md')
-        self.run = partial(self.p2m.bash_run, no_cmd_path=True)
+        self.run = partial(self.p2m.bash_run, cmd_path_from_env=True)
 
     def test_init(self):
         os.system('mkdir -p /tmp/root/docs/templates')
@@ -259,7 +259,10 @@ class TestGenerateMarkdown(unittest.TestCase):
         assert len(r) == 1
         assert r[0]['cmd'] == 'cat /etc/hosts'
         assert r[0]['res']
-        assert [i for i in r[0].keys()] in (['cmd', 'res'], ['res', 'cmd'])
+        assert [i for i in r[0].keys()] in (
+            ['cmd', 'res', 'exitcode'],
+            ['res', 'cmd', 'exitcode'],
+        )
         md = self.p2m.ctx['md'][0]
         assert md.startswith('\n```bash\n')
         assert 'cat /etc' in md.splitlines()[2]
@@ -284,7 +287,7 @@ class TestWriteMarkdown(unittest.TestCase):
     def setUp(self):
         os.unlink('/tmp/foo.md') if os.path.exists('/tmp/foo.md') else 0
         self.p2m = p2mm.P2M(__file__, fn_target_md='/tmp/foo.md')
-        self.run = partial(self.p2m.bash_run, no_cmd_path=True)
+        self.run = partial(self.p2m.bash_run, cmd_path_from_env=True)
         self.old_mlf = os.environ.get('MD_LINKS_FOR')
 
     def tearDown(self):

@@ -19,7 +19,7 @@ p2m = pytest2md.P2M(__file__, fn_target_md='README.md')
 
 
 # parametrizing the shell run results:
-run = partial(p2m.bash_run, no_cmd_path=True)
+run = partial(p2m.bash_run, cmd_path_from_env=True)
 
 
 doc_src = partial(
@@ -147,10 +147,16 @@ class TestChapter1:
         md('## bash_run')
 
         def br():
-            run = partial(p2m.bash_run, no_cmd_path=True)
-            # by default we search in assets for the command to run:
-            # errors have to be redirected:
-            res = p2m.bash_run('some_command_in_assets arg1 2>&1')
+            run = partial(p2m.bash_run, cmd_path_from_env=True)
+            # by default we search in normal environ for the command to run
+            # but we provide a switch to search in test assets.
+            # errors are redirected to stdout
+            res = p2m.bash_run(
+                'some_non_existing_command_in_assets arg1',
+                cmd_path_from_env=False,
+                ign_err=True,
+            )
+            assert res[0]['exitcode'] != 0
             res = run('ls -lta | grep total | head -n 1')
             assert 'total' in res[0]['res']
             res = run('ls -lta', into_file='bash_run.txt')

@@ -13,8 +13,12 @@
 <!-- autogen tutorial -->
 
 ```bash
-$ ./cat "/etc/hosts"
-/bin/sh: /home/gk/repos/pytest2md/tests/assets/cat: No such file or directory
+$ cat "/etc/hosts"
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+127.0.0.1   scapp-console.swisscom.com
+127.0.0.1   api.scapp-console.swisscom.com
+127.0.0.1   login.scapp-console.swisscom.com
 ```
 
 
@@ -29,7 +33,7 @@ $ ./cat "/etc/hosts"
 
 
 ```bash
-/home/gk/repos/pytest2md/tests/assets/cat "/etc/hosts"
+cat "/etc/hosts"
 ```
 </details>
 
@@ -42,4 +46,4 @@ $ ./cat "/etc/hosts"
 
 
 <!-- autogenlinks -->
-[p2m.py]: https://github.com/axiros/pytest2md/blob/f6941f22164eee48cf0a5188561f828c369af895/pytest2md/p2m.py
+[p2m.py]: https://github.com/axiros/pytest2md/blob/2e86cd544632b02f78385d481ee3e276c3586ce5/pytest2md/p2m.py

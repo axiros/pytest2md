@@ -198,10 +198,7 @@ class P2M:
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
         MdInline.bash = partial(
-            self.bash_run,
-            no_cmd_path=True,
-            md_insert=False,
-            assert_success=True,
+            self.bash_run, cmd_path_from_env=True, md_insert=False
         )
         MdInline.sh_file = partial(self.sh_file, md_insert=False)
 
@@ -465,12 +462,12 @@ def dump_cmd_log(ctx):
 def bash_run(
     cmd,
     res_as=None,
-    no_cmd_path=False,
+    cmd_path_from_env=True,  # and not from assets
     no_show_in_cmd='',
     summary=None,
     into_file=None,  # output to that file in assets/logs/<into_file>, linked. Only last command logged
     md_insert=True,
-    assert_success=False,  # currently only for non into_file commands
+    ign_err=False,  # currently only for non into_file commands
     pdb=False,
     ctx=None,
 ):
@@ -498,7 +495,7 @@ def bash_run(
 
     for c in cmds:
         cmd = c['cmd']
-        fncmd = cmd if no_cmd_path else (d_ass + '/' + cmd)
+        fncmd = cmd if cmd_path_from_env else (d_ass + '/' + cmd)
         ctx['cmd_log'].append(fncmd)
         # run it:
         if str(pdb).lower() not in ('none', 'false', '0'):
@@ -519,18 +516,15 @@ def bash_run(
             sp.Popen(_, shell=True).communicate()
 
         else:
-            if assert_success:
-                fncmd += ' || echo CMD_RUN_ERROR '
-            res = c['res'] = sp.getoutput(fncmd)
-            fncmd = fncmd.replace(' || echo CMD_RUN_ERROR ', '')
+            exitc, res = c['exitcode'], c['res'] = sp.getstatusoutput(fncmd)
 
-            if assert_success and 'CMD_RUN_ERROR' in res:
+            if not ign_err and exitc:
                 dump_cmd_log(ctx)
                 raise Exception('Command run error: %s %s' % (fncmd, res))
 
         if no_show_in_cmd:
             fncmd = fncmd.replace(no_show_in_cmd, '')
-        # .// -> when there is no_cmd_path we would get that, ugly:
+        # .// -> when there is cmd_path_from_env we would get that, ugly:
         # this is just for md output, not part of testing:
         c['cmd'] = fncmd.replace(d_ass, './').strip().replace('.//', './')
         if into_file:

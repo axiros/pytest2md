@@ -267,7 +267,10 @@ class MDTool(ChangeLogWriter):
                 C['src_link_tmpl_name'] = md[1].split('--', 1)[0].strip()
 
         C['src_link_tmpl_name'] = C['src_link_tmpl_name'] or 'static'
-        print('Rendering links for', src_link_tmpl_name)
+        print(
+            'Rendering links - using source links template:',
+            src_link_tmpl_name,
+        )
         if 1 or not os.environ.get('NOLINKREPL'):
             init_src_link_tmpl(ctx=C)
 
