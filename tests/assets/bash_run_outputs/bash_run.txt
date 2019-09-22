@@ -1,6 +1,6 @@
 total 80
-drwxr-xr-x.  8 gk armynyus  4096 Sep 22 18:29 .git
--rw-r--r--.  1 gk gk       14720 Sep 22 18:29 README.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 22 18:32 .git
+-rw-r--r--.  1 gk gk       14721 Sep 22 18:30 README.md
 drwxr-xr-x.  8 gk armynyus  4096 Sep 22 18:25 .
 drwxr-xr-x.  4 gk gk        4096 Sep 22 18:25 tests
 drwxr-xr-x.  3 gk gk        4096 Sep 22 18:25 pytest2md
