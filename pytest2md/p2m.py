@@ -197,6 +197,7 @@ class P2M:
         self.write_markdown = partial(write_markdown, ctx=C)
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
+
         MdInline.bash = partial(
             self.bash_run, cmd_path_from_env=True, md_insert=False
         )
@@ -414,6 +415,14 @@ def md(
             elif args[0] in ('{', '['):
                 args = json.loads(args)
             elif ',' in args and ':' in args:
+                args = args.strip()
+                # allow for bash run to omit the cmd prefix:
+                if (
+                    getattr(getattr(f, 'func', {}), '__name__', None)
+                    == 'bash_run'
+                ):
+                    if not args.startswith('cmd:'):
+                        args = 'cmd:' + args
                 args = mdtool.to_dict(args)
             else:
                 args = [args]
@@ -464,7 +473,7 @@ def dump_cmd_log(ctx):
     os.system('chmod +x "%s"' % fn)
     print('Writing markdown to this point to /tmp/p2m.md')
     try:
-        write_markdown(fn_target_md='/tmp/p2m.md', ctx=ctx)
+        write_markdown(fn_target_md='/tmp/mdp2m.md', ctx=ctx)
     except Exception as ex:
         print('Failed generating markdown', str(ex))
 
