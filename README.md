@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 190919
+version: 190920
 
 ---
 
@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Wed Sep 25 13:45:28 2019"
+        "Wed Sep 25 14:43:20 2019"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Wed Sep 25 13:45:28 2019"
+        "Wed Sep 25 14:43:20 2019"
     ]
 }
 ```
@@ -210,10 +210,10 @@ total 80
 ```bash
 $ ls -lta
 total 80
--rw-r--r--.  1 gk armynyus  2025 Sep 25 13:45 .README.tmpl.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 13:45 .git
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 12:48 .
--rw-r--r--.  1 gk gk       14723 Sep 25 12:48 README.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 25 14:43 .git
+-rw-r--r--.  1 gk armynyus  2025 Sep 25 14:42 .README.tmpl.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 25 13:45 .
+-rw-r--r--.  1 gk gk       14730 Sep 25 13:45 README.md
 
 ...(output truncated - see link below)
 ```
@@ -532,8 +532,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/49ec2cb9885d1207fbb2849fba9a27f5cade660d/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/49ec2cb9885d1207fbb2849fba9a27f5cade660d/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/49ec2cb9885d1207fbb2849fba9a27f5cade660d/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/49ec2cb9885d1207fbb2849fba9a27f5cade660d/tests/test_tutorial.py
-[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/49ec2cb9885d1207fbb2849fba9a27f5cade660d/tests/test_tutorial.py#L325
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/bde4bea4f9c0d30794b9507709f4679a3082ee2a/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/bde4bea4f9c0d30794b9507709f4679a3082ee2a/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/tests/test_tutorial.py
+[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/tests/test_tutorial.py#L325
