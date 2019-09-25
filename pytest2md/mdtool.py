@@ -531,4 +531,8 @@ def find_path(ld, bd, dirmatch=None):
 
 def to_dict(s):
     l = [kv.strip().split(':', 1) for kv in s.split(',')]
-    return dict([(k.strip(), v.strip()) for k, v in l])
+    try:
+        return dict([(k.strip(), v.strip()) for k, v in l])
+    except Exception as ex:
+        ms = 'Trying to parse "%s" into a key value dict:' % s
+        raise Exception('%s - %s' % (ms, ex))

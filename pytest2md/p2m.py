@@ -440,8 +440,8 @@ def _bash_run_cmd_structure(c):
         raise Exception('Err: not support command structure', cmd)
 
 
-def _bash_run_check_asserts(c, ctx):
-    ass = c.get('assert')
+def _bash_run_check_asserts(c, ctx, expect=None):
+    ass = c.get('assert') or expect
     if ass is not None:
         if not ass in c['res']:
             dump_cmd_log(ctx)
@@ -479,6 +479,7 @@ def bash_run(
     md_insert=True,
     ign_err=False,  # currently only for non into_file commands
     pdb=False,
+    expect=None,
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
@@ -551,7 +552,7 @@ def bash_run(
             into_file_res.append([c['cmd'], fn])
 
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
-    [_bash_run_check_asserts(c, ctx) for c in cmds]
+    [_bash_run_check_asserts(c, ctx, expect=expect) for c in cmds]
     into = res_as if res_as else bash
     # when we have an inline func we want the content only:
     if not md_insert:
