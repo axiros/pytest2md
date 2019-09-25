@@ -274,6 +274,7 @@ def write_markdown(
     make_toc=True,
     make_cmd_log=True,
     no_write=False,
+    fn_target_md=None,  # overwrite possiblity for error handlers
     ctx=None,
 ):
     """
@@ -340,7 +341,7 @@ def write_markdown(
     if not exists(dirname(f)):
         # TODO: fix security:
         sp.getoutput('mkdir -p "%s"' % dirname(f))
-    with open(ctx['fn_target_md'], 'w') as fd:
+    with open(fn_target_md or ctx['fn_target_md'], 'w') as fd:
         fd.write(ctx['md'])
     return ctx['md']
 
@@ -451,12 +452,21 @@ def dump_cmd_log(ctx):
     cl = ctx['cmd_log']
     if not cl:
         return
+    cl, fn = '\n'.join(ctx['cmd_log']), '/tmp/p2mcmdlog'
     print('\nCommand log to this point\n', '=' * 80)
     os.system('echo -e "\x1b[1;48;5;245m"')
-    for l in ctx['cmd_log']:
-        print(l)
+    print(cl)
     os.system('echo -e "\x1b[0m"')
     print('=' * 80)
+    print('Written into', fn)
+    with open(fn, 'w') as fd:
+        fd.write(cl + '\n')
+    os.system('chmod +x "%s"' % fn)
+    print('Writing markdown to this point to /tmp/p2m.md')
+    try:
+        write_markdown(fn_target_md='/tmp/p2m.md', ctx=ctx)
+    except Exception as ex:
+        print('Failed generating markdown', str(ex))
 
 
 def bash_run(
@@ -516,7 +526,11 @@ def bash_run(
             sp.Popen(_, shell=True).communicate()
 
         else:
-            exitc, res = c['exitcode'], c['res'] = sp.getstatusoutput(fncmd)
+            if fncmd.strip().endswith('&'):
+                exitc, res = os.system(fncmd), '(backgrounded)'
+            else:
+                exitc, res = sp.getstatusoutput(fncmd)
+            c['exitcode'], c['res'] = exitc, res
 
             if not ign_err and exitc:
                 dump_cmd_log(ctx)
