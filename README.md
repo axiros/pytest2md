@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 190917
+version: 190918
 
 ---
 
@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Sun Sep 22 18:32:38 2019"
+        "Wed Sep 25 12:48:46 2019"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Sun Sep 22 18:32:38 2019"
+        "Wed Sep 25 12:48:46 2019"
     ]
 }
 ```
@@ -210,10 +210,10 @@ total 80
 ```bash
 $ ls -lta
 total 80
--rw-r--r--.  1 gk armynyus  2025 Sep 22 18:32 .README.tmpl.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 22 18:32 .git
+-rw-r--r--.  1 gk armynyus  2025 Sep 25 12:48 .README.tmpl.md
+drwxr-xr-x.  8 gk armynyus  4096 Sep 25 12:48 .git
+drwxrwxr-x. 21 gk gk        4096 Sep 23 17:41 ..
 drwxr-xr-x.  8 gk armynyus  4096 Sep 22 18:32 .
--rw-r--r--.  1 gk gk       14720 Sep 22 18:32 README.md
 
 ...(output truncated - see link below)
 ```
@@ -287,8 +287,8 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 ```bash
 $ cd /etc; ls -lta | head -n 5
 total 2240
-drwxr-xr-x. 156 root root     12288 Sep 22 10:56 .
--rw-r--r--.   1 root root        67 Sep 22 10:56 resolv.conf
+drwxr-xr-x. 156 root root     12288 Sep 23 00:55 .
+-rw-r--r--.   1 root root        67 Sep 23 00:55 resolv.conf
 drwxr-xr-x.   5 root root      4096 Sep 19 19:23 systemd
 -rw-r--r--.   1 root root    124464 Sep 19 19:00 ld.so.cache
 ```
@@ -532,8 +532,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/181473c1873cdb5f9df24a6a1d3cd1bc7e539f20/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/181473c1873cdb5f9df24a6a1d3cd1bc7e539f20/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/181473c1873cdb5f9df24a6a1d3cd1bc7e539f20/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/181473c1873cdb5f9df24a6a1d3cd1bc7e539f20/tests/test_tutorial.py
-[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/181473c1873cdb5f9df24a6a1d3cd1bc7e539f20/tests/test_tutorial.py#L325
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/c91b9ec646f75fd7ca2ed68c244dfef16c1f77de/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/c91b9ec646f75fd7ca2ed68c244dfef16c1f77de/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/c91b9ec646f75fd7ca2ed68c244dfef16c1f77de/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/c91b9ec646f75fd7ca2ed68c244dfef16c1f77de/tests/test_tutorial.py
+[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/c91b9ec646f75fd7ca2ed68c244dfef16c1f77de/tests/test_tutorial.py#L325
