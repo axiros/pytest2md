@@ -1,9 +1,10 @@
-total 80
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 14:43 .git
--rw-r--r--.  1 gk armynyus  2025 Sep 25 14:42 .README.tmpl.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 13:45 .
--rw-r--r--.  1 gk gk       14730 Sep 25 13:45 README.md
-drwxrwxr-x. 21 gk gk        4096 Sep 23 17:41 ..
+total 84
+-rw-r--r--.  1 gk armynyus  2026 Oct 10 15:25 .README.tmpl.md
+drwxr-xr-x.  8 gk armynyus  4096 Oct 10 15:25 .git
+drwxrwxr-x. 22 gk gk        4096 Sep 26 17:54 ..
+drwxrwxr-x.  2 gk gk        4096 Sep 26 04:16 pytest2md.egg-info
+drwxr-xr-x.  9 gk armynyus  4096 Sep 26 04:16 .
+-rw-r--r--.  1 gk gk       14730 Sep 25 14:43 README.md
 drwxr-xr-x.  4 gk gk        4096 Sep 22 18:25 tests
 drwxr-xr-x.  3 gk gk        4096 Sep 22 18:25 pytest2md
 drwxr-xr-x.  3 gk gk        4096 Sep 22 18:25 docs

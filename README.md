@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 190920
+version: 1901001
 
 ---
 
@@ -88,7 +88,7 @@ test_changelog.py
 test_tutorial.py
 
 $ ls -lta /etc/hosts
--rw-r--r--. 1 root root 286 Jul 22 12:08 /etc/hosts
+-rw-r--r--. 1 root root 305 Oct  9 15:05 /etc/hosts
 ```
 
 
@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Wed Sep 25 14:43:20 2019"
+        "Thu Oct 10 15:25:33 2019"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Wed Sep 25 14:43:20 2019"
+        "Thu Oct 10 15:25:33 2019"
     ]
 }
 ```
@@ -204,16 +204,16 @@ $ ./some_non_existing_command_in_assets arg1
 
 ```bash
 $ ls -lta | grep total | head -n 1
-total 80
+total 84
 ```
 
 ```bash
 $ ls -lta
-total 80
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 14:43 .git
--rw-r--r--.  1 gk armynyus  2025 Sep 25 14:42 .README.tmpl.md
-drwxr-xr-x.  8 gk armynyus  4096 Sep 25 13:45 .
--rw-r--r--.  1 gk gk       14730 Sep 25 13:45 README.md
+total 84
+-rw-r--r--.  1 gk armynyus  2026 Oct 10 15:25 .README.tmpl.md
+drwxr-xr-x.  8 gk armynyus  4096 Oct 10 15:25 .git
+drwxrwxr-x. 22 gk gk        4096 Sep 26 17:54 ..
+drwxrwxr-x.  2 gk gk        4096 Sep 26 04:16 pytest2md.egg-info
 
 ...(output truncated - see link below)
 ```
@@ -286,11 +286,11 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 
 ```bash
 $ cd /etc; ls -lta | head -n 5
-total 2240
-drwxr-xr-x. 156 root root     12288 Sep 23 00:55 .
--rw-r--r--.   1 root root        67 Sep 23 00:55 resolv.conf
-drwxr-xr-x.   5 root root      4096 Sep 19 19:23 systemd
--rw-r--r--.   1 root root    124464 Sep 19 19:00 ld.so.cache
+total 2252
+drwxr-xr-x. 158 root root     12288 Oct  9 15:05 .
+-rw-r--r--.   1 root root       305 Oct  9 15:05 hosts
+-rw-r--r--.   1 root root    124612 Oct  9 12:55 ld.so.cache
+drwxr-xr-x.   2 root root      4096 Oct  8 16:02 docker
 ```
 
 Default inline functions (add your own in module headers):  
@@ -532,8 +532,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/bde4bea4f9c0d30794b9507709f4679a3082ee2a/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/bde4bea4f9c0d30794b9507709f4679a3082ee2a/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/tests/test_tutorial.py
-[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/tests/test_tutorial.py#L325
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/df26b61d7e0f725ecff10259ff086db99588d598/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/df26b61d7e0f725ecff10259ff086db99588d598/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/df26b61d7e0f725ecff10259ff086db99588d598/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/df26b61d7e0f725ecff10259ff086db99588d598/tests/test_tutorial.py
+[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/df26b61d7e0f725ecff10259ff086db99588d598/tests/test_tutorial.py#L325

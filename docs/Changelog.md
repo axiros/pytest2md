@@ -19,6 +19,7 @@ $ cat "/etc/hosts"
 127.0.0.1   scapp-console.swisscom.com
 127.0.0.1   api.scapp-console.swisscom.com
 127.0.0.1   login.scapp-console.swisscom.com
+127.0.0.1   foobar
 ```
 
 
@@ -46,4 +47,4 @@ cat "/etc/hosts"
 
 
 <!-- autogenlinks -->
-[p2m.py]: https://github.com/axiros/pytest2md/blob/bde4bea4f9c0d30794b9507709f4679a3082ee2a/pytest2md/p2m.py
+[p2m.py]: https://github.com/axiros/pytest2md/blob/df26b61d7e0f725ecff10259ff086db99588d598/pytest2md/p2m.py
