@@ -501,9 +501,13 @@ def bash_run(
     ign_err=False,  # currently only for non into_file commands
     pdb=False,
     expect=None,
+    retry_secs=None,  # on failures, retry until now() + this
     ctx=None,
 ):
     """runs unix commands, then writes results into the markdown"""
+    if isinstance(retry_secs, str):
+        retry_secs = float(retry_secs)
+
     if isinstance(cmd, str):
         cmds = [{'cmd': cmd, 'res': ''}]
 
@@ -551,7 +555,17 @@ def bash_run(
             if fncmd.strip().endswith('&'):
                 exitc, res = os.system(fncmd), '(backgrounded)'
             else:
-                exitc, res = sp.getstatusoutput(fncmd)
+                t0 = time.time()
+                while True:
+                    exitc, res = sp.getstatusoutput(fncmd)
+                    if expect and retry_secs and time.time() - t0 < retry_secs:
+                        if expect in res:
+                            break
+                        print('Retrying %s' % fncmd)
+                        time.sleep(0.2)
+                        continue
+                    break
+
             c['exitcode'], c['res'] = exitc, res
 
             if not ign_err and exitc:
