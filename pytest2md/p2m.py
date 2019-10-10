@@ -187,6 +187,7 @@ class P2M:
         self.sh_file = partial(sh_file, ctx=C)
         C['env_exports'] = {}
         self.export = partial(export, ctx=C)
+        self.export_add = partial(export_add, ctx=C)
         # tools for the functions:
         self.sh_code = partial(sh_code, ctx=C)
         self.as_json = as_json
@@ -202,6 +203,13 @@ class P2M:
             self.bash_run, cmd_path_from_env=True, md_insert=False
         )
         MdInline.sh_file = partial(self.sh_file, md_insert=False)
+
+
+def export_add(key, val, ctx, append=False):
+    breakpoint()
+    v = os.environ.get(key)
+    val = ':'.join((v, val) if append else (val, v))
+    return export(key, val, ctx)
 
 
 def export(key, val, ctx):
@@ -314,7 +322,7 @@ def write_markdown(
     sep = ctx['md_sep']
     if not sep in readm:
         readm = '\n%s\n%s\n%s\n' % (sep, readm, sep)
-    pre, _, post = readm.split(sep)
+    pre, _, post = readm.split(sep, 3)
     ctx['md'] = ''.join(
         (pre, sep, '\n' + '\n'.join(ctx['md']), '\n', sep, post)
     )
@@ -471,11 +479,16 @@ def dump_cmd_log(ctx):
     with open(fn, 'w') as fd:
         fd.write(cl + '\n')
     os.system('chmod +x "%s"' % fn)
-    print('Writing markdown to this point to /tmp/p2m.md')
+    errmd = '/tmp/md_error_p2m.md'
+    print('Writing markdown to this point to ' + errmd)
     try:
-        write_markdown(fn_target_md='/tmp/mdp2m.md', ctx=ctx)
+        ctx['fn_target_md'] = errmd
+        write_markdown(ctx=ctx)
     except Exception as ex:
-        print('Failed generating markdown', str(ex))
+        print(
+            'Failed generating error reporting markdown until point of failure',
+            str(ex),
+        )
 
 
 def bash_run(
