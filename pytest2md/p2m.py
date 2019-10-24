@@ -127,6 +127,7 @@ class P2M:
         fn_target_md=None,
         md_sep=dflt_md_sep,
         fn_target_md_tmpl=None,
+        frontmatter=None,
     ):
 
         """
@@ -164,6 +165,8 @@ class P2M:
         C['md_sep'] = md_sep
         C['d_test'] = d_test = DIR(fn_test_file)
         C['d_repo_base'] = d_repo_base(d_test)
+        if frontmatter:
+            C['frontmatter'] = frontmatter
         C['fn_target_md'] = fn = abs(
             fn_target_md or dflt_target_md(fnt, d_test)
         )
@@ -282,7 +285,7 @@ def write_markdown(
     make_toc=True,
     make_cmd_log=True,
     no_write=False,
-    fn_target_md=None,  # overwrite possiblity for error handlers
+    fn_target_md=None,  # normally in ctx. this is an overwrite possiblity for error handlers
     ctx=None,
 ):
     """
@@ -342,6 +345,15 @@ def write_markdown(
             make_toc = {}
         mdt.ctx['md'] = ctx['md'] = mdt.make_toc(**make_toc)
         # mdt.ctx['md'] = ctx['md']
+    fm = ctx.get('frontmatter')
+    if fm:
+        frntmt = json.dumps(fm, indent=4, sort_keys=True)
+        md = ctx['md']
+        if md.lstrip().startswith('{'):
+            md = md.split('\n}\n\n', 1)
+            if len(md) == 2:
+                md = md[1]
+        ctx['md'] = '\n%s\n\n%s' % (frntmt, md)
 
     if no_write:
         return ctx['md']
