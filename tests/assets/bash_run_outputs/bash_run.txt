@@ -1,9 +1,11 @@
 total 80
--rw-r--r--.  1 gk gk       14724 Oct 24 21:03 README.md
-drwxr-xr-x.  8 gk armynyus  4096 Oct 24 21:03 .git
--rw-r--r--.  1 gk armynyus  2026 Oct 24 21:03 .README.tmpl.md
-drwxrwxr-x. 27 gk gk        4096 Oct 19 22:49 ..
-drwxr-xr-x.  8 gk armynyus  4096 Oct 10 17:38 .
+drwxr-xr-x.  8 gk armynyus  4096 Oct 31 17:19 .git
+-rw-r--r--.  1 gk armynyus  2026 Oct 31 17:19 .README.tmpl.md
+-rw-r--r--.  1 gk gk       14731 Oct 31 17:18 README.md
+drwxrwxr-x. 28 gk gk        4096 Oct 29 20:12 ..
+-rw-r--r--.  1 gk gk        1837 Oct 24 21:06 setup.py
+-rw-r--r--.  1 gk armynyus  1439 Oct 24 21:05 .travis.yml
+drwxr-xr-x.  8 gk armynyus  4096 Oct 24 21:03 .
 drwxr-xr-x.  4 gk gk        4096 Sep 22 18:25 tests
 drwxr-xr-x.  3 gk gk        4096 Sep 22 18:25 pytest2md
 drwxr-xr-x.  3 gk gk        4096 Sep 22 18:25 docs
@@ -11,8 +13,6 @@ drwxr-xr-x.  2 gk gk        4096 Sep 22 18:25 assets
 -rwxr-xr-x.  1 gk gk        1051 Sep 17 01:06 pip_up.sh
 drwxr-xr-x.  3 gk armynyus  4096 Sep 15 13:11 .pytest_cache
 -rw-r--r--.  1 gk gk         425 Sep 15 12:37 tox.ini
--rw-r--r--.  1 gk gk        1933 Sep 15 12:37 setup.py
 -rw-r--r--.  1 gk gk        1316 Sep 15 12:37 LICENSE
 -rw-r--r--.  1 gk gk          77 Sep 15 12:37 MANIFEST.in
--rw-r--r--.  1 gk armynyus  1437 Sep 15 12:37 .travis.yml
 -rw-r--r--.  1 gk armynyus  1214 Sep 15 12:37 .gitignore
