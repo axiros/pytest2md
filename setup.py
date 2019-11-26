@@ -33,7 +33,7 @@ setup(
     long_description=md,
     long_description_content_type='text/markdown',
     # for parametrizing the command line:
-    install_requires=[],
+    install_requires=['ansi2html'],
     packages=P,
     package_dir={'': '.'},
     include_package_data=True,

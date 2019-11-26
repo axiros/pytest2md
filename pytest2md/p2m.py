@@ -18,6 +18,11 @@ import sys
 import pdb
 import os
 
+try:
+    from ansi2html import Ansi2HTMLConverter
+except:
+    Ansi2HTMLConverter = None
+
 
 PY2 = sys.version_info[0] < 3
 exists = os.path.exists
@@ -108,9 +113,7 @@ def deindent(p):
     ind = len(pp) - len(pp.lstrip())
     if not ind:
         return p
-    return '\n'.join(
-        [l[ind:] if not l[:ind].strip() else l for l in p.splitlines()]
-    )
+    return '\n'.join([l[ind:] if not l[:ind].strip() else l for l in p.splitlines()])
 
 
 class P2M:
@@ -167,9 +170,7 @@ class P2M:
         C['d_repo_base'] = d_repo_base(d_test)
         if frontmatter:
             C['frontmatter'] = frontmatter
-        C['fn_target_md'] = fn = abs(
-            fn_target_md or dflt_target_md(fnt, d_test)
-        )
+        C['fn_target_md'] = fn = abs(fn_target_md or dflt_target_md(fnt, d_test))
 
         C['fn_target_md_tmpl'] = find_template(fn, fn_target_md_tmpl)
         # tests/test_foo.py -> name is 'foo'
@@ -202,9 +203,7 @@ class P2M:
         # mdtool access:
         self.src_link_templates = mdtool.known_src_links
 
-        MdInline.bash = partial(
-            self.bash_run, cmd_path_from_env=True, md_insert=False
-        )
+        MdInline.bash = partial(self.bash_run, cmd_path_from_env=True, md_insert=False)
         MdInline.sh_file = partial(self.sh_file, md_insert=False)
 
 
@@ -325,9 +324,7 @@ def write_markdown(
     if not sep in readm:
         readm = '\n%s\n%s\n%s\n' % (sep, readm, sep)
     pre, _, post = readm.split(sep, 3)
-    ctx['md'] = ''.join(
-        (pre, sep, '\n' + '\n'.join(ctx['md']), '\n', sep, post)
-    )
+    ctx['md'] = ''.join((pre, sep, '\n' + '\n'.join(ctx['md']), '\n', sep, post))
 
     print('Now postprocessing', ctx['fn_target_md'])
 
@@ -390,10 +387,7 @@ def md(
     after = parts.pop(0)
     if parts:
         r = run_pyrun_funcs(
-            parts,
-            test_func_frame,
-            ctx=ctx,
-            no_sh_func_output=no_sh_func_output,
+            parts, test_func_frame, ctx=ctx, no_sh_func_output=no_sh_func_output,
         )
         after += r
 
@@ -436,10 +430,7 @@ def md(
             elif ',' in args and ':' in args:
                 args = args.strip()
                 # allow for bash run to omit the cmd prefix:
-                if (
-                    getattr(getattr(f, 'func', {}), '__name__', None)
-                    == 'bash_run'
-                ):
+                if getattr(getattr(f, 'func', {}), '__name__', None) == 'bash_run':
                     if not args.startswith('cmd:'):
                         args = 'cmd:' + args
                 args = mdtool.to_dict(args)
@@ -512,6 +503,7 @@ def bash_run(
     md_insert=True,
     ign_err=False,  # currently only for non into_file commands
     pdb=False,
+    fmt=None,
     expect=None,
     retry_secs=None,  # on failures, retry until now() + this
     ctx=None,
@@ -598,10 +590,15 @@ def bash_run(
             fn = fn_into.replace(ctx['d_repo_base'], '.')
             into_file_res.append([c['cmd'], fn])
 
+    if fmt == 'ansi2html' and Ansi2HTMLConverter:
+        cmds = [{'cmd': cmd['cmd'], 'res': inl_ansi_html(cmd['res'])} for cmd in cmds]
     r = '\n\n'.join(['$ %(cmd)s\n%(res)s' % c for c in cmds])
     [_bash_run_check_asserts(c, ctx, expect=expect) for c in cmds]
     into = res_as if res_as else bash
     # when we have an inline func we want the content only:
+
+    if summary == 'cmd':
+        summary = orig_cmd
     if not md_insert:
         r = into(r)
         if summary:
@@ -620,6 +617,16 @@ def bash_run(
 
 
 import shutil
+
+
+def inl_ansi_html(s):
+    # TODO fix the style, looks terrible
+    s = Ansi2HTMLConverter().convert(s)
+    pre, s = s.split('<style', 1)
+    style, body = s.split('</style>', 1)
+    pre, body = s.split('<body', 1)
+    body = body.split('</body>', 1)[0]
+    return '\n```\n\n<style %s</style><div %s</div>\n\n```' % (style, body)
 
 
 def sh_file(
@@ -716,9 +723,7 @@ def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
 
 
 def _is_outer_func_def(line):
-    return line.startswith('def ') and line.split('#', 1)[0].strip().endswith(
-        ':'
-    )
+    return line.startswith('def ') and line.split('#', 1)[0].strip().endswith(':')
 
 
 def md_from_source_code(ctx, pre_md='', no_sh_func_output=False, repl=None):
