@@ -702,7 +702,14 @@ def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
                 if not 'breakpoint' in s:
                     sys.stdout = printed
                     sys.stderr = printed
-                func()
+                try:
+                    func()
+                except AttributeError as ex:
+                    if 'Printed' in str(ex):
+                        ex.args += (
+                            'Tip: Have a breakpoint in the tested module? Then add a breakpoint also into the test function - then we will not redirect stdout',
+                        )
+                    raise
             finally:
                 sys.stdout = o
                 sys.stderr = e
