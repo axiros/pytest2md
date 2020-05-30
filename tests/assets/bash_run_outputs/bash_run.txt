@@ -1,8 +1,8 @@
 total 80
--rw-r--r--.  1 gk gk 14727 May 30 11:15 README.md
-drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .git
 drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .
--rw-r--r--.  1 gk gk  2027 May 30 11:14 .README.tmpl.md
+-rw-r--r--.  1 gk gk  2027 May 30 11:15 .README.tmpl.md
+drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .git
+-rw-r--r--.  1 gk gk 14727 May 30 11:15 README.md
 drwxr-xr-x.  3 gk gk  4096 May 30 10:01 pytest2md
 drwxrwxr-x. 96 gk gk  4096 May 25 12:07 ..
 -rw-r--r--.  1 gk gk  1848 Nov 26  2019 setup.py
