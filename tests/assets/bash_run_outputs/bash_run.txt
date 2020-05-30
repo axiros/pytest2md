@@ -1,10 +1,10 @@
 total 80
-drwxr-xr-x.  8 gk gk  4096 May 30 11:14 .
+-rw-r--r--.  1 gk gk 14727 May 30 11:15 README.md
+drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .git
+drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .
 -rw-r--r--.  1 gk gk  2027 May 30 11:14 .README.tmpl.md
 drwxr-xr-x.  3 gk gk  4096 May 30 10:01 pytest2md
-drwxr-xr-x.  8 gk gk  4096 May 29 02:40 .git
 drwxrwxr-x. 96 gk gk  4096 May 25 12:07 ..
--rw-r--r--.  1 gk gk 14717 Nov 26  2019 README.md
 -rw-r--r--.  1 gk gk  1848 Nov 26  2019 setup.py
 -rw-r--r--.  1 gk gk  1439 Oct 24  2019 .travis.yml
 drwxr-xr-x.  4 gk gk  4096 Sep 22  2019 tests
