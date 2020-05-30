@@ -290,6 +290,9 @@ def write_markdown(
     """
     adds generated markdown to the destination file
     """
+    if env_p2mdfg:
+        print('Not writing Markdown since $P2MFG is set! ')
+        return
     # just required for 'with_source_ref':
     # src = sys._getframe().f_back.f_code
     if isinstance(ctx['md'], str):
@@ -676,6 +679,9 @@ def sh_code(func, ctx=None):
 
 _print_redir_lock = threading.RLock()
 
+# allow breakpoints in modules, i.e. not redir stdout:
+env_p2mdfg = os.environ.get('P2MFG')
+
 
 def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
     r = []
@@ -699,7 +705,7 @@ def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
             try:
                 o = sys.stdout
                 e = sys.stderr
-                if not 'breakpoint' in s:
+                if not 'breakpoint' in s and not env_p2mdfg:
                     sys.stdout = printed
                     sys.stderr = printed
                 try:
@@ -707,7 +713,7 @@ def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
                 except AttributeError as ex:
                     if 'Printed' in str(ex):
                         ex.args += (
-                            'Tip: Have a breakpoint in the tested module? Then add a breakpoint also into the test function - then we will not redirect stdout',
+                            'Tip: Have a breakpoint in the tested module? Then add a breakpoint also into the *test function* - we will detect that and not redir stdout. You can also export P2MFG=true to never redirect - no markdown will be created then.',
                         )
                     raise
             finally:

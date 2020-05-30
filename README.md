@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 1901125
+version: 20200530
 
 ---
 
@@ -88,7 +88,7 @@ test_changelog.py
 test_tutorial.py
 
 $ ls -lta /etc/hosts
--rw-r--r--. 1 root root 302 Nov 13 21:48 /etc/hosts
+-rw-r--r--. 1 root root 308 May  8 23:47 /etc/hosts
 ```
 
 
@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Nov 26 03:49:31 2019"
+        "Sat May 30 11:15:12 2020"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Tue Nov 26 03:49:31 2019"
+        "Sat May 30 11:15:12 2020"
     ]
 }
 ```
@@ -204,16 +204,16 @@ $ ./some_non_existing_command_in_assets arg1
 
 ```bash
 $ ls -lta | grep total | head -n 1
-total 84
+total 80
 ```
 
 ```bash
 $ ls -lta
-total 84
-drwxr-xr-x.  8 gk gk  4096 Nov 26 03:48 .git
-drwxr-xr-x.  9 gk gk  4096 Nov 26 03:48 .
--rw-r--r--.  1 gk gk  2026 Nov 26 03:48 .README.tmpl.md
-drwxr-xr-x.  3 gk gk  4096 Nov 26 03:30 pytest2md
+total 80
+drwxr-xr-x.  8 gk gk  4096 May 30 11:14 .
+-rw-r--r--.  1 gk gk  2027 May 30 11:14 .README.tmpl.md
+drwxr-xr-x.  3 gk gk  4096 May 30 10:01 pytest2md
+drwxr-xr-x.  8 gk gk  4096 May 29 02:40 .git
 
 ...(output truncated - see link below)
 ```
@@ -286,11 +286,11 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 
 ```bash
 $ cd /etc; ls -lta | head -n 5
-total 2300
-drwxr-xr-x. 160 root root     12288 Nov 25 13:49 .
--rw-r--r--.   1 root root        98 Nov 25 13:49 resolv.conf
-drwxr-xr-x.   4 root lp        4096 Nov 24 19:17 cups
--rw-r--r--.   1 root root       300 Nov 24 19:17 printcap
+total 2700
+drwxr-xr-x. 165 root root     12288 May 29 14:48 .
+-rw-r--r--.   1 root root        67 May 29 14:48 resolv.conf
+-rw-r--r--.   1 root root    139649 May 24 08:20 ld.so.cache
+drwxr-xr-x.   2 root root      4096 May 12 00:31 containerd
 ```
 
 Default inline functions (add your own in module headers):  
@@ -532,8 +532,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/tests/test_tutorial.py
-[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/tests/test_tutorial.py#L325
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/9976bc1a0155f4b815cf0fe3920c81fad3797df7/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/9976bc1a0155f4b815cf0fe3920c81fad3797df7/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/9976bc1a0155f4b815cf0fe3920c81fad3797df7/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/9976bc1a0155f4b815cf0fe3920c81fad3797df7/tests/test_tutorial.py
+[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/9976bc1a0155f4b815cf0fe3920c81fad3797df7/tests/test_tutorial.py#L325

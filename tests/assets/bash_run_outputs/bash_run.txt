@@ -1,19 +1,18 @@
-total 84
-drwxr-xr-x.  8 gk gk  4096 Nov 26 03:48 .git
-drwxr-xr-x.  9 gk gk  4096 Nov 26 03:48 .
--rw-r--r--.  1 gk gk  2026 Nov 26 03:48 .README.tmpl.md
-drwxr-xr-x.  3 gk gk  4096 Nov 26 03:30 pytest2md
-drwxrwxr-x.  2 gk gk  4096 Nov 26 02:48 pytest2md.egg-info
--rw-r--r--.  1 gk gk  1848 Nov 26 02:48 setup.py
-drwxrwxr-x. 37 gk gk  4096 Nov 24 17:32 ..
--rw-r--r--.  1 gk gk 14732 Oct 31 17:20 README.md
--rw-r--r--.  1 gk gk  1439 Oct 24 21:05 .travis.yml
-drwxr-xr-x.  4 gk gk  4096 Sep 22 18:25 tests
-drwxr-xr-x.  3 gk gk  4096 Sep 22 18:25 docs
-drwxr-xr-x.  2 gk gk  4096 Sep 22 18:25 assets
--rwxr-xr-x.  1 gk gk  1051 Sep 17 01:06 pip_up.sh
-drwxr-xr-x.  3 gk gk  4096 Sep 15 13:11 .pytest_cache
--rw-r--r--.  1 gk gk   425 Sep 15 12:37 tox.ini
--rw-r--r--.  1 gk gk  1316 Sep 15 12:37 LICENSE
--rw-r--r--.  1 gk gk    77 Sep 15 12:37 MANIFEST.in
--rw-r--r--.  1 gk gk  1214 Sep 15 12:37 .gitignore
+total 80
+drwxr-xr-x.  8 gk gk  4096 May 30 11:14 .
+-rw-r--r--.  1 gk gk  2027 May 30 11:14 .README.tmpl.md
+drwxr-xr-x.  3 gk gk  4096 May 30 10:01 pytest2md
+drwxr-xr-x.  8 gk gk  4096 May 29 02:40 .git
+drwxrwxr-x. 96 gk gk  4096 May 25 12:07 ..
+-rw-r--r--.  1 gk gk 14717 Nov 26  2019 README.md
+-rw-r--r--.  1 gk gk  1848 Nov 26  2019 setup.py
+-rw-r--r--.  1 gk gk  1439 Oct 24  2019 .travis.yml
+drwxr-xr-x.  4 gk gk  4096 Sep 22  2019 tests
+drwxr-xr-x.  3 gk gk  4096 Sep 22  2019 docs
+drwxr-xr-x.  2 gk gk  4096 Sep 22  2019 assets
+-rwxr-xr-x.  1 gk gk  1051 Sep 17  2019 pip_up.sh
+drwxr-xr-x.  3 gk gk  4096 Sep 15  2019 .pytest_cache
+-rw-r--r--.  1 gk gk   425 Sep 15  2019 tox.ini
+-rw-r--r--.  1 gk gk  1316 Sep 15  2019 LICENSE
+-rw-r--r--.  1 gk gk    77 Sep 15  2019 MANIFEST.in
+-rw-r--r--.  1 gk gk  1214 Sep 15  2019 .gitignore

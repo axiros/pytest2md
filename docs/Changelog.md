@@ -14,6 +14,7 @@
 
 ```bash
 $ cat "/etc/hosts"
+# foo
 127.0.0.1   axc3.axiros.com localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 127.0.0.1   scapp-console.swisscom.com
@@ -46,4 +47,4 @@ cat "/etc/hosts"
 
 
 <!-- autogenlinks -->
-[p2m.py]: https://github.com/axiros/pytest2md/blob/98a411aacd1ce24b8e56e95c9d50e5dc4a945525/pytest2md/p2m.py
+[p2m.py]: https://github.com/axiros/pytest2md/blob/9976bc1a0155f4b815cf0fe3920c81fad3797df7/pytest2md/p2m.py
