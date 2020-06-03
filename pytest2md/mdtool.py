@@ -14,8 +14,7 @@ import os
 # static is just a static webserver:
 known_src_links = {
     'github': (
-        'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/'
-        '%(path)s%(line:#L%s)s'
+        'https://github.com/%(gh_repo_name)s/blob/%(git_rev)s/' '%(path)s%(line:#L%s)s'
     ),
     'github_raw': (
         'https://raw.githubusercontent.com/%(gh_repo_name)s/'
@@ -268,7 +267,7 @@ class MDTool(ChangeLogWriter):
 
         C['src_link_tmpl_name'] = C['src_link_tmpl_name'] or 'static'
         print(
-            'Rendering links - using source links template:',
+            'Rendering links - using source links template ($MD_LINKS_FOR, e.g. export MD_LINKS_FOR=github):',
             src_link_tmpl_name,
         )
         if 1 or not os.environ.get('NOLINKREPL'):
@@ -489,14 +488,7 @@ def make_toc(ctx, add_change_log=None, **kw):
             r.pop()
             r.append('%s <a href="#toc%s">%s</a>' % (lev, back_ref_id, h))
     toc.append('')
-    res = (
-        pre
-        + tsep
-        + '\n# Table Of Contents\n'
-        + '\n'.join(toc)
-        + tsep
-        + '\n'.join(r)
-    )
+    res = pre + tsep + '\n# Table Of Contents\n' + '\n'.join(toc) + tsep + '\n'.join(r)
     return res
 
 

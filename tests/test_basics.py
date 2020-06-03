@@ -54,9 +54,7 @@ class TestGenerateMarkdown(unittest.TestCase):
 
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = [
-            '\nhi  \nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```'
-        ]
+        l = ['\nhi  \nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```']
         assert l == md
 
     def test_from_src_code2(self):
@@ -70,9 +68,7 @@ class TestGenerateMarkdown(unittest.TestCase):
 
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = [
-            '\nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```'
-        ]
+        l = ['\nHello  \n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```']
         assert l == md
 
     def test_from_src_code2_1(self):
@@ -84,9 +80,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         'foo'
         self.p2m.md_from_source_code()
         md = self.p2m.ctx['md']
-        l = [
-            '\n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```\n\nfoo  '
-        ]
+        l = ['\n\n\n```python\nprint(i)\n```\nOutput:\n\n```\n42\n```\n\nfoo  ']
         assert l == md
 
     def test_from_src_code3(self):
@@ -113,9 +107,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         md = self.p2m.ctx['md']
         # the test func gets that "MARKDOWN:" output ususally from a helper
         # func, i.e. user doe not see it, e.g. print(to_html(res))
-        l = [
-            '\n\n```python\nprint("""MARKDOWN: # h1\\ninner""")\n```\n # h1\ninner\n'
-        ]
+        l = ['\n\n```python\nprint("""MARKDOWN: # h1\\ninner""")\n```\n # h1\ninner\n']
         assert l == md
 
     def test_tool_as_json(self):
@@ -161,9 +153,7 @@ class TestGenerateMarkdown(unittest.TestCase):
         def f1(p2m=self.p2m):  # no needed in real life, p2m on module level
             print(
                 p2m.html_table(
-                    [['foo', 'bar'], [42, 42]],
-                    ('name', 'val'),
-                    summary='click...',
+                    [['foo', 'bar'], [42, 42]], ('name', 'val'), summary='click...',
                 )
             )
 
@@ -172,13 +162,12 @@ class TestGenerateMarkdown(unittest.TestCase):
         l = [
             '\n'
             'foo  \n'
-            '\n\n'
+            '\n'
+            '\n'
             '```python\n'
             'print(\n'
             '    p2m.html_table(\n'
-            "        [['foo', 'bar'], [42, 42]],\n"
-            "        ('name', 'val'),\n"
-            "        summary='click...',\n"
+            "        [['foo', 'bar'], [42, 42]], ('name', 'val'), summary='click...',\n"
             '    )\n'
             ')\n'
             '```\n'
@@ -196,13 +185,12 @@ class TestGenerateMarkdown(unittest.TestCase):
             '\n'
             '\n'
             'as details:  \n'
-            '\n\n'
+            '\n'
+            '\n'
             '```python\n'
             'print(\n'
             '    p2m.html_table(\n'
-            "        [['foo', 'bar'], [42, 42]],\n"
-            "        ('name', 'val'),\n"
-            "        summary='click...',\n"
+            "        [['foo', 'bar'], [42, 42]], ('name', 'val'), summary='click...',\n"
             '    )\n'
             ')\n'
             '```\n'
@@ -299,9 +287,7 @@ class TestWriteMarkdown(unittest.TestCase):
 
     def test_write_md_1(self):
         self.p2m.ctx['md'] = ['# h1', 'hi']
-        md = self.p2m.write_markdown(
-            no_write=True, make_toc=False, no_link_repl=False
-        )
+        md = self.p2m.write_markdown(no_write=True, make_toc=False, no_link_repl=False)
         l = '\n<!-- autogen tutorial -->\n# h1\nhi\n<!-- autogen tutorial -->\n'
         assert l == md
 
@@ -312,6 +298,9 @@ class TestWriteMarkdown(unittest.TestCase):
         assert l == md
 
     def test_link_simple(self):
+        orig = os.environ.get('MD_LINKS_FOR')
+        if orig:
+            del os.environ['MD_LINKS_FOR']
         self.p2m.ctx['md'] = ['# h1', 'hi[%s]<SRC> [nix]' % test_mod]
         md = self.p2m.write_markdown(no_write=True, make_toc=False)
         lm = """
@@ -350,12 +339,12 @@ hi[%s][%s.py] [nix]
             this,
         )
         assert md.strip() == l.strip()
+        if orig:
+            os.environ['MD_LINKS_FOR'] = orig
 
     def test_link_match_only(self):
         foo = '1555854118.9871481555854118.9871481555854118.987148'
-        self.p2m.ctx['md'] = [
-            'check [fmatch:%s,lmatch:%s]<SRC> that' % (test_mod, foo)
-        ]
+        self.p2m.ctx['md'] = ['check [fmatch:%s,lmatch:%s]<SRC> that' % (test_mod, foo)]
         e = os.environ
         e['MD_LINKS_FOR'] = 'name:github,gh_repo_name:A/B,git_rev:1234'
         md = self.p2m.write_markdown(no_write=True, make_toc=False)

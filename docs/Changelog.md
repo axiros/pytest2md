@@ -47,4 +47,4 @@ cat "/etc/hosts"
 
 
 <!-- autogenlinks -->
-[p2m.py]: https://github.com/axiros/pytest2md/blob/748d73a47455d24dc3d9726340fb075686bb9a6f/pytest2md/p2m.py
+[p2m.py]: https://github.com/axiros/pytest2md/blob/d7c23813ea77f821e8c83571849dce02ac197290/pytest2md/p2m.py

@@ -1,17 +1,17 @@
 total 84
-drwxr-xr-x.  9 gk gk  4096 Jun  3 19:37 .
--rw-r--r--.  1 gk gk  2198 Jun  3 19:37 .README.tmpl.md
-drwxr-xr-x.  3 gk gk  4096 Jun  3 19:35 pytest2md
-drwxrwxr-x.  2 gk gk  4096 Jun  3 15:20 pytest2md.egg-info
-drwxr-xr-x.  8 gk gk  4096 Jun  3 15:19 .git
--rw-r--r--.  1 gk gk 14727 May 30 11:15 README.md
+-rw-r--r--.  1 gk gk 14890 Jun  4 00:15 README.md
+drwxr-xr-x.  4 gk gk  4096 Jun  4 00:14 tests
+drwxr-xr-x.  8 gk gk  4096 Jun  4 00:09 .git
+drwxr-xr-x.  9 gk gk  4096 Jun  4 00:09 .
+-rwxr-xr-x.  1 gk gk  1043 Jun  4 00:09 pip_up.sh
+drwxr-xr-x.  3 gk gk  4096 Jun  4 00:06 pytest2md
+-rw-r--r--.  1 gk gk  2198 Jun  4 00:04 .README.tmpl.md
+-rw-r--r--.  1 gk gk  1848 Jun  3 23:28 setup.py
+drwxrwxr-x.  2 gk gk  4096 Jun  3 23:27 pytest2md.egg-info
 drwxrwxr-x. 96 gk gk  4096 May 25 12:07 ..
--rw-r--r--.  1 gk gk  1848 Nov 26  2019 setup.py
 -rw-r--r--.  1 gk gk  1439 Oct 24  2019 .travis.yml
-drwxr-xr-x.  4 gk gk  4096 Sep 22  2019 tests
 drwxr-xr-x.  3 gk gk  4096 Sep 22  2019 docs
 drwxr-xr-x.  2 gk gk  4096 Sep 22  2019 assets
--rwxr-xr-x.  1 gk gk  1051 Sep 17  2019 pip_up.sh
 drwxr-xr-x.  3 gk gk  4096 Sep 15  2019 .pytest_cache
 -rw-r--r--.  1 gk gk   425 Sep 15  2019 tox.ini
 -rw-r--r--.  1 gk gk  1316 Sep 15  2019 LICENSE
