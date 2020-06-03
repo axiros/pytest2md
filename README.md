@@ -1,7 +1,7 @@
 ---
 
 author: gk
-version: 20200531
+version: 20200601
 
 ---
 
@@ -154,7 +154,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Sat May 30 11:15:50 2020"
+        "Wed Jun  3 19:37:58 2020"
     ]
 }
 ```
@@ -170,7 +170,7 @@ $ cat "test_file.json"
             "testfile": "created"
         },
         "at",
-        "Sat May 30 11:15:50 2020"
+        "Wed Jun  3 19:37:58 2020"
     ]
 }
 ```
@@ -204,16 +204,16 @@ $ ./some_non_existing_command_in_assets arg1
 
 ```bash
 $ ls -lta | grep total | head -n 1
-total 80
+total 84
 ```
 
 ```bash
 $ ls -lta
-total 80
-drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .
--rw-r--r--.  1 gk gk  2027 May 30 11:15 .README.tmpl.md
-drwxr-xr-x.  8 gk gk  4096 May 30 11:15 .git
--rw-r--r--.  1 gk gk 14727 May 30 11:15 README.md
+total 84
+drwxr-xr-x.  9 gk gk  4096 Jun  3 19:37 .
+-rw-r--r--.  1 gk gk  2198 Jun  3 19:37 .README.tmpl.md
+drwxr-xr-x.  3 gk gk  4096 Jun  3 19:35 pytest2md
+drwxrwxr-x.  2 gk gk  4096 Jun  3 15:20 pytest2md.egg-info
 
 ...(output truncated - see link below)
 ```
@@ -286,11 +286,11 @@ Strings can also contain instructions, like this (looked up in p2m.MdInline name
 
 ```bash
 $ cd /etc; ls -lta | head -n 5
-total 2700
-drwxr-xr-x. 165 root root     12288 May 29 14:48 .
--rw-r--r--.   1 root root        67 May 29 14:48 resolv.conf
--rw-r--r--.   1 root root    139649 May 24 08:20 ld.so.cache
-drwxr-xr-x.   2 root root      4096 May 12 00:31 containerd
+total 2716
+drwxr-xr-x. 165 root root     12288 Jun  3 09:04 .
+-rw-r--r--.   1 root root    139649 Jun  3 09:04 ld.so.cache
+-rw-r--r--.   1 root root        67 Jun  3 07:44 resolv.conf
+drwxr-xr-x.   2 root root      4096 Jun  1 19:02 alternatives
 ```
 
 Default inline functions (add your own in module headers):  
@@ -479,6 +479,10 @@ ls -lta
 
 # <a href="#toc14">Tips</a>
 
+- Skip "inner" functions, except matching ones: `export P2RUN=my_func_name_match`
+
+- Turn off stdout redirection: `export P2MFG=true` (for breakpoints in tested modules)
+
 - Local Renderer:
 
     pip install grip
@@ -532,8 +536,8 @@ get the same result, when running markdown generating tests.
 
 
 <!-- autogenlinks -->
-[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/eccf4eb83f64c283bbc9f65d2d2d136b529ff66c/.README.tmpl.md
-[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/eccf4eb83f64c283bbc9f65d2d2d136b529ff66c/README.md
-[mdtool.py]: https://github.com/axiros/pytest2md/blob/eccf4eb83f64c283bbc9f65d2d2d136b529ff66c/pytest2md/mdtool.py
-[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/eccf4eb83f64c283bbc9f65d2d2d136b529ff66c/tests/test_tutorial.py
-[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/eccf4eb83f64c283bbc9f65d2d2d136b529ff66c/tests/test_tutorial.py#L325
+[.README.tmpl.md]: https://raw.githubusercontent.com/axiros/pytest2md/748d73a47455d24dc3d9726340fb075686bb9a6f/.README.tmpl.md
+[README.md]: https://raw.githubusercontent.com/axiros/pytest2md/748d73a47455d24dc3d9726340fb075686bb9a6f/README.md
+[mdtool.py]: https://github.com/axiros/pytest2md/blob/748d73a47455d24dc3d9726340fb075686bb9a6f/pytest2md/mdtool.py
+[test_tutorial.py]: https://github.com/axiros/pytest2md/blob/748d73a47455d24dc3d9726340fb075686bb9a6f/tests/test_tutorial.py
+[test_tutorial.py#325]: https://github.com/axiros/pytest2md/blob/748d73a47455d24dc3d9726340fb075686bb9a6f/tests/test_tutorial.py#L325

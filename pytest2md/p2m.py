@@ -684,10 +684,16 @@ env_p2mdfg = os.environ.get('P2MFG')
 
 
 def run_pyrun_funcs(blocks, test_func_frame, ctx, no_sh_func_output=False):
+    run_only = os.environ.get('P2RUN')
     r = []
     printed = Printed()
     for b in blocks:
         func_name = b.split('\n', 1)[0].strip()
+        if run_only and run_only not in func_name:
+            msg = 'Skipped: %s' % func_name
+            print(msg)
+            r.append(msg)
+            continue
         func = test_func_frame.f_locals[func_name]
         s = inspect.getsource(func).split('\n', 1)[1]
         s = deindent(s).lstrip() + '\n'
